@@ -1,0 +1,5 @@
+controllers:
+    resource:
+        path: ../src/Api/Controller/
+        namespace: Api\Controller
+    type: attribute

@@ -1,0 +1,14 @@
+workers:
+  docker_compose:
+    cmd: ['docker-compose', 'up']
+
+  # built-in command that builds and watches front-end assets
+  # yarn_encore_watch:
+  #     cmd: ['yarn', 'encore', 'dev', '--watch']
+  yarn_encore_watch: ~
+
+  # built-in command that starts messenger consumer
+  # messenger_consume_async:
+  #     cmd: ['symfony', 'console', 'messenger:consume', 'async']
+  #     watch: ['config', 'src', 'templates', 'vendor']
+  # messenger_consume_async: ~
