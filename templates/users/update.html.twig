@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Update user {{ user.username }}</h1>
+
+    {{ form_start(form) }}
+    {{ form_errors(form) }}
+
+    {{ form_row(form.username) }}
+    {{ form_row(form.email) }}
+    {{ form_row(form.password) }}
+    {{ form_row(form.formRoles) }}
+    <div class="d-flex">
+        <div class="me-2">
+            <a class="btn btn-outline-danger" href="{{ path('web_user_index') }}">
+                <i class="bi-arrow-left"></i>
+                Cancel
+            </a>
+        </div>
+        {{ form_row(form.submit) }}
+    </div>
+    {{ form_end(form) }}
+{% endblock %}

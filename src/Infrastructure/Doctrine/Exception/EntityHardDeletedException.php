@@ -1,0 +1,20 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Infrastructure\Doctrine\Exception;
+
+use RuntimeException;
+use Throwable;
+
+class EntityHardDeletedException extends RuntimeException
+{
+    public function __construct($entity, int $code = 0, ?Throwable $previous = null)
+    {
+        parent::__construct(
+            sprintf("Doctrine is about to hard-delete a soft-deletable entity of type %s", get_class($entity)),
+            $code,
+            $previous
+        );
+    }
+}
