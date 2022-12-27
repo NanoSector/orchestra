@@ -4,9 +4,12 @@ declare(strict_types=1);
 
 namespace Web\Form;
 
+use Domain\Entity\Group;
 use Domain\Entity\User;
 use Domain\Enumeration\Role;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\EnumType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
@@ -21,7 +24,7 @@ class UserForm extends AbstractType
     {
         $builder
             ->add('username', TextType::class)
-            ->add('email', TextType::class)
+            ->add('email', EmailType::class)
             ->add('password', RepeatedType::class, [
                 'type' => PasswordType::class,
                 'mapped' => false, // Prevent the password from ever entering the user object
@@ -43,6 +46,13 @@ class UserForm extends AbstractType
                 'preferred_choices' => [
                     Role::ROLE_USER
                 ]
+            ])
+            ->add('groups', EntityType::class, [
+                'class' => Group::class,
+                'multiple' => true,
+                'expanded' => true,
+                'disabled' => true, // TODO: persisting does not work?
+                'choice_label' => static fn (Group $g) => $g->getName(),
             ])
             ->add('submit', SubmitType::class);
     }

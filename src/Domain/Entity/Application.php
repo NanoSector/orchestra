@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace Domain\Entity;
 
@@ -6,10 +7,14 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Domain\Repository\ApplicationRepository;
+use Infrastructure\Doctrine\Traits\TimestampedEntityTrait;
 
 #[ORM\Entity(repositoryClass: ApplicationRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 class Application
 {
+    use TimestampedEntityTrait;
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -21,9 +26,13 @@ class Application
     #[ORM\ManyToMany(targetEntity: Group::class, inversedBy: 'applications')]
     private Collection $groups;
 
+    #[ORM\OneToMany(mappedBy: 'application', targetEntity: Endpoint::class, orphanRemoval: true)]
+    private Collection $endpoints;
+
     public function __construct()
     {
         $this->groups = new ArrayCollection();
+        $this->endpoints = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -63,6 +72,36 @@ class Application
     public function removeGroup(Group $group): self
     {
         $this->groups->removeElement($group);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Endpoint>
+     */
+    public function getEndpoints(): Collection
+    {
+        return $this->endpoints;
+    }
+
+    public function addEndpoint(Endpoint $endpoint): self
+    {
+        if (!$this->endpoints->contains($endpoint)) {
+            $this->endpoints->add($endpoint);
+            $endpoint->setApplication($this);
+        }
+
+        return $this;
+    }
+
+    public function removeEndpoint(Endpoint $endpoint): self
+    {
+        if ($this->endpoints->removeElement($endpoint)) {
+            // set the owning side to null (unless already changed)
+            if ($endpoint->getApplication() === $this) {
+                $endpoint->setApplication(null);
+            }
+        }
 
         return $this;
     }

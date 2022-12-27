@@ -1,4 +1,4 @@
-{% extends 'base.html.twig' %}
+{% extends app.request.attributes.has('isModalRequest') ? 'modal.html.twig' : 'base.html.twig' %}
 
 {% block body %}
     <h1 class="mb-3">Create a new user</h1>
@@ -10,6 +10,7 @@
     {{ form_row(form.email) }}
     {{ form_row(form.password) }}
     {{ form_row(form.formRoles) }}
+    {{ form_row(form.groups) }}
     <div class="d-flex">
         <div class="me-2">
             <a class="btn btn-outline-danger" href="{{ path('web_user_index') }}">

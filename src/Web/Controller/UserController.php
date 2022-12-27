@@ -1,9 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Web\Controller;
 
 use Domain\Entity\User;
 use Domain\Repository\UserRepository;
+use Infrastructure\Breadcrumbs\Breadcrumb;
+use Infrastructure\Controller\AppContext;
 use Infrastructure\Flash;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -12,6 +16,8 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Web\Form\UserForm;
 
+#[AppContext('user_management')]
+#[Breadcrumb('Users', 'web_user_index')]
 class UserController extends AbstractController
 {
     private UserRepository $userRepository;
@@ -24,14 +30,16 @@ class UserController extends AbstractController
     }
 
     #[Route('/users', name: 'web_user_index', methods: ["GET"])]
-    public function index(): Response
+    public function index(Request $request): Response
     {
         return $this->render('users/index.html.twig', [
             'users' => $this->userRepository->findAll(),
         ]);
     }
 
+
     #[Route('/users/create', name: 'web_user_create', methods: ["GET", "POST"])]
+    #[Breadcrumb('Create user')]
     public function create(Request $request): Response
     {
         $user = new User();
@@ -62,6 +70,7 @@ class UserController extends AbstractController
     }
 
     #[Route('/users/{id}', name: 'web_user_update', methods: ["GET", "POST"])]
+    #[Breadcrumb('Update user')]
     public function update(User $user, Request $request): Response
     {
         $form = $this->createForm(UserForm::class, $user, [
@@ -102,5 +111,4 @@ class UserController extends AbstractController
 
         return $this->redirectToRoute('web_user_index');
     }
-
 }

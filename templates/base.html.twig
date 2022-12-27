@@ -1,3 +1,15 @@
+{% macro menuItem(name, icon, url, appContext) %}
+    {% set currentAppContext = app.request.attributes.get('appContext') | default('home') %}
+    {% set isActive = appContext == currentAppContext %}
+
+    <li class="nav-item">
+        <a class="nav-link text-white {% if isActive %}active{% endif %}" href="{{ url }}">
+            <i class="bi-{{ icon }}"></i>
+            {{ name | trans }}
+        </a>
+    </li>
+{% endmacro %}
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -14,23 +26,72 @@
     {% endblock %}
 </head>
 <body>
-{% include 'navbar.html.twig' %}
-
 <div class="d-flex">
-    <div class="w-25 bg-dark" style="height: calc(100vh - 56px)">
+    <div class="d-flex vh-100 flex-column p-3 text-white bg-dark" style="width: 280px;">
+        <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
+            <span class="fs-4">Orchestra</span>
+        </a>
+        <hr>
+        <ul class="nav nav-pills flex-column mb-auto">
+            {{ _self.menuItem('Home', 'house', '#', 'home') }}
+            {{ _self.menuItem('Dashboard', 'speedometer2', '#', 'dashboard') }}
+            {{ _self.menuItem('Applications', 'app-indicator', path('web_application_index'), 'app_management') }}
+            {{ _self.menuItem('Users', 'person-circle', path('web_user_index'), 'user_management') }}
+        </ul>
+        <hr>
 
+        <div class="dropdown">
+            {% if app.user %}
+                <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle"
+                   id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
+                    <strong>{{ app.user.username }}</strong>
+                </a>
+                <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1">
+                    <li><a class="dropdown-item" href="#">{% trans %}Settings{% endtrans %}</a></li>
+                    <li><a class="dropdown-item" href="#">{% trans %}Profile{% endtrans %}</a></li>
+                    <li>
+                        <hr class="dropdown-divider">
+                    </li>
+                    <li><a class="dropdown-item" href="{{ path('web_login_logout') }}">{% trans %}Sign out{% endtrans %}</a></li>
+                </ul>
+            {% else %}
+                <a href="{{ path('web_login_index') }}"
+                   class="d-flex align-items-center text-white text-decoration-none">
+                    <strong>{% trans %}Log in{% endtrans %}</strong>
+                </a>
+            {% endif %}
+        </div>
     </div>
 
-    <div class="p-3 overflow-hidden flex-grow-1">
-        {% for label, messages in app.flashes %}
-            {% for message in messages %}
-                <div class="alert alert-{{ label }}">
-                    {{ message }}
-                </div>
-            {% endfor %}
-        {% endfor %}
+    <div class="flex-grow-1">
+        <div class="bg-dark p-3">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb mb-0">
+                    <li class="breadcrumb-item"><a href="#">Home</a></li>
+                    {% for breadcrumb in app.request.attributes.get('breadcrumbs') %}
+                        <li class="breadcrumb-item {% if breadcrumb.active %}active{% endif %}">
+                        {% if breadcrumb.url %}
+                            <a href="{{ breadcrumb.url }}">{{ breadcrumb.name | trans }}</a></li>
+                        {% else %}
+                            {{ breadcrumb.name }}
+                        {% endif %}
+                    {% endfor %}
+                </ol>
+            </nav>
+        </div>
 
-        {% block body %}{% endblock %}
+        <div class="p-3">
+
+            {% for label, messages in app.flashes %}
+                {% for message in messages %}
+                    <div class="alert alert-{{ label }}">
+                        {{ message | trans }}
+                    </div>
+                {% endfor %}
+            {% endfor %}
+
+            {% block body %}{% endblock %}
+        </div>
     </div>
 </div>
 

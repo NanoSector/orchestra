@@ -1,0 +1,68 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div>
+        <div class="d-flex justify-content-between">
+            <div>
+                <h1>Applications</h1>
+            </div>
+
+            <div>
+                <a class="btn btn-primary" href="{{ path('web_application_create') }}" role="button">
+                    <i class="bi-plus-circle-fill"></i>
+                    Create new application
+                </a>
+            </div>
+        </div>
+        <table class="table table-striped init-datatable">
+            <thead class="table-light">
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Name</th>
+                <th scope="col">Groups</th>
+                <th scope="col">Created</th>
+                <th scope="col">Last updated</th>
+                <th scope="col">Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for application in applications %}
+                <tr {{ stimulus_controller('groups/actions', {
+                    'deleteUrl': path('web_application_delete', {'id': application.id})
+                }) }}>
+                    <th scope="row" class="align-middle">{{ application.id }}</th>
+                    <td class="align-middle">{{ application.name }}</td>
+                    <td class="align-middle">{{ application.name }}</td>
+{#                    <td class="align-middle">{{ application.groups | reduce(g => g.name) | join(', ') }}</td>#}
+                    <td class="align-middle">{{ application.createdAt }}</td>
+                    <td class="align-middle">{{ application.updatedAt }}</td>
+                    <td class="align-middle">
+
+                        <a class="btn btn-sm btn-primary" href="{{ path('web_application_details', {'id': application.id}) }}">
+                            <i class="bi-eye"></i>
+                            View
+                        </a>
+
+                        <a class="btn btn-sm btn-secondary" href="{{ path('web_application_update', {'id': application.id}) }}">
+                            <i class="bi-pencil"></i>
+                            Edit
+                        </a>
+
+                        <a {{ stimulus_target('groups/actions', 'deleteButton')}} class="btn btn-sm btn-outline-danger" {{ stimulus_action('groups/actions', 'confirmDelete') }}>
+                            <i class="bi-trash"></i>
+                            Delete
+                        </a>
+
+                        <form {{ stimulus_target('groups/actions', 'deleteForm')}} action="{{ path('web_application_delete', {'id': application.id} ) }}" method="POST" class="d-none">
+                            <button type="submit" class="btn btn-sm btn-danger">
+                                <i class="bi-trash-fill"></i>
+                                Confirm delete
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

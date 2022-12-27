@@ -8,6 +8,7 @@ doctrine:
 
         types:
             CarbonDateTimeType: Carbon\Doctrine\DateTimeType
+            EndpointDriverType: Domain\Doctrine\Type\EndpointDriverType
             RoleCollectionType: Domain\Doctrine\Type\RoleCollectionType
     orm:
         auto_generate_proxy_classes: true

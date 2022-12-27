@@ -24,6 +24,9 @@ security:
                 login_path: web_login_index
                 check_path: web_login_index
 
+            logout:
+                path: web_login_logout
+
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#the-firewall
 

@@ -26,4 +26,12 @@ class LoginController extends AbstractController
             'error' => $error,
         ]);
     }
+
+    #[Route('/logout', name: 'web_login_logout', methods: ['GET'])]
+    public function logout(): void
+    {
+        // As per https://symfony.com/doc/current/security.html#logging-out this should never be called;
+        // pretend it does not exist.
+        throw $this->createNotFoundException();
+    }
 }

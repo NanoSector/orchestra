@@ -1,0 +1,21 @@
+{% extends app.request.attributes.has('isModalRequest') ? 'modal.html.twig' : 'base.html.twig' %}
+
+{% block body %}
+    <h1>Update group {{ group.name }}</h1>
+
+    {{ form_start(form) }}
+    {{ form_errors(form) }}
+
+    {{ form_row(form.name) }}
+    {{ form_row(form.users) }}
+    <div class="d-flex">
+        <div class="me-2">
+            <a class="btn btn-outline-danger" href="{{ path('web_group_index') }}">
+                <i class="bi-arrow-left"></i>
+                Cancel
+            </a>
+        </div>
+        {{ form_row(form.submit) }}
+    </div>
+    {{ form_end(form) }}
+{% endblock %}
