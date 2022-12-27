@@ -4,12 +4,9 @@ declare(strict_types=1);
 
 namespace Web\Controller;
 
-use Domain\Endpoint\Driver\NextcloudOcs\NextcloudOcsDriver;
 use Domain\Entity\Application;
-use Domain\Entity\Endpoint;
 use Domain\Repository\ApplicationRepository;
 use Infrastructure\Breadcrumbs\Breadcrumb;
-use Infrastructure\Breadcrumbs\InheritBreadcrumbs;
 use Infrastructure\Controller\AppContext;
 use Infrastructure\Flash;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;

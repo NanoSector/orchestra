@@ -11,7 +11,7 @@ trait ResponseWithHealthCheckTrait
     public function getHealthMetric(): ?HealthMetricInterface
     {
         return $this->getMetrics()->findFirst(
-            static fn(MetricInterface $m) => $m instanceof HealthMetricInterface
+            static fn($key, MetricInterface $m) => $m instanceof HealthMetricInterface
         );
     }
 }

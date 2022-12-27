@@ -36,3 +36,6 @@ services:
             - name: 'doctrine.event_listener'
               event: 'onFlush'
               priority: 500
+
+    Domain\Endpoint\Driver\NextcloudOcs\NextcloudOcsDriver:
+        public: true

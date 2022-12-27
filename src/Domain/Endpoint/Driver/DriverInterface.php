@@ -22,5 +22,7 @@ interface DriverInterface
      */
     public function sanitizeConfiguration(array $options): array;
 
+    public function fetch(DriverEndpointInterface $endpoint): ResponseInterface;
+
 
 }

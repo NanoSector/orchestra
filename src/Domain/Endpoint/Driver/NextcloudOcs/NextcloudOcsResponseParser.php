@@ -4,8 +4,8 @@ namespace Domain\Endpoint\Driver\NextcloudOcs;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Domain\Exception\EndpointExecutionFailedException;
-use Domain\Metric\Parser\ResponseStructure;
 use Domain\Metric\Parser\Builder\ParserBuilder;
+use Domain\Metric\Parser\ResponseStructure;
 use Domain\Metric\Parser\Specialized\PostgreSQLVersionNode;
 use Symfony\Contracts\HttpClient\Exception\ExceptionInterface;
 use Symfony\Contracts\HttpClient\ResponseInterface;

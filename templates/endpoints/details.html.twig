@@ -1,0 +1,68 @@
+{% extends app.request.attributes.has('isModalRequest') ? 'modal.html.twig' : 'base.html.twig' %}
+
+{% block body %}
+    <h1>{{ application.name }} - {{ endpoint.name }}</h1>
+
+{#    <h2>Metrics</h2>#}
+{#    <p>#}
+{#        Metrics are obtained automatically by calling this endpoint.#}
+{#        If you do not wish to see a specific metric, you can hide it.#}
+{#        Data points will still be collected.#}
+{#    </p>#}
+
+    {% for product, metrics in endpoint.metricsPerProduct %}
+        <h3>{{ product }}</h3>
+
+        <div class="row">
+            {% for metric in metrics %}
+                <div class="col-3 p-2">
+                    <div class="bg-{{ metric.lastDatapoint.toMetricDomainObject.badge.value }} rounded-3 p-2">
+                        <h4>{{ metric.discriminator.friendlyName }}</h4>
+                        {{ metric.lastDatapoint.toMetricDomainObject }}
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% endfor %}
+
+    <table class="table table-striped init-datatable">
+        <thead class="table-light">
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Name</th>
+            <th scope="col">Datapoints</th>
+            <th scope="col">Last datapoint</th>
+            <th scope="col">Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for metric in endpoint.metrics %}
+            <tr>
+                <th scope="row" class="align-middle">{{ metric.id }}</th>
+                <td class="align-middle">{{ metric.product }}</td>
+                <td class="align-middle">{{ metric.datapoints.count }}</td>
+                <td class="align-middle">
+                    {% if metric.lastDatapoint %}
+                        {{ metric.lastDatapoint.updatedAt }}
+                    {% else %}
+                        N/A
+                    {% endif %}
+                </td>
+                <td class="align-middle">
+
+                    <a class="btn btn-sm btn-primary" href="{{ path('web_application_details', {'id': metric.id}) }}">
+                        <i class="bi-eye"></i>
+                        View
+                    </a>
+
+                    <a class="btn btn-sm btn-secondary" href="{{ path('web_application_update', {'id': metric.id}) }}">
+                        <i class="bi-pencil"></i>
+                        Edit
+                    </a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}

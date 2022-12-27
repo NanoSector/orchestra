@@ -105,4 +105,12 @@ class Application
 
         return $this;
     }
+
+    /**
+     * @return ArrayCollection<Metric>
+     */
+    public function getMetrics(): ArrayCollection
+    {
+        return new ArrayCollection(...$this->endpoints->map(fn(Endpoint $e) => $e->getMetrics()->toArray())->toArray());
+    }
 }

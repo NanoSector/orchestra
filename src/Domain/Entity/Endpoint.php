@@ -3,6 +3,9 @@ declare(strict_types=1);
 
 namespace Domain\Entity;
 
+use Carbon\Carbon;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Domain\Endpoint\Driver\DriverEndpointInterface;
 use Domain\Endpoint\EndpointDriver;
@@ -38,6 +41,17 @@ class Endpoint implements DriverEndpointInterface
 
     #[ORM\Column]
     private ?int $interval = null;
+
+    #[ORM\Column(type: 'CarbonDateTimeType', nullable: true)]
+    private ?Carbon $lastSuccessfulResponse = null;
+
+    #[ORM\OneToMany(mappedBy: 'endpoint', targetEntity: Metric::class, fetch: 'EAGER', orphanRemoval: true)]
+    private Collection $metrics;
+
+    public function __construct()
+    {
+        $this->metrics = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -115,4 +129,67 @@ class Endpoint implements DriverEndpointInterface
 
         return $this;
     }
+
+    public function getLastSuccessfulResponse(): ?Carbon
+    {
+        return $this->lastSuccessfulResponse;
+    }
+
+    public function setLastSuccessfulResponse(?Carbon $lastSuccessfulResponse): self
+    {
+        $this->lastSuccessfulResponse = $lastSuccessfulResponse;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Metric>
+     */
+    public function getMetrics(): Collection
+    {
+        return $this->metrics;
+    }
+
+    /**
+     * @return ArrayCollection<string, ArrayCollection<Metric>>
+     */
+    public function getMetricsPerProduct(): ArrayCollection
+    {
+        /** @var ArrayCollection<string, ArrayCollection<Metric>> $collection */
+        $collection = new ArrayCollection();
+
+        foreach ($this->getMetrics() as $metric) {
+            if (!$collection->containsKey($metric->getProduct())) {
+                $collection->set($metric->getProduct(), new ArrayCollection());
+            }
+
+            $collection->get($metric->getProduct())->add($metric);
+        }
+
+        return $collection;
+    }
+
+    public function addMetric(Metric $metric): self
+    {
+        if (!$this->metrics->contains($metric)) {
+            $this->metrics->add($metric);
+            $metric->setEndpoint($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMetric(Metric $metric): self
+    {
+        if ($this->metrics->removeElement($metric)) {
+            // set the owning side to null (unless already changed)
+            if ($metric->getEndpoint() === $this) {
+                $metric->setEndpoint(null);
+            }
+        }
+
+        return $this;
+    }
+
+
 }
