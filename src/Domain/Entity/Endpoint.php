@@ -156,7 +156,6 @@ class Endpoint implements DriverEndpointInterface
      */
     public function getMetricsPerProduct(): ArrayCollection
     {
-        /** @var ArrayCollection<string, ArrayCollection<Metric>> $collection */
         $collection = new ArrayCollection();
 
         foreach ($this->getMetrics() as $metric) {

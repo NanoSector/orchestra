@@ -1,13 +1,14 @@
 <?php
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace Web\Controller;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Domain\Collection\MetricsPerProductCollection;
 use Domain\Entity\Application;
-use Domain\Entity\Datapoint;
-use Domain\Entity\Endpoint;
+use Domain\Entity\Metric;
+use Domain\Entity\MetricPin;
 use Domain\Entity\User;
 use Domain\Repository\ApplicationRepository;
 use Infrastructure\Breadcrumbs\Breadcrumb;
@@ -32,14 +33,6 @@ class ApplicationController extends AbstractController
         $this->applicationRepository = $applicationRepository;
     }
 
-    #[Route('/applications', name: 'web_application_index')]
-    public function index(): Response
-    {
-        return $this->render('applications/index.html.twig', [
-            'applications' => $this->applicationRepository->findAll()
-        ]);
-    }
-
     #[Route('/applications/create', name: 'web_application_create', methods: ["GET", "POST"])]
     #[Breadcrumb('Create application')]
     public function create(Request $request): Response
@@ -59,51 +52,54 @@ class ApplicationController extends AbstractController
 
         return $this->render('applications/create.html.twig', [
             'application' => $application,
-            'form' => $form,
+            'form'        => $form,
         ]);
+    }
+
+    #[Route('/applications/{id}/delete', name: 'web_application_delete', methods: ["POST"])]
+    public function delete(Application $application): Response
+    {
+        $this->applicationRepository->remove($application, true);
+
+        $this->addFlash('success', 'The application has been deleted.');
+
+        return $this->redirectToRoute('web_application_index');
     }
 
     #[Route('/applications/{id}', name: 'web_application_details', methods: ["GET"])]
     #[Breadcrumb('Application overview')]
     public function details(Application $application): Response
     {
-        /** @var ArrayCollection<string, ArrayCollection<MetricViewModel>> $pinnedMetricsPerProduct */
         $pinnedMetricsPerProduct = new ArrayCollection();
 
         $user = $this->getUser();
 
         if ($user instanceof User) {
-            foreach ($user->getPinnedMetrics() as $pinnedMetric) {
-                $metric = $pinnedMetric->getMetric();
+            $userPinnedMetrics = $user->decoratePinnedMetrics();
+            $pinnedMetrics = $userPinnedMetrics->findPinsByApplication($application);
 
-                if (!$metric->getEndpoint() instanceof Endpoint) {
-                    continue;
-                }
+            $metrics = $pinnedMetrics->map(fn(MetricPin $p) => $p->getMetric());
+            $perProductCollection = MetricsPerProductCollection::fromMetricCollection($metrics);
 
-                if (!$metric->getEndpoint()->belongsToApplication($application)) {
-                    continue;
-                }
-
-                $lastDatapoint = $metric->getLastDatapoint();
-
-                if (!$lastDatapoint instanceof Datapoint) {
-                    continue;
-                }
-
-                $product = $metric->getProduct() ?? 'N/A';
-
-                if (!$pinnedMetricsPerProduct->containsKey($product)) {
-                    $pinnedMetricsPerProduct->set($product, new ArrayCollection());
-                }
-
-                $metricObject = $lastDatapoint->toSpecialist()->makeMetricObject();
-                $pinnedMetricsPerProduct->get($product)->add(new MetricViewModel($metric, $metricObject));
-            }
+            $pinnedMetricsPerProduct = $perProductCollection->map(
+                static fn(ArrayCollection $metrics) => $metrics->map(
+                    fn(Metric $m) => MetricViewModel::fromLastDatapointInMetric($m)
+                                                    ->setPinned($userPinnedMetrics->hasPinnedMetric($m))
+                )
+            );
         }
 
         return $this->render('applications/details.html.twig', [
-            'application' => $application,
+            'application'             => $application,
             'pinnedMetricsPerProduct' => $pinnedMetricsPerProduct,
+        ]);
+    }
+
+    #[Route('/applications', name: 'web_application_index')]
+    public function index(): Response
+    {
+        return $this->render('applications/index.html.twig', [
+            'applications' => $this->applicationRepository->findAll()
         ]);
     }
 
@@ -124,17 +120,7 @@ class ApplicationController extends AbstractController
 
         return $this->render('applications/update.html.twig', [
             'application' => $application,
-            'form' => $form,
+            'form'        => $form,
         ]);
-    }
-
-    #[Route('/applications/{id}/delete', name: 'web_application_delete', methods: ["POST"])]
-    public function delete(Application $application): Response
-    {
-        $this->applicationRepository->remove($application, true);
-
-        $this->addFlash('success', 'The application has been deleted.');
-
-        return $this->redirectToRoute('web_application_index');
     }
 }

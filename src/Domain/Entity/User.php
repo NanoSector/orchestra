@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace Domain\Entity;
 
@@ -8,6 +8,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Domain\Collection\RoleCollection;
+use Domain\Entity\Decorator\PinnedMetricUserDecorator;
 use Domain\Enumeration\Role;
 use Domain\Repository\UserRepository;
 use Infrastructure\Doctrine\Traits\SoftDeleteEntityTrait;
@@ -60,21 +61,34 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->pinnedMetrics = new ArrayCollection();
     }
 
-    public function getId(): ?int
+    public function addFormRole(Role $role): void
     {
-        return $this->id;
+        $this->roles->add($role);
+        $this->roles = $this->roles->unique();
     }
 
-    public function getUsername(): ?string
+    public function addGroup(Group $group): self
     {
-        return $this->username;
-    }
-
-    public function setUsername(string $username): self
-    {
-        $this->username = $username;
+        if (!$this->groups->contains($group)) {
+            $this->groups->add($group);
+            $group->addUser($this);
+        }
 
         return $this;
+    }
+
+    public function decoratePinnedMetrics(): PinnedMetricUserDecorator
+    {
+        return new PinnedMetricUserDecorator($this);
+    }
+
+    /**
+     * @see UserInterface
+     */
+    public function eraseCredentials()
+    {
+        // If you store any temporary, sensitive data on the user, clear it here
+        // $this->plainPassword = null;
     }
 
     public function getEmail(): string
@@ -94,24 +108,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
     /**
-     * A visual identifier that represents this user.
-     *
-     * @see UserInterface
-     */
-    public function getUserIdentifier(): string
-    {
-        return $this->email;
-    }
-
-    /**
-     * @see UserInterface
-     */
-    public function getRoles(): array
-    {
-        return $this->roles->asStringCollection()->toArray();
-    }
-
-    /**
      * Used by the Symfony form builder component.
      *
      * @return Role[]
@@ -121,20 +117,17 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->roles->toArray();
     }
 
-    public function addFormRole(Role $role): void
+    /**
+     * @return Collection<int, Group>
+     */
+    public function getGroups(): Collection
     {
-        $this->roles->add($role);
-        $this->roles = $this->roles->unique();
+        return $this->groups;
     }
 
-    public function removeFormRole(Role $role): void
+    public function getId(): ?int
     {
-        if ($role === Role::ROLE_USER) {
-            // Cannot remove the default user role.
-            return;
-        }
-
-        $this->roles = $this->roles->filter(fn(Role $r) => !$r->equals($role));
+        return $this->id;
     }
 
     /**
@@ -153,42 +146,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
     /**
-     * @see UserInterface
-     */
-    public function eraseCredentials()
-    {
-        // If you store any temporary, sensitive data on the user, clear it here
-        // $this->plainPassword = null;
-    }
-
-    /**
-     * @return Collection<int, Group>
-     */
-    public function getGroups(): Collection
-    {
-        return $this->groups;
-    }
-
-    public function addGroup(Group $group): self
-    {
-        if (!$this->groups->contains($group)) {
-            $this->groups->add($group);
-            $group->addUser($this);
-        }
-
-        return $this;
-    }
-
-    public function removeGroup(Group $group): self
-    {
-        if ($this->groups->removeElement($group)) {
-            $group->removeUser($this);
-        }
-
-        return $this;
-    }
-
-    /**
      * @return Collection<int, MetricPin>
      */
     public function getPinnedMetrics(): Collection
@@ -196,19 +153,51 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->pinnedMetrics;
     }
 
-    public function pinMetric(Metric $metric): self
+    /**
+     * @see UserInterface
+     */
+    public function getRoles(): array
     {
-        if (!$this->pinnedMetrics->findFirst(fn(int $key, MetricPin $p) => $p->getMetric() === $metric)) {
-            $pin = new MetricPin($metric, $this);
-            $this->pinnedMetrics->add($pin);
-        }
+        return $this->roles->asStringCollection()->toArray();
+    }
+
+    /**
+     * A visual identifier that represents this user.
+     *
+     * @see UserInterface
+     */
+    public function getUserIdentifier(): string
+    {
+        return $this->email;
+    }
+
+    public function getUsername(): ?string
+    {
+        return $this->username;
+    }
+
+    public function setUsername(string $username): self
+    {
+        $this->username = $username;
 
         return $this;
     }
 
-    public function unpinMetric(Metric $metric): self
+    public function removeFormRole(Role $role): void
     {
-//        $this->pinnedMetrics = $this->pinnedMetrics->filter(fn(MetricPin $p) => $p->getMetric() !== $metric);
+        if ($role === Role::ROLE_USER) {
+            // Cannot remove the default user role.
+            return;
+        }
+
+        $this->roles = $this->roles->filter(fn(Role $r) => !$r->equals($role));
+    }
+
+    public function removeGroup(Group $group): self
+    {
+        if ($this->groups->removeElement($group)) {
+            $group->removeUser($this);
+        }
 
         return $this;
     }

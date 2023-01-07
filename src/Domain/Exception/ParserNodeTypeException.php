@@ -1,10 +1,10 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace Domain\Exception;
 
-use Exception;
-
-class ParserNodeTypeException extends Exception
+class ParserNodeTypeException extends RuntimeException
 {
     public static function mismatch(string $got, string $wanted): self
     {

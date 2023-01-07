@@ -6,6 +6,7 @@ namespace Web\Controller;
 
 use Carbon\Carbon;
 use Doctrine\Common\Collections\ArrayCollection;
+use Domain\Collection\MetricsPerProductCollection;
 use Domain\Endpoint\Driver\DriverInterface;
 use Domain\Entity\Application;
 use Domain\Entity\Datapoint;
@@ -116,21 +117,12 @@ class EndpointController extends AbstractController
             'endpoint' => new BreadcrumbItem('Endpoint', null, true),
         ]);
 
-        $metricsPerProduct = $endpoint->getMetricsPerProduct();
+        $metricsPerProduct = MetricsPerProductCollection::fromMetricCollection($endpoint->getMetrics());
 
         /** @var ArrayCollection<string, ArrayCollection<MetricViewModel>> $lastMetricsPerProduct */
         $lastMetricsPerProduct = $metricsPerProduct->map(
             static fn(ArrayCollection $metrics) => $metrics->map(
-                static function (Metric $metric) {
-                    $lastDatapoint = $metric->getLastDatapoint();
-
-                    if (!$lastDatapoint instanceof Datapoint) {
-                        return null;
-                    }
-
-                    $metricObject = $lastDatapoint->toSpecialist()->makeMetricObject();
-                    return new MetricViewModel($metric, $metricObject);
-                }
+                fn(Metric $m) => MetricViewModel::fromLastDatapointInMetric($m)
             )
         );
 
@@ -262,7 +254,7 @@ class EndpointController extends AbstractController
         $user = $this->getUser();
 
         if ($user instanceof User) {
-            $user->pinMetric($metric);
+            $user->decoratePinnedMetrics()->pinMetric($metric);
 
             $this->userRepository->save($user, true);
         }
