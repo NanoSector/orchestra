@@ -1,73 +1,128 @@
 {% extends app.request.attributes.has('isModalRequest') ? 'modal.html.twig' : 'base.html.twig' %}
 
 {% block body %}
-    <h1>{{ application.name }}</h1>
+    <h1>Application {{ application.name }}</h1>
 
+    {% if pinnedMetricsPerProduct.count > 0 %}
+        <div class="card shadow-sm">
+            <div class="card-header">
+                <h2 class="card-title">Pinned metrics</h2>
+            </div>
 
-    <div class="d-flex justify-content-between">
-        <div>
-            <h2>Endpoints</h2>
+            <div class="card-body">
+
+                <div class="row">
+                    {% for product, metrics in pinnedMetricsPerProduct %}
+                        <div class="col-lg-4 col-md-6">
+                            <div class="card my-3 shadow-sm">
+                                <div class="card-body">
+                                    <div class="d-flex justify-content-between">
+                                        <h3 class="card-title">{{ product }}</h3>
+                                        <div>
+                                            <i class="bi-three-dots-vertical"></i>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        {% for metric in metrics %}
+                                            <div class="col-lg-6 pt-2 px-2">
+                                                <div class="{{ metric.classList }} rounded-3 p-2 shadow">
+                                                    <h4>{{ metric.name }}</h4>
+                                                    {{ metric.value }}
+                                                </div>
+                                            </div>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    {% endif %}
+
+    <div class="card shadow-sm">
+        <div class="card-header">
+            <div class="d-flex justify-content-between">
+                <div>
+                    <h2 class="card-title">Endpoints</h2>
+                    <p class="card-subtitle">
+                        An application can have one or more endpoints.
+                        Endpoints will generate metrics which are aggregated in Orchestra.
+                    </p>
+                </div>
+
+                <div>
+                    <a class="btn btn-primary"
+                       href="{{ path('web_endpoint_create', {'applicationId': application.id}) }}" role="button">
+                        <i class="bi-plus-circle-fill"></i>
+                        Create new endpoint
+                    </a>
+                </div>
+            </div>
         </div>
 
-        <div>
-            <a class="btn btn-primary" href="{{ path('web_endpoint_create', {'applicationId': application.id}) }}" role="button">
-                <i class="bi-plus-circle-fill"></i>
-                Create new endpoint
-            </a>
+        <div class="table-flush">
+            <table class="table table-hover init-datatable">
+                <thead class="table-light">
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Driver</th>
+                    <th scope="col">State</th>
+                    <th scope="col">Last successful response</th>
+                    <th scope="col">Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for endpoint in application.endpoints %}
+                    <tr>
+                        <th scope="row" class="align-middle">{{ endpoint.id }}</th>
+                        <td class="align-middle">{{ endpoint.name }}</td>
+                        <td class="align-middle">{{ endpoint.driver.friendlyName }}</td>
+                        <td class="align-middle">TODO</td>
+                        <td class="align-middle">{{ endpoint.lastSuccessfulResponse }}</td>
+                        <td class="align-middle wrap-content">
+
+                            <a class="btn btn-sm btn-primary"
+                               href="{{ path('web_endpoint_details', {'applicationId': application.id, 'id': endpoint.id}) }}">
+                                <i class="bi-eye"></i>
+                                View
+                            </a>
+
+                            <a class="btn btn-sm btn-outline-primary"
+                               href="{{ path('web_endpoint_test', {'applicationId': application.id, 'id': endpoint.id}) }}">
+                                <i class="bi-arrow-repeat"></i>
+                                Force update
+                            </a>
+
+                            <a class="btn btn-sm btn-outline-secondary"
+                               href="{{ path('web_endpoint_update', {'applicationId': application.id, 'id': endpoint.id}) }}">
+                                <i class="bi-pencil"></i>
+                                Edit
+                            </a>
+
+                            <a {{ stimulus_target('groups/actions', 'deleteButton') }}
+                                    class="btn btn-sm btn-outline-danger" {{ stimulus_action('groups/actions', 'confirmDelete') }}>
+                                <i class="bi-trash"></i>
+                                Delete
+                            </a>
+
+                            <form {{ stimulus_target('groups/actions', 'deleteForm') }}
+                                    action="{{ path('web_endpoint_delete', {'applicationId': application.id, 'id': endpoint.id} ) }}"
+                                    method="POST" class="d-none">
+                                <button type="submit" class="btn btn-sm btn-danger">
+                                    <i class="bi-trash-fill"></i>
+                                    Confirm delete
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
         </div>
     </div>
-
-    <table class="table table-striped init-datatable">
-        <thead class="table-light">
-        <tr>
-            <th scope="col">#</th>
-            <th scope="col">Name</th>
-            <th scope="col">Driver</th>
-            <th scope="col">State</th>
-            <th scope="col">Last successful response</th>
-            <th scope="col">Actions</th>
-        </tr>
-        </thead>
-        <tbody>
-        {% for endpoint in application.endpoints %}
-            <tr>
-                <th scope="row" class="align-middle">{{ endpoint.id }}</th>
-                <td class="align-middle">{{ endpoint.name }}</td>
-                <td class="align-middle">{{ endpoint.driver.friendlyName }}</td>
-                <td class="align-middle">TODO</td>
-                <td class="align-middle">{{ endpoint.lastSuccessfulResponse }}</td>
-                <td class="align-middle">
-
-                    <a class="btn btn-sm btn-primary" href="{{ path('web_endpoint_details', {'applicationId': application.id, 'id': endpoint.id}) }}">
-                        <i class="bi-eye"></i>
-                        View
-                    </a>
-
-                    <a class="btn btn-sm btn-primary" href="{{ path('web_endpoint_test', {'applicationId': application.id, 'id': endpoint.id}) }}">
-                        <i class="bi-arrow-repeat"></i>
-                        Force update
-                    </a>
-
-                    <a class="btn btn-sm btn-secondary" href="{{ path('web_endpoint_update', {'applicationId': application.id, 'id': endpoint.id}) }}">
-                        <i class="bi-pencil"></i>
-                        Edit
-                    </a>
-
-                    <a {{ stimulus_target('groups/actions', 'deleteButton')}} class="btn btn-sm btn-outline-danger" {{ stimulus_action('groups/actions', 'confirmDelete') }}>
-                        <i class="bi-trash"></i>
-                        Delete
-                    </a>
-
-                    <form {{ stimulus_target('groups/actions', 'deleteForm')}} action="{{ path('web_endpoint_delete', {'applicationId': application.id, 'id': endpoint.id} ) }}" method="POST" class="d-none">
-                        <button type="submit" class="btn btn-sm btn-danger">
-                            <i class="bi-trash-fill"></i>
-                            Confirm delete
-                        </button>
-                    </form>
-                </td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
 
 {% endblock %}

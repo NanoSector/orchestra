@@ -50,10 +50,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\ManyToMany(targetEntity: Group::class, mappedBy: 'users', fetch: 'EAGER')]
     private Collection $groups;
 
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: MetricPin::class, cascade: ['persist', 'remove'])]
+    private Collection $pinnedMetrics;
+
     public function __construct()
     {
         $this->roles = new RoleCollection([Role::ROLE_USER]);
         $this->groups = new ArrayCollection();
+        $this->pinnedMetrics = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -180,6 +184,31 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         if ($this->groups->removeElement($group)) {
             $group->removeUser($this);
         }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, MetricPin>
+     */
+    public function getPinnedMetrics(): Collection
+    {
+        return $this->pinnedMetrics;
+    }
+
+    public function pinMetric(Metric $metric): self
+    {
+        if (!$this->pinnedMetrics->findFirst(fn(int $key, MetricPin $p) => $p->getMetric() === $metric)) {
+            $pin = new MetricPin($metric, $this);
+            $this->pinnedMetrics->add($pin);
+        }
+
+        return $this;
+    }
+
+    public function unpinMetric(Metric $metric): self
+    {
+//        $this->pinnedMetrics = $this->pinnedMetrics->filter(fn(MetricPin $p) => $p->getMetric() !== $metric);
 
         return $this;
     }

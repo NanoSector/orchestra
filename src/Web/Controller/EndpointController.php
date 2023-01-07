@@ -11,9 +11,11 @@ use Domain\Entity\Application;
 use Domain\Entity\Datapoint;
 use Domain\Entity\Endpoint;
 use Domain\Entity\Metric;
+use Domain\Entity\User;
 use Domain\Metric\MetricEnum;
 use Domain\Repository\EndpointRepository;
 use Domain\Repository\MetricRepository;
+use Domain\Repository\UserRepository;
 use Infrastructure\Breadcrumbs\BreadcrumbBag;
 use Infrastructure\Breadcrumbs\BreadcrumbItem;
 use Infrastructure\Controller\AppContext;
@@ -34,11 +36,17 @@ class EndpointController extends AbstractController
 
     private EndpointRepository $endpointRepository;
     private MetricRepository $metricRepository;
+    private UserRepository $userRepository;
 
-    public function __construct(EndpointRepository $endpointRepository, MetricRepository $metricRepository)
+    public function __construct(
+        EndpointRepository $endpointRepository,
+        MetricRepository   $metricRepository,
+        UserRepository     $userRepository
+    )
     {
         $this->endpointRepository = $endpointRepository;
         $this->metricRepository = $metricRepository;
+        $this->userRepository = $userRepository;
     }
 
     #[Route('/applications/{applicationId}/endpoints/create', name: 'web_endpoint_create', methods: ["GET", "POST"])]
@@ -240,5 +248,32 @@ class EndpointController extends AbstractController
         $this->addFlash('success', 'The endpoint has been tested.');
 
         return $this->redirectToRoute('web_endpoint_details', ['applicationId' => $application->getId(), 'id' => $endpoint->getId()]);
+    }
+
+    #[Route('/applications/{applicationId}/endpoints/{endpointId}/metric/{id}/pin', name: 'web_endpoint_metric_pin', methods: ["GET"])]
+    #[ParamConverter("application", options: ["id" => "applicationId"])]
+    #[ParamConverter("endpoint", options: ["id" => "endpointId"])]
+    public function pinMetric(Application $application, Endpoint $endpoint, Metric $metric): Response
+    {
+        if (!$endpoint->belongsToApplication($application) || !$metric->belongsToEndpoint($endpoint)) {
+            throw $this->createNotFoundException();
+        }
+
+        $user = $this->getUser();
+
+        if ($user instanceof User) {
+            $user->pinMetric($metric);
+
+            $this->userRepository->save($user, true);
+        }
+
+        $this->addFlash(Flash::OK, 'The metric has been pinned. Check it out in the application overview.');
+
+        return $this->redirectToRoute('web_endpoint_details',
+            [
+                'applicationId' => $application->getId(),
+                'id' => $endpoint->getId()
+            ]
+        );
     }
 }

@@ -1,68 +1,172 @@
 {% extends app.request.attributes.has('isModalRequest') ? 'modal.html.twig' : 'base.html.twig' %}
 
 {% block body %}
-    <h1>{{ application.name }} - {{ endpoint.name }}</h1>
-
-{#    <h2>Metrics</h2>#}
-{#    <p>#}
-{#        Metrics are obtained automatically by calling this endpoint.#}
-{#        If you do not wish to see a specific metric, you can hide it.#}
-{#        Data points will still be collected.#}
-{#    </p>#}
-
-    {% for product, metrics in endpoint.metricsPerProduct %}
-        <h3>{{ product }}</h3>
-
-        <div class="row">
-            {% for metric in metrics %}
-                <div class="col-3 p-2">
-                    <div class="bg-{{ metric.lastDatapoint.toMetricDomainObject.badge.value }} rounded-3 p-2">
-                        <h4>{{ metric.discriminator.friendlyName }}</h4>
-                        {{ metric.lastDatapoint.toMetricDomainObject }}
-                    </div>
-                </div>
-            {% endfor %}
+    <div class="d-flex justify-content-between">
+        <div>
+            <h1>Endpoint {{ endpoint.name }}</h1>
         </div>
-    {% endfor %}
 
-    <table class="table table-striped init-datatable">
-        <thead class="table-light">
-        <tr>
-            <th scope="col">#</th>
-            <th scope="col">Name</th>
-            <th scope="col">Datapoints</th>
-            <th scope="col">Last datapoint</th>
-            <th scope="col">Actions</th>
-        </tr>
-        </thead>
-        <tbody>
-        {% for metric in endpoint.metrics %}
-            <tr>
-                <th scope="row" class="align-middle">{{ metric.id }}</th>
-                <td class="align-middle">{{ metric.product }}</td>
-                <td class="align-middle">{{ metric.datapoints.count }}</td>
-                <td class="align-middle">
-                    {% if metric.lastDatapoint %}
-                        {{ metric.lastDatapoint.updatedAt }}
-                    {% else %}
-                        N/A
-                    {% endif %}
-                </td>
-                <td class="align-middle">
+        <div>
+            <a class="btn btn-lg btn-primary"
+               href="{{ path('web_endpoint_test', {'applicationId': application.id, 'id': endpoint.id}) }}">
+                <i class="bi-arrow-repeat"></i>
+                Update now
+            </a>
+        </div>
+    </div>
 
-                    <a class="btn btn-sm btn-primary" href="{{ path('web_application_details', {'id': metric.id}) }}">
-                        <i class="bi-eye"></i>
-                        View
-                    </a>
+    <div class="card shadow-sm">
+        <div class="card-header">
+            <h2 class="card-title">Collected metrics</h2>
 
-                    <a class="btn btn-sm btn-secondary" href="{{ path('web_application_update', {'id': metric.id}) }}">
-                        <i class="bi-pencil"></i>
-                        Edit
-                    </a>
-                </td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+            <p class="card-subtitle">
+                These are all the metrics that have been collected using this endpoint.
+            </p>
+        </div>
+
+        <div class="card-body">
+
+            <div class="row">
+                {% for product, metrics in lastMetricsPerProduct %}
+                    <div class="col-lg-4 col-md-6">
+                        <div class="card my-3 shadow-sm">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between">
+                                    <h3 class="card-title">{{ product }}</h3>
+                                    <div>
+                                        <i class="bi-three-dots-vertical"></i>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    {% for metric in metrics %}
+                                        <div class="col-lg-6 pt-2 px-2">
+                                            <div class="{{ metric.classList }} rounded-3 p-2 shadow">
+                                                <div class="d-flex justify-content-between">
+                                                    <h4>{{ metric.name }}</h4>
+                                                    <div>
+                                                        <a href="{{ url('web_endpoint_metric_pin', { applicationId: application.id, endpointId: endpoint.id, id: metric.id}) }}">
+                                                            <i class="bi-pin-angle"></i>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                                {{ metric.value }}
+                                            </div>
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    <div class="card shadow-sm">
+        <div class="card-header">
+            <h2 class="card-title">Datapoints</h2>
+        </div>
+        <div class="table-flush">
+            <table class="table table-striped init-datatable">
+                <thead class="table-light">
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Type</th>
+                    <th scope="col">Datapoints</th>
+                    <th scope="col">Last datapoint</th>
+                    <th scope="col">Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for metric in endpoint.metrics %}
+                    <tr>
+                        <th scope="row" class="align-middle">{{ metric.id }}</th>
+                        <td class="align-middle">{{ metric.product }}</td>
+                        <td class="align-middle">{{ metric.discriminator.name }}</td>
+                        <td class="align-middle">{{ metric.datapoints.count }}</td>
+                        <td class="align-middle">
+                            {% if metric.lastDatapoint %}
+                                {{ metric.lastDatapoint.updatedAt }}
+                            {% else %}
+                                N/A
+                            {% endif %}
+                        </td>
+                        <td class="align-middle wrap-content">
+
+                            <a class="btn btn-sm btn-primary"
+                               href="{{ path('web_application_details', {'id': metric.id}) }}">
+                                <i class="bi-eye"></i>
+                                View
+                            </a>
+
+                            <a class="btn btn-sm btn-secondary"
+                               href="{{ path('web_application_update', {'id': metric.id}) }}">
+                                <i class="bi-pencil"></i>
+                                Edit
+                            </a>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="card shadow-sm">
+        <div class="card-header">
+            <h2 class="card-title">Collection logs</h2>
+            <p class="card-subtitle">
+                If data collection is not working as expected, these logs may help.
+                You can set the retention period in the endpoint settings.
+            </p>
+        </div>
+        <div class="table-flush">
+            <table class="table table-striped init-datatable">
+                <thead class="table-light">
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Type</th>
+                    <th scope="col">Datapoints</th>
+                    <th scope="col">Last datapoint</th>
+                    <th scope="col">Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for metric in endpoint.metrics %}
+                    <tr>
+                        <th scope="row" class="align-middle">{{ metric.id }}</th>
+                        <td class="align-middle">{{ metric.product }}</td>
+                        <td class="align-middle">{{ metric.discriminator.name }}</td>
+                        <td class="align-middle">{{ metric.datapoints.count }}</td>
+                        <td class="align-middle">
+                            {% if metric.lastDatapoint %}
+                                {{ metric.lastDatapoint.updatedAt }}
+                            {% else %}
+                                N/A
+                            {% endif %}
+                        </td>
+                        <td class="align-middle wrap-content">
+
+                            <a class="btn btn-sm btn-primary"
+                               href="{{ path('web_application_details', {'id': metric.id}) }}">
+                                <i class="bi-eye"></i>
+                                View
+                            </a>
+
+                            <a class="btn btn-sm btn-secondary"
+                               href="{{ path('web_application_update', {'id': metric.id}) }}">
+                                <i class="bi-pencil"></i>
+                                Edit
+                            </a>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
 
 {% endblock %}

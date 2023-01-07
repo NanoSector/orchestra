@@ -4,7 +4,11 @@ declare(strict_types=1);
 
 namespace Web\Controller;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Domain\Entity\Application;
+use Domain\Entity\Datapoint;
+use Domain\Entity\Endpoint;
+use Domain\Entity\User;
 use Domain\Repository\ApplicationRepository;
 use Infrastructure\Breadcrumbs\Breadcrumb;
 use Infrastructure\Controller\AppContext;
@@ -14,6 +18,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Web\Form\ApplicationForm;
 use Web\Helper\Flash;
+use Web\ViewModel\MetricViewModel;
 
 #[AppContext('app_management')]
 #[Breadcrumb('Applications', 'web_application_index')]
@@ -62,8 +67,43 @@ class ApplicationController extends AbstractController
     #[Breadcrumb('Application overview')]
     public function details(Application $application): Response
     {
+        /** @var ArrayCollection<string, ArrayCollection<MetricViewModel>> $pinnedMetricsPerProduct */
+        $pinnedMetricsPerProduct = new ArrayCollection();
+
+        $user = $this->getUser();
+
+        if ($user instanceof User) {
+            foreach ($user->getPinnedMetrics() as $pinnedMetric) {
+                $metric = $pinnedMetric->getMetric();
+
+                if (!$metric->getEndpoint() instanceof Endpoint) {
+                    continue;
+                }
+
+                if (!$metric->getEndpoint()->belongsToApplication($application)) {
+                    continue;
+                }
+
+                $lastDatapoint = $metric->getLastDatapoint();
+
+                if (!$lastDatapoint instanceof Datapoint) {
+                    continue;
+                }
+
+                $product = $metric->getProduct() ?? 'N/A';
+
+                if (!$pinnedMetricsPerProduct->containsKey($product)) {
+                    $pinnedMetricsPerProduct->set($product, new ArrayCollection());
+                }
+
+                $metricObject = $lastDatapoint->toSpecialist()->makeMetricObject();
+                $pinnedMetricsPerProduct->get($product)->add(new MetricViewModel($metric, $metricObject));
+            }
+        }
+
         return $this->render('applications/details.html.twig', [
             'application' => $application,
+            'pinnedMetricsPerProduct' => $pinnedMetricsPerProduct,
         ]);
     }
 
