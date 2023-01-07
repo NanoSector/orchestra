@@ -8,12 +8,12 @@ use Domain\Entity\Group;
 use Domain\Repository\GroupRepository;
 use Infrastructure\Breadcrumbs\Breadcrumb;
 use Infrastructure\Controller\AppContext;
-use Infrastructure\Flash;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Web\Form\GroupForm;
+use Web\Helper\Flash;
 
 #[AppContext('user_management')]
 #[Breadcrumb('Users', 'web_user_index')]

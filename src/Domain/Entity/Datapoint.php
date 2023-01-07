@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace Domain\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Domain\Metric\DatapointSpecialist;
 use Domain\Metric\MetricInterface;
 use Domain\Repository\DatapointRepository;
 use Infrastructure\Doctrine\Traits\TimestampedEntityTrait;
@@ -58,8 +59,8 @@ class Datapoint
         return $this;
     }
 
-    public function toMetricDomainObject(): MetricInterface
+    public function toSpecialist(): DatapointSpecialist
     {
-        return $this->getMetric()->getDiscriminator()->value::fromDatapoint($this);
+        return new DatapointSpecialist($this);
     }
 }

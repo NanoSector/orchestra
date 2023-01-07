@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace Domain\Metric;
 
 use Domain\Entity\Datapoint;
-use Infrastructure\Badge;
+use Web\Helper\Badge;
 
 class TextMetric implements MetricInterface
 {
@@ -27,18 +27,8 @@ class TextMetric implements MetricInterface
         return $this->value;
     }
 
-    public function getBadge(): Badge
-    {
-        return Badge::INFO;
-    }
-
     public static function fromDatapoint(Datapoint $datapoint): self
     {
         return new self($datapoint->getMetric()->getProduct(), (string)json_decode($datapoint->getValue(), true, 512, JSON_THROW_ON_ERROR));
-    }
-
-    public function __toString(): string
-    {
-        return $this->getValue();
     }
 }

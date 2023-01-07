@@ -53,11 +53,6 @@ class Endpoint implements DriverEndpointInterface
         $this->metrics = new ArrayCollection();
     }
 
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
-
     public function getName(): ?string
     {
         return $this->name;
@@ -80,6 +75,20 @@ class Endpoint implements DriverEndpointInterface
         $this->application = $application;
 
         return $this;
+    }
+
+    public function belongsToApplication(Application $application): bool
+    {
+        if (!$this->application instanceof Application) {
+            return false;
+        }
+
+        return $application->getId() === $this->application->getId();
+    }
+
+    public function getId(): ?int
+    {
+        return $this->id;
     }
 
     public function getUrl(): string
@@ -143,14 +152,6 @@ class Endpoint implements DriverEndpointInterface
     }
 
     /**
-     * @return Collection<int, Metric>
-     */
-    public function getMetrics(): Collection
-    {
-        return $this->metrics;
-    }
-
-    /**
      * @return ArrayCollection<string, ArrayCollection<Metric>>
      */
     public function getMetricsPerProduct(): ArrayCollection
@@ -167,6 +168,14 @@ class Endpoint implements DriverEndpointInterface
         }
 
         return $collection;
+    }
+
+    /**
+     * @return Collection<int, Metric>
+     */
+    public function getMetrics(): Collection
+    {
+        return $this->metrics;
     }
 
     public function addMetric(Metric $metric): self

@@ -8,12 +8,12 @@ use Domain\Entity\Application;
 use Domain\Repository\ApplicationRepository;
 use Infrastructure\Breadcrumbs\Breadcrumb;
 use Infrastructure\Controller\AppContext;
-use Infrastructure\Flash;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Web\Form\ApplicationForm;
+use Web\Helper\Flash;
 
 #[AppContext('app_management')]
 #[Breadcrumb('Applications', 'web_application_index')]

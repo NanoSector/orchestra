@@ -8,13 +8,13 @@ use Domain\Entity\User;
 use Domain\Repository\UserRepository;
 use Infrastructure\Breadcrumbs\Breadcrumb;
 use Infrastructure\Controller\AppContext;
-use Infrastructure\Flash;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Web\Form\UserForm;
+use Web\Helper\Flash;
 
 #[AppContext('user_management')]
 #[Breadcrumb('Users', 'web_user_index')]

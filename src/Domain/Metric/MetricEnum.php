@@ -9,15 +9,4 @@ enum MetricEnum: string
     case Invalid = InvalidMetric::class;
     case Text = TextMetric::class;
     case Version = VersionMetric::class;
-
-    public function getFriendlyName(): string
-    {
-        return match($this) {
-            self::Health => 'Health',
-            self::Invalid => 'Invalid',
-            self::Text => 'Text',
-            self::Version => 'Version',
-
-        };
-    }
 }

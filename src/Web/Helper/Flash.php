@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Infrastructure;
+namespace Web\Helper;
 
 final class Flash
 {

@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace Domain\Metric;
 
 use Domain\Entity\Datapoint;
-use Infrastructure\Badge;
+use Web\Helper\Badge;
 
 class HealthMetric implements MetricInterface, HealthMetricInterface
 {
@@ -21,7 +21,6 @@ class HealthMetric implements MetricInterface, HealthMetricInterface
         $this->attributes = $attributes;
     }
 
-
     public function getName(): string
     {
         return $this->product;
@@ -30,11 +29,6 @@ class HealthMetric implements MetricInterface, HealthMetricInterface
     public function getValue(): bool
     {
         return $this->healthy;
-    }
-
-    public function getBadge(): Badge
-    {
-        return $this->getValue() ? Badge::OK : Badge::DANGER;
     }
 
     /**
@@ -48,10 +42,5 @@ class HealthMetric implements MetricInterface, HealthMetricInterface
     public static function fromDatapoint(Datapoint $datapoint): self
     {
         return new self($datapoint->getMetric()->getProduct(), (bool)$datapoint->getValue(), []);
-    }
-
-    public function __toString(): string
-    {
-        return $this->getValue() ? 'Healthy' : 'Unhealthy';
     }
 }

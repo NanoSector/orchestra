@@ -103,6 +103,15 @@ class Metric
         return $this;
     }
 
+    public function belongsToEndpoint(Endpoint $endpoint): bool
+    {
+        if (!$this->endpoint instanceof Endpoint) {
+            return false;
+        }
+
+        return $this->endpoint->getId() === $endpoint->getId();
+    }
+
     public function getDiscriminator(): ?MetricEnum
     {
         return $this->discriminator;

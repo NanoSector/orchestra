@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Web\Controller;
 
 use Carbon\Carbon;
+use Doctrine\Common\Collections\ArrayCollection;
 use Domain\Endpoint\Driver\DriverInterface;
 use Domain\Entity\Application;
 use Domain\Entity\Datapoint;
@@ -16,7 +17,6 @@ use Domain\Repository\MetricRepository;
 use Infrastructure\Breadcrumbs\BreadcrumbBag;
 use Infrastructure\Breadcrumbs\BreadcrumbItem;
 use Infrastructure\Controller\AppContext;
-use Infrastructure\Flash;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormError;
@@ -25,6 +25,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\KernelInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Web\Form\EndpointForm;
+use Web\Helper\Flash;
+use Web\ViewModel\MetricViewModel;
 
 #[AppContext('app_management')]
 class EndpointController extends AbstractController
@@ -92,6 +94,10 @@ class EndpointController extends AbstractController
     #[ParamConverter("application", options: ["id" => "applicationId"])]
     public function details(Application $application, Endpoint $endpoint, Request $request): Response
     {
+        if (!$endpoint->belongsToApplication($application)) {
+            throw $this->createNotFoundException();
+        }
+
         /** @var BreadcrumbBag $breadcrumbBag */
         $breadcrumbBag = $request->attributes->get('breadcrumbs');
         $breadcrumbBag->add([
@@ -102,9 +108,28 @@ class EndpointController extends AbstractController
             'endpoint' => new BreadcrumbItem('Endpoint', null, true),
         ]);
 
+        $metricsPerProduct = $endpoint->getMetricsPerProduct();
+
+        /** @var ArrayCollection<string, ArrayCollection<MetricViewModel>> $lastMetricsPerProduct */
+        $lastMetricsPerProduct = $metricsPerProduct->map(
+            static fn(ArrayCollection $metrics) => $metrics->map(
+                static function (Metric $metric) {
+                    $lastDatapoint = $metric->getLastDatapoint();
+
+                    if (!$lastDatapoint instanceof Datapoint) {
+                        return null;
+                    }
+
+                    $metricObject = $lastDatapoint->toSpecialist()->makeMetricObject();
+                    return new MetricViewModel($metric, $metricObject);
+                }
+            )
+        );
+
         return $this->render('endpoints/details.html.twig', [
             'application' => $application,
             'endpoint' => $endpoint,
+            'lastMetricsPerProduct' => $lastMetricsPerProduct,
         ]);
     }
 
@@ -170,6 +195,7 @@ class EndpointController extends AbstractController
     #[ParamConverter("application", options: ["id" => "applicationId"])]
     public function test(Application $application, Endpoint $endpoint, KernelInterface $kernel): Response
     {
+        // TODO: Refactor this into actual classes
         /** @var DriverInterface $driver */
         $driver = $kernel->getContainer()->get($endpoint->getDriver()->value);
 
