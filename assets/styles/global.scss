@@ -1,6 +1,75 @@
 // customize some Bootstrap variables
 //$primary: darken(#428bca, 20%);
 
+$spacer: 1rem;
+$enable-shadows: true;
+
+// Font configuration
+$font-size-base: 0.90rem;
+
+$h1-font-size: $font-size-base * 2;
+$h2-font-size: $font-size-base * 1.75;
+$h3-font-size: $font-size-base * 1.50;
+$h4-font-size: $font-size-base * 1.25;
+$h5-font-size: $font-size-base;
+$h6-font-size: $font-size-base;
+
+// Card configuration
+$card-spacer-y: $spacer;
+$card-spacer-x: $spacer;
+$card-cap-bg: rgba(#000, .06) !important;
+$card-cap-padding-y: $card-spacer-y;
+$card-title-spacer-y: $spacer;
+
 // the ~ allows you to reference things in node_modules
 @import "~bootstrap/scss/bootstrap";
 @import "~bootstrap-icons/font/bootstrap-icons.css";
+
+$breadcrumb-height: 54px;
+
+.breadcrumb-bar {
+  height: $breadcrumb-height;
+}
+
+.main-content {
+  max-height: calc(100vh - $breadcrumb-height);
+  overflow-y: scroll;
+}
+
+h1 {
+  margin-bottom: 25px;
+}
+
+.card {
+  margin-bottom: 50px;
+}
+
+.card-header {
+  .card-title:only-child {
+    margin-bottom: 0 !important;
+  }
+}
+
+// Table styles
+td, th {
+  vertical-align: middle;
+
+  &.wrap-content {
+    width: 1%;
+    white-space: nowrap;
+  }
+}
+
+.table-flush {
+  .table {
+    margin-bottom: 0;
+  }
+
+  .dataTable-container {
+    border-bottom: 0 !important;
+  }
+
+  .dataTable-top, .dataTable-bottom {
+    padding: 0;
+  }
+}

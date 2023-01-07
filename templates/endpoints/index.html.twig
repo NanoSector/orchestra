@@ -36,7 +36,7 @@
 {#                    <td class="align-middle">{{ application.groups | reduce(g => g.name) | join(', ') }}</td>#}
                     <td class="align-middle">{{ application.createdAt }}</td>
                     <td class="align-middle">{{ application.updatedAt }}</td>
-                    <td class="align-middle">
+                    <td class="align-middle wrap-content">
 
                         <a class="btn btn-sm btn-primary" href="{{ path('web_application_details', {'id': application.id}) }}">
                             <i class="bi-eye"></i>

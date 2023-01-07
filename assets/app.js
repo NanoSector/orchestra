@@ -20,7 +20,11 @@ document.addEventListener('DOMContentLoaded', (event) => {
     let tables = document.querySelectorAll('.init-datatable');
 
     for (const table of tables) {
-        new DataTable(table);
+        new DataTable(table, {
+            footer: false,
+            paging: false,
+            searchable: false
+        });
 
         table.classList.remove('init-datatable');
     }

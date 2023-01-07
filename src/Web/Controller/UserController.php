@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Web\Controller;
 
 use Domain\Entity\User;
+use Domain\Repository\GroupRepository;
 use Domain\Repository\UserRepository;
 use Infrastructure\Breadcrumbs\Breadcrumb;
 use Infrastructure\Controller\AppContext;
@@ -21,11 +22,13 @@ use Web\Helper\Flash;
 class UserController extends AbstractController
 {
     private UserRepository $userRepository;
+    private GroupRepository $groupRepository;
     private UserPasswordHasherInterface $passwordHasher;
 
-    public function __construct(UserRepository $userRepository, UserPasswordHasherInterface $passwordHasher)
+    public function __construct(UserRepository $userRepository, GroupRepository $groupRepository, UserPasswordHasherInterface $passwordHasher)
     {
         $this->userRepository = $userRepository;
+        $this->groupRepository = $groupRepository;
         $this->passwordHasher = $passwordHasher;
     }
 
@@ -33,6 +36,7 @@ class UserController extends AbstractController
     public function index(Request $request): Response
     {
         return $this->render('users/index.html.twig', [
+            'groups' => $this->groupRepository->findAll(),
             'users' => $this->userRepository->findAll(),
         ]);
     }

@@ -27,14 +27,6 @@ class GroupController extends AbstractController
         $this->groupRepository = $groupRepository;
     }
 
-    #[Route('/groups', name: 'web_group_index')]
-    public function index(): Response
-    {
-        return $this->render('groups/index.html.twig', [
-            'groups' => $this->groupRepository->findAll()
-        ]);
-    }
-
     #[Route('/groups/create', name: 'web_group_create', methods: ["GET", "POST"])]
     #[Breadcrumb('Create group')]
     public function create(Request $request): Response
@@ -86,6 +78,6 @@ class GroupController extends AbstractController
 
         $this->addFlash('success', 'The group has been deleted.');
 
-        return $this->redirectToRoute('web_group_index');
+        return $this->redirectToRoute('web_user_index');
     }
 }
