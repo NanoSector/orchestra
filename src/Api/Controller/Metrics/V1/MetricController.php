@@ -32,8 +32,18 @@ class MetricController extends AbstractApiController
             return $this->problemResponse(ApiProblem::fromHttpCode(Response::HTTP_UNAUTHORIZED));
         }
 
-        $user->decoratePinnedMetrics()->pinMetric($metric);
+        $pinnedMetrics = $user->decoratePinnedMetrics();
+
+        if ($pinnedMetrics->hasPinnedMetric($metric)) {
+            $this->verbose()->add('Metric was already pinned; no action taken');
+
+            return $this->okResponse();
+        }
+
+        $pinnedMetrics->pinMetric($metric);
         $this->userRepository->save($user, true);
+
+        $this->verbose()->add('Metric has been pinned and saved');
 
         return $this->okResponse();
     }
@@ -47,8 +57,18 @@ class MetricController extends AbstractApiController
             return $this->problemResponse(ApiProblem::fromHttpCode(Response::HTTP_UNAUTHORIZED));
         }
 
-        $user->decoratePinnedMetrics()->unpinMetric($metric);
+        $pinnedMetrics = $user->decoratePinnedMetrics();
+
+        if (!$pinnedMetrics->hasPinnedMetric($metric)) {
+            $this->verbose()->add('Metric was not pinned; no action taken');
+
+            return $this->okResponse();
+        }
+
+        $pinnedMetrics->unpinMetric($metric);
         $this->userRepository->save($user, true);
+
+        $this->verbose()->add('Metric has been unpinned and saved');
 
         return $this->okResponse();
     }

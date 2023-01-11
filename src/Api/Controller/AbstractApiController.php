@@ -8,13 +8,17 @@ use Api\Support\ApiProblem;
 use Api\Support\LinkBag;
 use Api\Support\VerboseMessageBag;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Contracts\Service\Attribute\Required;
 
 class AbstractApiController extends AbstractController
 {
     private VerboseMessageBag $verbose;
 
     private LinkBag $links;
+
+    private string $environment;
 
     public function __construct()
     {
@@ -38,7 +42,7 @@ class AbstractApiController extends AbstractController
             $response['_links'] = $this->links->getAll();
         }
 
-        if ($this->container->getParameter('kernel.environment') === 'dev') {
+        if ($this->environment === 'dev') {
             $response['_handler'] = static::class;
             $response['_verbose'] = $this->verbose()->getAll();
         }
@@ -58,6 +62,13 @@ class AbstractApiController extends AbstractController
         $response->setContent('application/problem+json');
 
         return $response;
+    }
+
+    #[Required]
+    public function setEnvironment(#[Autowire(value: '%kernel.environment%')] string $environment): void
+    {
+        $this->verbose->add(sprintf('Kernel environment detected as %s', $environment));
+        $this->environment = $environment;
     }
 
     protected function links(): LinkBag
