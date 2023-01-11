@@ -3,6 +3,7 @@ controllers_api:
         path: ../src/Api/Controller/
         namespace: Api\Controller
     type: attribute
+    prefix: '/api'
 
 controllers_web:
     resource:

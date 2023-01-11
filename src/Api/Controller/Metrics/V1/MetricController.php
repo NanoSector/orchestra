@@ -12,6 +12,7 @@ use Domain\Repository\UserRepository;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+#[Route('/v1/metrics', name: 'api_metrics_v1_')]
 class MetricController extends AbstractApiController
 {
 
@@ -23,7 +24,7 @@ class MetricController extends AbstractApiController
         $this->userRepository = $userRepository;
     }
 
-    #[Route('/api/v1/metrics/{id}/pin', name: 'api_metrics_v1_metric_pin', methods: ["POST"])]
+    #[Route('/{id}/pin', name: 'metric_pin', methods: ["POST"])]
     public function pin(Metric $metric): Response
     {
         $user = $this->getUser();
@@ -48,7 +49,7 @@ class MetricController extends AbstractApiController
         return $this->okResponse();
     }
 
-    #[Route('/api/v1/metrics/{id}/unpin', name: 'api_metrics_v1_metric_unpin', methods: ["POST"])]
+    #[Route('/{id}/unpin', name: 'metric_unpin', methods: ["POST"])]
     public function unpin(Metric $metric): Response
     {
         $user = $this->getUser();
