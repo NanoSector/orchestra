@@ -1,0 +1,15 @@
+<div class="col-lg-6 pt-2 px-2">
+    <div class="{{ metric.classList }} rounded-3 p-2 shadow">
+        <div class="d-flex justify-content-between">
+            <h4>{{ metric.name }}</h4>
+            <div {{ stimulus_controller('metrics/actions', {
+                'pin-api-endpoint': url('api_metrics_v1_metric_pin', {id: metric.id}),
+                'unpin-api-endpoint': url('api_metrics_v1_metric_unpin', {id: metric.id}),
+                'fragment-endpoint': url('web_fragment_metric_actions', {id: metric.id}),
+            }) }}>
+                {{ include('fragments/metric/metric-actions.html.twig', { metric: metric }) }}
+            </div>
+        </div>
+        {{ metric.value }}
+    </div>
+</div>

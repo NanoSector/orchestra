@@ -29,7 +29,10 @@ class ApiProblem implements JsonSerializable
     {
         $statusText = Response::$statusTexts[$code] ?? 'Unknown';
 
-        return new ApiProblem($statusText, $code, $detail);
+        $self = new ApiProblem($statusText, $code, $detail);
+        $self->setType('orchestra://problem/http/' . $code);
+
+        return $self;
     }
 
     public function jsonSerialize(): array

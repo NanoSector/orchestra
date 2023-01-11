@@ -37,4 +37,19 @@ class MetricController extends AbstractApiController
 
         return $this->okResponse();
     }
+
+    #[Route('/api/v1/metrics/{id}/unpin', name: 'api_metrics_v1_metric_unpin', methods: ["POST"])]
+    public function unpin(Metric $metric): Response
+    {
+        $user = $this->getUser();
+
+        if (!$user instanceof User) {
+            return $this->problemResponse(ApiProblem::fromHttpCode(Response::HTTP_UNAUTHORIZED));
+        }
+
+        $user->decoratePinnedMetrics()->unpinMetric($metric);
+        $this->userRepository->save($user, true);
+
+        return $this->okResponse();
+    }
 }

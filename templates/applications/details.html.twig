@@ -25,19 +25,7 @@
 
                                     <div class="row">
                                         {% for metric in metrics %}
-                                            <div class="col-lg-6 pt-2 px-2">
-                                                <div class="{{ metric.classList }} rounded-3 p-2 shadow">
-                                                    <div class="d-flex justify-content-between">
-                                                        <h4>{{ metric.name }}</h4>
-                                                        <div>
-                                                            <a href="{{ url('web_endpoint_metric_pin', { applicationId: application.id, endpointId: endpoint.id, id: metric.id}) }}">
-                                                                <i class="bi-pin-angle"></i>
-                                                            </a>
-                                                        </div>
-                                                    </div>
-                                                    {{ metric.value }}
-                                                </div>
-                                            </div>
+                                            {{ include('fragments/metric/metric-block.html.twig', { metric: metric }) }}
                                         {% endfor %}
                                     </div>
                                 </div>

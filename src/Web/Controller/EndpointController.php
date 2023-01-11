@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace Web\Controller;
 
@@ -41,10 +41,9 @@ class EndpointController extends AbstractController
 
     public function __construct(
         EndpointRepository $endpointRepository,
-        MetricRepository   $metricRepository,
-        UserRepository     $userRepository
-    )
-    {
+        MetricRepository $metricRepository,
+        UserRepository $userRepository
+    ) {
         $this->endpointRepository = $endpointRepository;
         $this->metricRepository = $metricRepository;
         $this->userRepository = $userRepository;
@@ -61,7 +60,7 @@ class EndpointController extends AbstractController
                 sprintf('Application %s', $application->getName()),
                 $this->generateUrl('web_application_details', ['id' => $application->getId()])
             ),
-            'endpoint' => new BreadcrumbItem('Create endpoint', null, true),
+            'endpoint'    => new BreadcrumbItem('Create endpoint', null, true),
         ]);
 
         $endpoint = new Endpoint();
@@ -83,20 +82,35 @@ class EndpointController extends AbstractController
                 $this->endpointRepository->save($endpoint, true);
                 $this->addFlash(Flash::OK, 'The endpoint has been created.');
 
-                return $this->redirectToRoute('web_endpoint_details', ['applicationId' => $application->getId(), 'id' => $endpoint->getId()]);
+                return $this->redirectToRoute(
+                    'web_endpoint_details',
+                    ['applicationId' => $application->getId(), 'id' => $endpoint->getId()]
+                );
             } catch (\JsonException $e) {
                 // no-op, re-enter the form
-                $form->addError(new FormError(
-                    'The driver options must be valid JSON'
-                ));
+                $form->addError(
+                    new FormError(
+                        'The driver options must be valid JSON'
+                    )
+                );
             }
         }
 
         return $this->render('endpoints/create.html.twig', [
             'application' => $application,
-            'endpoint' => $endpoint,
-            'form' => $form,
+            'endpoint'    => $endpoint,
+            'form'        => $form,
         ]);
+    }
+
+    #[Route('/endpoint/{id}/delete', name: 'web_endpoint_delete', methods: ["POST"])]
+    public function delete(Application $application): Response
+    {
+        $this->applicationRepository->remove($application, true);
+
+        $this->addFlash('success', 'The endpoint has been deleted.');
+
+        return $this->redirectToRoute('web_endpoint_index');
     }
 
     #[Route('/applications/{applicationId}/endpoints/{id}', name: 'web_endpoint_details', methods: ["GET"])]
@@ -114,15 +128,22 @@ class EndpointController extends AbstractController
                 sprintf('Application %s', $application->getName()),
                 $this->generateUrl('web_application_details', ['id' => $application->getId()])
             ),
-            'endpoint' => new BreadcrumbItem('Endpoint', null, true),
+            'endpoint'    => new BreadcrumbItem('Endpoint', null, true),
         ]);
 
         $metricsPerProduct = MetricsPerProductCollection::fromMetricCollection($endpoint->getMetrics());
+
+        $user = $this->getUser();
 
         /** @var ArrayCollection<string, ArrayCollection<MetricViewModel>> $lastMetricsPerProduct */
         $lastMetricsPerProduct = $metricsPerProduct->map(
             static fn(ArrayCollection $metrics) => $metrics->map(
                 fn(Metric $m) => MetricViewModel::fromLastDatapointInMetric($m)
+                                                ->setPinned(
+                                                    $user instanceof User
+                                                        ? $user->decoratePinnedMetrics()->hasPinnedMetric($m)
+                                                        : false
+                                                )
             )
         );
 
@@ -131,64 +152,6 @@ class EndpointController extends AbstractController
             'endpoint' => $endpoint,
             'lastMetricsPerProduct' => $lastMetricsPerProduct,
         ]);
-    }
-
-    #[Route('/applications/{applicationId}/endpoints/{id}/update', name: 'web_endpoint_update', methods: ["GET", "POST"])]
-    #[ParamConverter("application", options: ["id" => "applicationId"])]
-    public function update(Application $application, Endpoint $endpoint, Request $request): Response
-    {
-        /** @var BreadcrumbBag $breadcrumbBag */
-        $breadcrumbBag = $request->attributes->get('breadcrumbs');
-        $breadcrumbBag->add([
-            'application' => new BreadcrumbItem(
-                sprintf('Application %s', $application->getName()),
-                $this->generateUrl('web_application_details', ['id' => $application->getId()])
-            ),
-            'endpoint' => new BreadcrumbItem('Update endpoint', null, true),
-        ]);
-
-
-        $form = $this->createForm(EndpointForm::class, $endpoint);
-        $form->get('driverOptions')->setData(json_encode($endpoint->getDriverOptions(), JSON_THROW_ON_ERROR));
-
-        $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
-            try {
-                $driverOptions = json_decode($form->get('driverOptions')->getData(), true, 512, JSON_THROW_ON_ERROR);
-
-                if (!is_array($driverOptions)) {
-                    $driverOptions = [$driverOptions];
-                }
-                $endpoint->setDriverOptions($driverOptions);
-                $endpoint->setInterval(30);
-
-                $this->endpointRepository->save($endpoint, true);
-                $this->addFlash(Flash::OK, 'The endpoint has been updated.');
-
-                return $this->redirectToRoute('web_endpoint_details', ['applicationId' => $application->getId(), 'id' => $endpoint->getId()]);
-            } catch (\JsonException $e) {
-                // no-op, re-enter the form
-                $form->addError(new FormError(
-                    'The driver options must be valid JSON'
-                ));
-            }
-        }
-
-        return $this->render('endpoints/update.html.twig', [
-            'application' => $application,
-            'endpoint' => $endpoint,
-            'form' => $form,
-        ]);
-    }
-
-    #[Route('/endpoint/{id}/delete', name: 'web_endpoint_delete', methods: ["POST"])]
-    public function delete(Application $application): Response
-    {
-        $this->applicationRepository->remove($application, true);
-
-        $this->addFlash('success', 'The endpoint has been deleted.');
-
-        return $this->redirectToRoute('web_endpoint_index');
     }
 
     #[Route('/applications/{applicationId}/endpoints/{id}/test', name: 'web_endpoint_test', methods: ["GET"])]
@@ -239,33 +202,64 @@ class EndpointController extends AbstractController
 
         $this->addFlash('success', 'The endpoint has been tested.');
 
-        return $this->redirectToRoute('web_endpoint_details', ['applicationId' => $application->getId(), 'id' => $endpoint->getId()]);
+        return $this->redirectToRoute(
+            'web_endpoint_details',
+            ['applicationId' => $application->getId(), 'id' => $endpoint->getId()]
+        );
     }
 
-    #[Route('/applications/{applicationId}/endpoints/{endpointId}/metric/{id}/pin', name: 'web_endpoint_metric_pin', methods: ["GET"])]
+    #[Route('/applications/{applicationId}/endpoints/{id}/update', name: 'web_endpoint_update', methods: [
+        "GET",
+        "POST"
+    ])]
     #[ParamConverter("application", options: ["id" => "applicationId"])]
-    #[ParamConverter("endpoint", options: ["id" => "endpointId"])]
-    public function pinMetric(Application $application, Endpoint $endpoint, Metric $metric): Response
+    public function update(Application $application, Endpoint $endpoint, Request $request): Response
     {
-        if (!$endpoint->belongsToApplication($application) || !$metric->belongsToEndpoint($endpoint)) {
-            throw $this->createNotFoundException();
+        /** @var BreadcrumbBag $breadcrumbBag */
+        $breadcrumbBag = $request->attributes->get('breadcrumbs');
+        $breadcrumbBag->add([
+            'application' => new BreadcrumbItem(
+                sprintf('Application %s', $application->getName()),
+                $this->generateUrl('web_application_details', ['id' => $application->getId()])
+            ),
+            'endpoint'    => new BreadcrumbItem('Update endpoint', null, true),
+        ]);
+
+        $form = $this->createForm(EndpointForm::class, $endpoint);
+        $form->get('driverOptions')->setData(json_encode($endpoint->getDriverOptions(), JSON_THROW_ON_ERROR));
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            try {
+                $driverOptions = json_decode($form->get('driverOptions')->getData(), true, 512, JSON_THROW_ON_ERROR);
+
+                if (!is_array($driverOptions)) {
+                    $driverOptions = [$driverOptions];
+                }
+                $endpoint->setDriverOptions($driverOptions);
+                $endpoint->setInterval(30);
+
+                $this->endpointRepository->save($endpoint, true);
+                $this->addFlash(Flash::OK, 'The endpoint has been updated.');
+
+                return $this->redirectToRoute(
+                    'web_endpoint_details',
+                    ['applicationId' => $application->getId(), 'id' => $endpoint->getId()]
+                );
+            } catch (\JsonException $e) {
+                // no-op, re-enter the form
+                $form->addError(
+                    new FormError(
+                        'The driver options must be valid JSON'
+                    )
+                );
+            }
         }
 
-        $user = $this->getUser();
-
-        if ($user instanceof User) {
-            $user->decoratePinnedMetrics()->pinMetric($metric);
-
-            $this->userRepository->save($user, true);
-        }
-
-        $this->addFlash(Flash::OK, 'The metric has been pinned. Check it out in the application overview.');
-
-        return $this->redirectToRoute('web_endpoint_details',
-            [
-                'applicationId' => $application->getId(),
-                'id' => $endpoint->getId()
-            ]
-        );
+        return $this->render('endpoints/update.html.twig', [
+            'application' => $application,
+            'endpoint'    => $endpoint,
+            'form'        => $form,
+        ]);
     }
 }

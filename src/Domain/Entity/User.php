@@ -51,7 +51,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\ManyToMany(targetEntity: Group::class, mappedBy: 'users', fetch: 'EAGER')]
     private Collection $groups;
 
-    #[ORM\OneToMany(mappedBy: 'user', targetEntity: MetricPin::class, cascade: ['persist', 'remove'])]
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: MetricPin::class, cascade: ['persist', 'remove'], orphanRemoval: true)]
     private Collection $pinnedMetrics;
 
     public function __construct()

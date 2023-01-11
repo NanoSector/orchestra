@@ -1,0 +1,9 @@
+{% if metric.pinned %}
+    <a href="#" {{ stimulus_action('metrics/actions', 'unpin') }} class="text-white">
+        <i class="bi-pin-angle-fill"></i>
+    </a>
+{% else %}
+    <a href="#" {{ stimulus_action('metrics/actions', 'pin') }} class="text-white">
+        <i class="bi-pin-angle"></i>
+    </a>
+{% endif %}

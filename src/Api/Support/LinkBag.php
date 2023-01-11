@@ -10,7 +10,7 @@ use Symfony\Component\HttpFoundation\Request;
 final class LinkBag
 {
     /** @var array<string, string> */
-    private array $links;
+    private array $links = [];
 
     public function set(string $key, string $url): self
     {

@@ -91,6 +91,11 @@ class MetricViewModel
         return $this->metric->getDiscriminator()->name;
     }
 
+    public function isPinned(): bool
+    {
+        return $this->pinned;
+    }
+
     public function setPinned(bool $pinned): self
     {
         $this->pinned = $pinned;
