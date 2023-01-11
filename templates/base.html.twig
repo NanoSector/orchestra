@@ -14,7 +14,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>{% block title %}Welcome!{% endblock %}</title>
+    <title>{% block title %}Orchestra{% endblock %}</title>
     <link rel="icon"
           href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
     {% block stylesheets %}
@@ -33,10 +33,10 @@
         </a>
         <hr>
         <ul class="nav nav-pills flex-column mb-auto">
-            {{ _self.menuItem('Home', 'house', '#', 'home') }}
+            {{ _self.menuItem('Home', 'house', path('web_home_index'), 'home') }}
             {{ _self.menuItem('Dashboard', 'speedometer2', '#', 'dashboard') }}
             {{ _self.menuItem('Applications', 'app-indicator', path('web_application_index'), 'app_management') }}
-            {{ _self.menuItem('Users', 'person-circle', path('web_user_index'), 'user_management') }}
+            {{ _self.menuItem('Users & Groups', 'person-circle', path('web_user_index'), 'user_management') }}
         </ul>
         <hr>
 

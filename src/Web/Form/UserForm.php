@@ -37,11 +37,10 @@ class UserForm extends AbstractType
                 'class' => Role::class,
                 'multiple' => true,
                 'expanded' => true,
-                'choice_label' => function (?Role $role) {
-                    return match ($role) {
-                        Role::ROLE_USER => 'Regular user',
-                        Role::ROLE_ADMIN => 'Administrator',
-                    };
+                'choice_label' => fn(Role $role) => match ($role) {
+                    Role::ROLE_USER => 'Regular user',
+                    Role::ROLE_ADMIN => 'Administrator',
+                    default => $role->name,
                 },
                 'preferred_choices' => [
                     Role::ROLE_USER

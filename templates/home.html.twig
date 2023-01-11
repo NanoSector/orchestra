@@ -1,0 +1,11 @@
+{% extends app.request.attributes.has('isModalRequest') ? 'modal.html.twig' : 'base.html.twig' %}
+
+{% block body %}
+    <h1>Welcome to Orchestra!</h1>
+
+    <p>
+        Orchestra is a work-in-progress project.
+        Please visit <a href="https://github.com/NanoSector/orchestra">the GitHub page</a> for actual development
+        status.
+    </p>
+{% endblock %}

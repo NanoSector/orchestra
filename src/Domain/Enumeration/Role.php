@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace Domain\Enumeration;
 
@@ -8,6 +8,8 @@ enum Role: string
 {
     case ROLE_ADMIN = 'ROLE_ADMIN';
     case ROLE_USER = 'ROLE_USER';
+    
+    case SYMFONY_ROLE_ALLOWED_TO_SWITCH = 'ROLE_ALLOWED_TO_SWITCH';
 
     /** @return Role[] */
     public static function all(): array

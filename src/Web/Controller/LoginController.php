@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Web\Controller;
 
+use Domain\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -14,6 +15,10 @@ class LoginController extends AbstractController
     #[Route('/login', name: 'web_login_index')]
     public function index(AuthenticationUtils $authenticationUtils): Response
     {
+        if ($this->getUser() instanceof User) {
+            return $this->redirectToRoute('web_home_index');
+        }
+
         // get the login error if there is one
         $error = $authenticationUtils->getLastAuthenticationError();
 
