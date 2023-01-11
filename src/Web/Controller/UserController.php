@@ -1,10 +1,11 @@
 <?php
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace Web\Controller;
 
 use Domain\Entity\User;
+use Domain\Enumeration\Role;
 use Domain\Repository\GroupRepository;
 use Domain\Repository\UserRepository;
 use Infrastructure\Breadcrumbs\Breadcrumb;
@@ -14,33 +15,28 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Web\Form\UserForm;
 use Web\Helper\Flash;
 
 #[AppContext('user_management')]
-#[Breadcrumb('Users', 'web_user_index')]
+#[Breadcrumb('Users & Groups', 'web_user_index')]
+#[IsGranted(Role::ROLE_ADMIN->value)]
 class UserController extends AbstractController
 {
     private UserRepository $userRepository;
     private GroupRepository $groupRepository;
     private UserPasswordHasherInterface $passwordHasher;
 
-    public function __construct(UserRepository $userRepository, GroupRepository $groupRepository, UserPasswordHasherInterface $passwordHasher)
-    {
+    public function __construct(
+        UserRepository $userRepository,
+        GroupRepository $groupRepository,
+        UserPasswordHasherInterface $passwordHasher
+    ) {
         $this->userRepository = $userRepository;
         $this->groupRepository = $groupRepository;
         $this->passwordHasher = $passwordHasher;
     }
-
-    #[Route('/users', name: 'web_user_index', methods: ["GET"])]
-    public function index(Request $request): Response
-    {
-        return $this->render('users/index.html.twig', [
-            'groups' => $this->groupRepository->findAll(),
-            'users' => $this->userRepository->findAll(),
-        ]);
-    }
-
 
     #[Route('/users/create', name: 'web_user_create', methods: ["GET", "POST"])]
     #[Breadcrumb('Create user')]
@@ -70,6 +66,23 @@ class UserController extends AbstractController
         return $this->render('users/create.html.twig', [
             'user' => $user,
             'form' => $form,
+        ]);
+    }
+
+    #[Route('/users/{id}/delete', name: 'web_user_delete', methods: ["POST"])]
+    public function delete(User $user): Response
+    {
+        $this->userRepository->remove($user, true);
+
+        return $this->redirectToRoute('web_user_index');
+    }
+
+    #[Route('/users', name: 'web_user_index', methods: ["GET"])]
+    public function index(Request $request): Response
+    {
+        return $this->render('users/index.html.twig', [
+            'groups' => $this->groupRepository->findAll(),
+            'users'  => $this->userRepository->findAll(),
         ]);
     }
 
@@ -106,13 +119,5 @@ class UserController extends AbstractController
             'user' => $user,
             'form' => $form,
         ]);
-    }
-
-    #[Route('/users/{id}/delete', name: 'web_user_delete', methods: ["POST"])]
-    public function delete(User $user): Response
-    {
-        $this->userRepository->remove($user, true);
-
-        return $this->redirectToRoute('web_user_index');
     }
 }

@@ -16,8 +16,7 @@ use Web\Form\GroupForm;
 use Web\Helper\Flash;
 
 #[AppContext('user_management')]
-#[Breadcrumb('Users', 'web_user_index')]
-#[Breadcrumb('Groups', 'web_group_index')]
+#[Breadcrumb('Users & Groups', 'web_user_index')]
 class GroupController extends AbstractController
 {
     private GroupRepository $groupRepository;
