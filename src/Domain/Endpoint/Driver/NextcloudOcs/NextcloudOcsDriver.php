@@ -29,7 +29,7 @@ class NextcloudOcsDriver extends AbstractDriver
     /**
      * @throws EndpointExecutionFailedException
      */
-    public function fetch(DriverEndpointInterface $endpoint): NextcloudOcsResponse
+    public function fetch(DriverEndpointInterface $endpoint): NextcloudOcsDriverResponse
     {
         $options = $endpoint->getDriverOptions();
         $options = $this->sanitizeConfiguration($options);

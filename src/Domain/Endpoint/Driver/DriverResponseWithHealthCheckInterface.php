@@ -11,7 +11,7 @@ namespace Domain\Endpoint\Driver;
 
 use Domain\Metric\HealthMetricInterface;
 
-interface ResponseWithHealthCheckInterface
+interface DriverResponseWithHealthCheckInterface
 {
     public function getHealthMetric(): ?HealthMetricInterface;
 }

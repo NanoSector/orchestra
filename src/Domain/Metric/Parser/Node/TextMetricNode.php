@@ -22,6 +22,9 @@ class TextMetricNode implements ParserNodeInterface
         $this->product = $product;
     }
 
+    /**
+     * @throws ParserNodeTypeException
+     */
     public function parse(string|array $value): MetricInterface
     {
         if (is_array($value)) {

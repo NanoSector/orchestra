@@ -7,13 +7,18 @@
 
 declare(strict_types=1);
 
-namespace Domain\Endpoint;
+namespace Domain\Endpoint\Driver;
 
 use Domain\Endpoint\Driver\NextcloudOcs\NextcloudOcsDriver;
 
-enum EndpointDriver: string
+enum DriverEnum: string
 {
     case NextcloudOcsDriver = NextcloudOcsDriver::class;
+
+    public function getContainerDefinition(): string
+    {
+        return $this->value;
+    }
 
     public function getFriendlyName(): string
     {

@@ -11,6 +11,7 @@ namespace Domain\Metric;
 
 use Composer\Semver\Comparator;
 use Domain\Entity\Datapoint;
+use JsonException;
 use Web\Helper\Badge;
 
 class VersionMetric implements SemverMetricInterface
@@ -49,6 +50,9 @@ class VersionMetric implements SemverMetricInterface
         return Comparator::lessThan($this->getValue(), $other->getValue());
     }
 
+    /**
+     * @throws JsonException
+     */
     public static function fromDatapoint(Datapoint $datapoint): self
     {
         return new self($datapoint->getMetric()->getProduct(), (string)json_decode($datapoint->getValue(), true, 512, JSON_THROW_ON_ERROR));

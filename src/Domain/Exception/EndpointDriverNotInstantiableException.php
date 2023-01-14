@@ -9,7 +9,7 @@ declare(strict_types = 1);
 
 namespace Domain\Exception;
 
-class RuntimeException extends \RuntimeException
+class EndpointDriverNotInstantiableException extends DomainException
 {
 
 }

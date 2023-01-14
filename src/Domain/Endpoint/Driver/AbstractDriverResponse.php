@@ -11,7 +11,7 @@ namespace Domain\Endpoint\Driver;
 
 use Doctrine\Common\Collections\ArrayCollection;
 
-abstract class AbstractResponse implements ResponseInterface
+abstract class AbstractDriverResponse implements DriverResponseInterface
 {
     private ArrayCollection $metrics;
 

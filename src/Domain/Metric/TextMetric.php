@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace Domain\Metric;
 
 use Domain\Entity\Datapoint;
+use JsonException;
 use Web\Helper\Badge;
 
 class TextMetric implements MetricInterface
@@ -33,6 +34,9 @@ class TextMetric implements MetricInterface
         return $this->value;
     }
 
+    /**
+     * @throws JsonException
+     */
     public static function fromDatapoint(Datapoint $datapoint): self
     {
         return new self($datapoint->getMetric()->getProduct(), (string)json_decode($datapoint->getValue(), true, 512, JSON_THROW_ON_ERROR));

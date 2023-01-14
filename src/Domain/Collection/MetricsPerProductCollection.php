@@ -36,6 +36,9 @@ class MetricsPerProductCollection
         return $self->getResult();
     }
 
+    /**
+     * @throws InvalidArgumentException
+     */
     public function add(Metric $metric): self
     {
         if ($metric->getProduct() === null) {

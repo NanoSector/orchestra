@@ -5,7 +5,7 @@
  * This source code is licensed under the MIT license. See LICENSE for details.
  */
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace Domain\Entity;
 
@@ -14,7 +14,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Domain\Endpoint\Driver\DriverEndpointInterface;
-use Domain\Endpoint\EndpointDriver;
+use Domain\Endpoint\Driver\DriverEnum;
 use Domain\Repository\EndpointRepository;
 use Infrastructure\Doctrine\Traits\TimestampedEntityTrait;
 use Symfony\Component\Validator\Constraints;
@@ -41,7 +41,7 @@ class Endpoint implements DriverEndpointInterface
     private string $url = '';
 
     #[ORM\Column(type: 'EndpointDriverType', length: 255)]
-    private ?EndpointDriver $driver = null;
+    private ?DriverEnum $driver = null;
 
     #[ORM\Column]
     private array $driverOptions = [];
@@ -56,10 +56,11 @@ class Endpoint implements DriverEndpointInterface
     #[ORM\Column(type: 'CarbonDateTimeType', nullable: true)]
     private ?Carbon $lastSuccessfulResponse = null;
 
-    #[ORM\OneToMany(mappedBy: 'endpoint', targetEntity: Metric::class, fetch: 'EAGER', orphanRemoval: true)]
+    #[ORM\OneToMany(mappedBy: 'endpoint', targetEntity: Metric::class, cascade: ['persist'], fetch: 'EAGER', orphanRemoval: true)]
     private Collection $metrics;
 
-    #[ORM\OneToMany(mappedBy: 'endpoint', targetEntity: EndpointCollectionLog::class, orphanRemoval: true)]
+    #[ORM\OneToMany(mappedBy: 'endpoint', targetEntity: EndpointCollectionLog::class, cascade: ['persist'], orphanRemoval: true)]
+    #[ORM\OrderBy([ 'id' => 'DESC' ])]
     private Collection $collectionLogs;
 
     public function __construct()
@@ -68,26 +69,22 @@ class Endpoint implements DriverEndpointInterface
         $this->collectionLogs = new ArrayCollection();
     }
 
-    public function getName(): ?string
+    public function addCollectionLog(EndpointCollectionLog $collectionLog): self
     {
-        return $this->name;
-    }
-
-    public function setName(string $name): self
-    {
-        $this->name = $name;
+        if (!$this->collectionLogs->contains($collectionLog)) {
+            $this->collectionLogs->add($collectionLog);
+            $collectionLog->setEndpoint($this);
+        }
 
         return $this;
     }
 
-    public function getApplication(): ?Application
+    public function addMetric(Metric $metric): self
     {
-        return $this->application;
-    }
-
-    public function setApplication(?Application $application): self
-    {
-        $this->application = $application;
+        if (!$this->metrics->contains($metric)) {
+            $this->metrics->add($metric);
+            $metric->setEndpoint($this);
+        }
 
         return $this;
     }
@@ -106,24 +103,32 @@ class Endpoint implements DriverEndpointInterface
         return $this->id;
     }
 
-    public function getUrl(): string
+    public function getApplication(): ?Application
     {
-        return $this->url;
+        return $this->application;
     }
 
-    public function setUrl(string $url): self
+    public function setApplication(?Application $application): self
     {
-        $this->url = $url;
+        $this->application = $application;
 
         return $this;
     }
 
-    public function getDriver(): ?EndpointDriver
+    /**
+     * @return Collection<int, EndpointCollectionLog>
+     */
+    public function getCollectionLogs(): Collection
+    {
+        return $this->collectionLogs;
+    }
+
+    public function getDriver(): ?DriverEnum
     {
         return $this->driver;
     }
 
-    public function setDriver(EndpointDriver $driver): self
+    public function setDriver(DriverEnum $driver): self
     {
         $this->driver = $driver;
 
@@ -192,11 +197,37 @@ class Endpoint implements DriverEndpointInterface
         return $this->metrics;
     }
 
-    public function addMetric(Metric $metric): self
+    public function getName(): ?string
     {
-        if (!$this->metrics->contains($metric)) {
-            $this->metrics->add($metric);
-            $metric->setEndpoint($this);
+        return $this->name;
+    }
+
+    public function setName(string $name): self
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    public function getUrl(): string
+    {
+        return $this->url;
+    }
+
+    public function setUrl(string $url): self
+    {
+        $this->url = $url;
+
+        return $this;
+    }
+
+    public function removeCollectionLog(EndpointCollectionLog $collectionLog): self
+    {
+        if ($this->collectionLogs->removeElement($collectionLog)) {
+            // set the owning side to null (unless already changed)
+            if ($collectionLog->getEndpoint() === $this) {
+                $collectionLog->setEndpoint(null);
+            }
         }
 
         return $this;
@@ -214,32 +245,9 @@ class Endpoint implements DriverEndpointInterface
         return $this;
     }
 
-    /**
-     * @return Collection<int, EndpointCollectionLog>
-     */
-    public function getCollectionLogs(): Collection
+    public function touchLastSuccessfulResponse(): self
     {
-        return $this->collectionLogs;
-    }
-
-    public function addCollectionLog(EndpointCollectionLog $collectionLog): self
-    {
-        if (!$this->collectionLogs->contains($collectionLog)) {
-            $this->collectionLogs->add($collectionLog);
-            $collectionLog->setEndpoint($this);
-        }
-
-        return $this;
-    }
-
-    public function removeCollectionLog(EndpointCollectionLog $collectionLog): self
-    {
-        if ($this->collectionLogs->removeElement($collectionLog)) {
-            // set the owning side to null (unless already changed)
-            if ($collectionLog->getEndpoint() === $this) {
-                $collectionLog->setEndpoint(null);
-            }
-        }
+        $this->lastSuccessfulResponse = Carbon::now();
 
         return $this;
     }

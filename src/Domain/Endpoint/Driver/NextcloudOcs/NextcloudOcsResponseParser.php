@@ -27,7 +27,7 @@ class NextcloudOcsResponseParser
     /**
      * @throws EndpointExecutionFailedException
      */
-    public function parse(ResponseInterface $response): NextcloudOcsResponse
+    public function parse(ResponseInterface $response): NextcloudOcsDriverResponse
     {
         try {
             $response = $response->toArray();
@@ -69,6 +69,6 @@ class NextcloudOcsResponseParser
 
         $metrics = $structure->parseMetrics($response);
 
-        return new NextcloudOcsResponse(new ArrayCollection($metrics));
+        return new NextcloudOcsDriverResponse(new ArrayCollection($metrics));
     }
 }

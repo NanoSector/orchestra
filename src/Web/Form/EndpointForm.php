@@ -9,10 +9,9 @@ declare(strict_types=1);
 
 namespace Web\Form;
 
-use Domain\Endpoint\EndpointDriver;
+use Domain\Endpoint\Driver\DriverEnum;
 use Domain\Entity\Application;
 use Domain\Entity\Endpoint;
-use phpDocumentor\Reflection\Type;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\EnumType;
@@ -38,8 +37,8 @@ class EndpointForm extends AbstractType
                 'label' => 'URL to fetch'
             ])
             ->add('driver', EnumType::class, [
-                'class' => EndpointDriver::class,
-                'choice_label' => static fn(EndpointDriver $d) => $d->getFriendlyName(),
+                'class' => DriverEnum::class,
+                'choice_label' => static fn(DriverEnum $d) => $d->getFriendlyName(),
             ])
             ->add('driverOptions', TextareaType::class, [
                 'mapped' => false,

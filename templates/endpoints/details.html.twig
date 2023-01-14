@@ -115,40 +115,44 @@
                 <thead class="table-light">
                 <tr>
                     <th scope="col">#</th>
-                    <th scope="col">Name</th>
-                    <th scope="col">Type</th>
-                    <th scope="col">Datapoints</th>
-                    <th scope="col">Last datapoint</th>
+                    <th scope="col">Successful</th>
+                    <th scope="col">Metrics created / updated</th>
+                    <th scope="col">Metrics missing in response</th>
+                    <th scope="col">Datapoints created / updated</th>
+                    <th scope="col">Executed at</th>
                     <th scope="col">Actions</th>
                 </tr>
                 </thead>
                 <tbody>
-                {% for metric in endpoint.metrics %}
+                {% for log in endpoint.collectionLogs %}
                     <tr>
-                        <th scope="row" class="align-middle">{{ metric.id }}</th>
-                        <td class="align-middle">{{ metric.product }}</td>
-                        <td class="align-middle">{{ metric.discriminator.name }}</td>
-                        <td class="align-middle">{{ metric.datapoints.count }}</td>
+                        <th scope="row" class="align-middle">{{ log.id }}</th>
                         <td class="align-middle">
-                            {% if metric.lastDatapoint %}
-                                {{ metric.lastDatapoint.updatedAt }}
+                            {% if not log.successful %}
+                                <span class="text-danger">No</span>
                             {% else %}
-                                N/A
-                            {% endif %}
+                                Yes
+                            {% endif %}</td>
+                        <td class="align-middle">
+                            {{ log.createdMetricCount }} / {{ log.updatedMetricCount }}
+                        </td>
+                        <td class="align-middle">
+                            {{ log.metricsMissingInResponseCount }}
+                        </td>
+                        <td class="align-middle">
+                            {{ log.createdDatapointCount }} / {{ log.updatedDatapointCount }}
+                        </td>
+                        <td class="align-middle">
+                            {{ log.createdAt }}
                         </td>
                         <td class="align-middle wrap-content">
 
                             <a class="btn btn-sm btn-primary"
-                               href="{{ path('web_application_details', {'id': metric.id}) }}">
+                               href="{{ path('web_application_details', {'id': log.id}) }}">
                                 <i class="bi-eye"></i>
                                 View
                             </a>
 
-                            <a class="btn btn-sm btn-secondary"
-                               href="{{ path('web_application_update', {'id': metric.id}) }}">
-                                <i class="bi-pencil"></i>
-                                Edit
-                            </a>
                         </td>
                     </tr>
                 {% endfor %}

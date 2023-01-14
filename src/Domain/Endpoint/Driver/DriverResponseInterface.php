@@ -12,7 +12,7 @@ namespace Domain\Endpoint\Driver;
 use Doctrine\Common\Collections\ArrayCollection;
 use Domain\Metric\MetricInterface;
 
-interface ResponseInterface
+interface DriverResponseInterface
 {
     /**
      * @return ArrayCollection<MetricInterface>

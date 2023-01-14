@@ -12,7 +12,7 @@ namespace Domain\Endpoint\Driver;
 use Domain\Metric\HealthMetricInterface;
 use Domain\Metric\MetricInterface;
 
-trait ResponseWithHealthCheckTrait
+trait DriverResponseWithHealthCheckTrait
 {
     public function getHealthMetric(): ?HealthMetricInterface
     {

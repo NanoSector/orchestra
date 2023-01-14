@@ -32,21 +32,24 @@ class EndpointCollectionLog
     private ?bool $successful = null;
 
     #[ORM\Column]
-    private ?int $updatedMetricCount = null;
+    private int $updatedMetricCount = 0;
 
     #[ORM\Column]
-    private ?int $createdMetricCount = null;
+    private int $createdMetricCount = 0;
 
     #[ORM\Column]
-    private ?int $updatedDatapointCount = null;
+    private int $updatedDatapointCount = 0;
 
     #[ORM\Column]
-    private ?int $createdDatapointCount = null;
+    private int $createdDatapointCount = 0;
+
+    #[ORM\Column]
+    private int $metricsMissingInResponseCount = 0;
 
     #[ORM\Column(length: 51000)]
     private ?string $responseBody = null;
 
-    public function getCreatedDatapointCount(): ?int
+    public function getCreatedDatapointCount(): int
     {
         return $this->createdDatapointCount;
     }
@@ -58,7 +61,7 @@ class EndpointCollectionLog
         return $this;
     }
 
-    public function getCreatedMetricCount(): ?int
+    public function getCreatedMetricCount(): int
     {
         return $this->createdMetricCount;
     }
@@ -99,7 +102,7 @@ class EndpointCollectionLog
         return $this;
     }
 
-    public function getUpdatedDatapointCount(): ?int
+    public function getUpdatedDatapointCount(): int
     {
         return $this->updatedDatapointCount;
     }
@@ -111,7 +114,7 @@ class EndpointCollectionLog
         return $this;
     }
 
-    public function getUpdatedMetricCount(): ?int
+    public function getUpdatedMetricCount(): int
     {
         return $this->updatedMetricCount;
     }
@@ -131,6 +134,18 @@ class EndpointCollectionLog
     public function setSuccessful(bool $successful): self
     {
         $this->successful = $successful;
+
+        return $this;
+    }
+
+    public function getMetricsMissingInResponseCount(): int
+    {
+        return $this->metricsMissingInResponseCount;
+    }
+
+    public function setMetricsMissingInResponseCount(int $metricsMissingInResponseCount): self
+    {
+        $this->metricsMissingInResponseCount = $metricsMissingInResponseCount;
 
         return $this;
     }

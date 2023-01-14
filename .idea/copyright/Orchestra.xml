@@ -1,6 +1,5 @@
 <component name="CopyrightManager">
   <copyright>
-    <option name="keyword" value="Copyright (c) \d+ NanoSector &amp; Orchestra contributors" />
     <option name="notice" value="Copyright (c) &amp;#36;today.year NanoSector &amp;amp; Orchestra contributors&#10;&#10;This source code is licensed under the MIT license. See LICENSE for details." />
     <option name="myName" value="Orchestra" />
   </copyright>

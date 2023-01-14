@@ -9,7 +9,7 @@ declare(strict_types=1);
 
 namespace Domain\Exception;
 
-class RequiredParserNodeNotFoundException extends RuntimeException
+class RequiredParserNodeNotFoundException extends DomainException
 {
 
 }

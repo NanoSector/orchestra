@@ -9,7 +9,7 @@ declare(strict_types=1);
 
 namespace Domain\Exception;
 
-class CompositeParserExhaustedException extends RuntimeException
+class CompositeParserExhaustedException extends DomainException
 {
 
 }

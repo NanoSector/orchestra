@@ -9,7 +9,7 @@ declare(strict_types = 1);
 
 namespace Domain\Exception;
 
-class ParserNodeTypeException extends RuntimeException
+class ParserNodeTypeException extends DomainException
 {
     public static function mismatch(string $got, string $wanted): self
     {

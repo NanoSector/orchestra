@@ -9,7 +9,6 @@ declare(strict_types=1);
 
 namespace Domain\Doctrine\Type;
 
-use Domain\Endpoint\EndpointDriver;
 use Domain\Metric\MetricEnum;
 use Infrastructure\Doctrine\Type\AbstractEnumType;
 

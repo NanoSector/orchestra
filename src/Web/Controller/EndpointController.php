@@ -13,6 +13,8 @@ use Carbon\Carbon;
 use Doctrine\Common\Collections\ArrayCollection;
 use Domain\Collection\MetricsPerProductCollection;
 use Domain\Endpoint\Driver\DriverInterface;
+use Domain\Endpoint\EndpointClient;
+use Domain\Endpoint\EndpointDriverResponseMapper;
 use Domain\Entity\Application;
 use Domain\Entity\Datapoint;
 use Domain\Entity\Endpoint;
@@ -161,49 +163,22 @@ class EndpointController extends AbstractController
 
     #[Route('/applications/{applicationId}/endpoints/{id}/test', name: 'web_endpoint_test', methods: ["GET"])]
     #[ParamConverter("application", options: ["id" => "applicationId"])]
-    public function test(Application $application, Endpoint $endpoint, KernelInterface $kernel): Response
+    public function test(
+        Application $application,
+        Endpoint $endpoint,
+        EndpointClient $endpointClient,
+        EndpointDriverResponseMapper $mapper
+    ): Response
     {
-        // TODO: Refactor this into actual classes
-        /** @var DriverInterface $driver */
-        $driver = $kernel->getContainer()->get($endpoint->getDriver()->value);
+        $response = $endpointClient->fetch($endpoint);
 
-        $response = $driver->fetch($endpoint);
+        $log = $mapper->createCollectionLog($endpoint, $response);
+        $endpoint->addCollectionLog($log);
 
-        $endpoint->setLastSuccessfulResponse(Carbon::now());
+        $endpoint = $mapper->map($endpoint, $response);
+        $endpoint->touchLastSuccessfulResponse();
+
         $this->endpointRepository->save($endpoint, true);
-
-        foreach ($response->getMetrics() as $metric) {
-            $metricEntity = $endpoint->getMetrics()->findFirst(
-                fn($key, Metric $m) => $m->getProduct() === $metric->getName()
-                    && $m->getDiscriminator()->value === get_class($metric)
-            );
-
-            if (!$metricEntity instanceof Metric) {
-                $metricEntity = new Metric();
-                $metricEntity->setEndpoint($endpoint);
-                $metricEntity->setProduct($metric->getName());
-                $metricEntity->setDiscriminator(MetricEnum::from(get_class($metric)));
-
-                $this->metricRepository->save($metricEntity);
-            }
-
-            $lastDatapoint = $metricEntity->getLastDatapoint();
-            $newValue = json_encode($metric->getValue(), JSON_THROW_ON_ERROR);
-
-            if ($lastDatapoint instanceof Datapoint && $newValue === $lastDatapoint->getValue()) {
-                $lastDatapoint->setUpdatedAt();
-
-                $this->metricRepository->save($metricEntity, true);
-                continue;
-            }
-
-            $datapoint = new Datapoint();
-            $datapoint->setValue($newValue);
-            $datapoint->setUpdatedAt();
-            $metricEntity->addDatapoint($datapoint);
-
-            $this->metricRepository->save($metricEntity, true);
-        }
 
         $this->addFlash('success', 'The endpoint has been tested.');
 

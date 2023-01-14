@@ -18,7 +18,7 @@ abstract class AbstractDriver implements DriverInterface
         return $this->sanitizeConfigurationLeaf($options, $skeleton);
     }
 
-    protected function sanitizeConfigurationLeaf(array $options, array $skeleton)
+    protected function sanitizeConfigurationLeaf(array $options, array $skeleton): array
     {
         $options = array_intersect_key($options, $skeleton);
 

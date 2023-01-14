@@ -37,7 +37,7 @@ trait TimestampedEntityTrait
     }
 
     #[ORM\PreUpdate]
-    public function setUpdatedAt(): void
+    public function touchUpdatedAt(): void
     {
         $this->updatedAt = Carbon::now();
     }

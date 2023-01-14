@@ -9,14 +9,14 @@ declare(strict_types=1);
 
 namespace Domain\Doctrine\Type;
 
-use Domain\Endpoint\EndpointDriver;
+use Domain\Endpoint\Driver\DriverEnum;
 use Infrastructure\Doctrine\Type\AbstractEnumType;
 
 class EndpointDriverType extends AbstractEnumType
 {
     public static function getEnumsClass(): string
     {
-        return EndpointDriver::class;
+        return DriverEnum::class;
     }
 
     public function getName(): string

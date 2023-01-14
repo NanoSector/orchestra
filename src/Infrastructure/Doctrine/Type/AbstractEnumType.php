@@ -38,6 +38,10 @@ abstract class AbstractEnumType extends Type
             throw new LogicException("This class should be an enum");
         }
 
+        if (!is_string($value)) {
+            return null;
+        }
+
         return $this::getEnumsClass()::tryFrom($value);
     }
 

@@ -9,6 +9,8 @@ declare(strict_types=1);
 
 namespace Domain\Endpoint\Driver;
 
+use Domain\Exception\EndpointExecutionFailedException;
+
 interface DriverInterface
 {
     /**
@@ -20,14 +22,17 @@ interface DriverInterface
 
     /**
      * Sanitizes the configuration by removing any unrecognized options
-     * and setting null values for unrecognized options.
+     * and setting null values for unspecified options.
      *
      * @param array $options
      * @return array
      */
     public function sanitizeConfiguration(array $options): array;
 
-    public function fetch(DriverEndpointInterface $endpoint): ResponseInterface;
+    /**
+     * @throws EndpointExecutionFailedException
+     */
+    public function fetch(DriverEndpointInterface $endpoint): DriverResponseInterface;
 
 
 }
