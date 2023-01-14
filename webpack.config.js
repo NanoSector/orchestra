@@ -1,3 +1,9 @@
+/*
+ * Copyright (c) 2023 NanoSector & Orchestra contributors
+ *
+ * This source code is licensed under the MIT license. See LICENSE for details.
+ */
+
 const Encore = require('@symfony/webpack-encore');
 
 // Manually configure the runtime environment if not already configured yet by the "encore" command.

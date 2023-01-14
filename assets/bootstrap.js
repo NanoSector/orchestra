@@ -1,3 +1,9 @@
+/*
+ * Copyright (c) 2023 NanoSector & Orchestra contributors
+ *
+ * This source code is licensed under the MIT license. See LICENSE for details.
+ */
+
 import { startStimulusApp } from '@symfony/stimulus-bridge';
 
 // Registers Stimulus controllers from controllers.json and in the controllers/ directory

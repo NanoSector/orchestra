@@ -1,3 +1,9 @@
+/*
+ * Copyright (c) 2023 NanoSector & Orchestra contributors
+ *
+ * This source code is licensed under the MIT license. See LICENSE for details.
+ */
+
 export default class ApiProblemResponse {
     /** @type {string} */
     type
