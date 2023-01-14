@@ -17,6 +17,7 @@ use Domain\Endpoint\Driver\DriverEndpointInterface;
 use Domain\Endpoint\EndpointDriver;
 use Domain\Repository\EndpointRepository;
 use Infrastructure\Doctrine\Traits\TimestampedEntityTrait;
+use Symfony\Component\Validator\Constraints;
 
 #[ORM\Entity(repositoryClass: EndpointRepository::class)]
 #[ORM\HasLifecycleCallbacks]
@@ -48,15 +49,23 @@ class Endpoint implements DriverEndpointInterface
     #[ORM\Column]
     private ?int $interval = null;
 
+    #[ORM\Column]
+    #[Constraints\PositiveOrZero]
+    private int $collectionLogRetention = 604800; // in seconds; default is a week
+
     #[ORM\Column(type: 'CarbonDateTimeType', nullable: true)]
     private ?Carbon $lastSuccessfulResponse = null;
 
     #[ORM\OneToMany(mappedBy: 'endpoint', targetEntity: Metric::class, fetch: 'EAGER', orphanRemoval: true)]
     private Collection $metrics;
 
+    #[ORM\OneToMany(mappedBy: 'endpoint', targetEntity: EndpointCollectionLog::class, orphanRemoval: true)]
+    private Collection $collectionLogs;
+
     public function __construct()
     {
         $this->metrics = new ArrayCollection();
+        $this->collectionLogs = new ArrayCollection();
     }
 
     public function getName(): ?string
@@ -199,6 +208,36 @@ class Endpoint implements DriverEndpointInterface
             // set the owning side to null (unless already changed)
             if ($metric->getEndpoint() === $this) {
                 $metric->setEndpoint(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, EndpointCollectionLog>
+     */
+    public function getCollectionLogs(): Collection
+    {
+        return $this->collectionLogs;
+    }
+
+    public function addCollectionLog(EndpointCollectionLog $collectionLog): self
+    {
+        if (!$this->collectionLogs->contains($collectionLog)) {
+            $this->collectionLogs->add($collectionLog);
+            $collectionLog->setEndpoint($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCollectionLog(EndpointCollectionLog $collectionLog): self
+    {
+        if ($this->collectionLogs->removeElement($collectionLog)) {
+            // set the owning side to null (unless already changed)
+            if ($collectionLog->getEndpoint() === $this) {
+                $collectionLog->setEndpoint(null);
             }
         }
 
