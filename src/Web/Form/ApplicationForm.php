@@ -5,7 +5,7 @@
  * This source code is licensed under the MIT license. See LICENSE for details.
  */
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace Web\Form;
 
@@ -25,12 +25,16 @@ class ApplicationForm extends AbstractType
         $builder
             ->add('name', TextType::class)
             ->add('groups', EntityType::class, [
-                'class' => Group::class,
-                'multiple' => true,
-                'expanded' => true,
-                'choice_label' => static fn (Group $u) => $u->getName(),
+                'class'        => Group::class,
+                'multiple'     => true,
+                'expanded'     => true,
+                'choice_label' => static fn(Group $u) => $u->getName(),
             ])
-            ->add('submit', SubmitType::class);
+            ->add('submit', SubmitType::class, [
+                'row_attr' => [
+                    'class' => 'mb-0', // remove the mb-3 class
+                ],
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

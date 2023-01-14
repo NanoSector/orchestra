@@ -58,7 +58,11 @@ class UserForm extends AbstractType
                 'disabled' => true, // TODO: persisting does not work?
                 'choice_label' => static fn (Group $g) => $g->getName(),
             ])
-            ->add('submit', SubmitType::class);
+            ->add('submit', SubmitType::class, [
+                'row_attr' => [
+                    'class' => 'mb-0', // remove the mb-3 class
+                ],
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

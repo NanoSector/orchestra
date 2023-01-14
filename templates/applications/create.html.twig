@@ -3,19 +3,31 @@
 {% block body %}
     <h1 class="mb-3">Create a new application</h1>
 
-    {{ form_start(form) }}
-    {{ form_errors(form) }}
+    <div class="row">
+        <div class="col-xl-10">
+            <div class="card shadow-sm">
+                <div class="card-header">
+                    <h2 class="card-title">Application details</h2>
+                </div>
 
-    {{ form_row(form.name) }}
-    {{ form_row(form.groups) }}
-    <div class="d-flex">
-        <div class="me-2">
-            <a class="btn btn-outline-danger" href="{{ path('web_application_index') }}">
-                <i class="bi-arrow-left"></i>
-                Cancel
-            </a>
+                <div class="card-body">
+                    {{ form_start(form) }}
+                    {{ form_errors(form) }}
+
+                    {{ form_row(form.name) }}
+                    {{ form_row(form.groups) }}
+                    <div class="d-flex justify-content-end">
+                        <div class="me-2">
+                            <a class="btn btn-outline-danger" href="{{ path('web_application_index') }}">
+                                <i class="bi-arrow-left"></i>
+                                Cancel
+                            </a>
+                        </div>
+                        {{ form_row(form.submit) }}
+                    </div>
+                    {{ form_end(form) }}
+                </div>
+            </div>
         </div>
-        {{ form_row(form.submit) }}
     </div>
-    {{ form_end(form) }}
 {% endblock %}

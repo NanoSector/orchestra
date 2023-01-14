@@ -8,6 +8,9 @@
             <div class="d-flex justify-content-between">
                 <div>
                     <h2 class="card-title">Users</h2>
+                    <p class="card-subtitle">
+                        Users can access Orchestra and perform actions based on the groups they are in.
+                    </p>
                 </div>
 
                 <div>
@@ -47,12 +50,15 @@
                                 Edit
                             </a>
 
-                            <a {{ stimulus_target('users/actions', 'deleteButton')}} class="btn btn-sm btn-outline-danger" {{ stimulus_action('users/actions', 'confirmDelete') }}>
+                            <a {{ stimulus_target('users/actions', 'deleteButton') }}
+                                    class="btn btn-sm btn-outline-danger" {{ stimulus_action('users/actions', 'confirmDelete') }}>
                                 <i class="bi-trash"></i>
                                 Delete
                             </a>
 
-                            <form {{ stimulus_target('users/actions', 'deleteForm')}} action="{{ path('web_user_delete', {'id': user.id} ) }}" method="POST" class="d-none">
+                            <form {{ stimulus_target('users/actions', 'deleteForm') }}
+                                    action="{{ path('web_user_delete', {'id': user.id} ) }}" method="POST"
+                                    class="d-none">
                                 <button type="submit" class="btn btn-sm btn-danger">
                                     <i class="bi-trash-fill"></i>
                                     Confirm delete
@@ -71,6 +77,9 @@
             <div class="d-flex justify-content-between">
                 <div>
                     <h2 class="card-title">Groups</h2>
+                    <p class="card-subtitle">
+                        Groups can be attached to entities. Any users in the group will then have access to the entity.
+                    </p>
                 </div>
 
                 <div>
@@ -110,12 +119,15 @@
                                 Edit
                             </a>
 
-                            <a {{ stimulus_target('groups/actions', 'deleteButton')}} class="btn btn-sm btn-outline-danger" {{ stimulus_action('groups/actions', 'confirmDelete') }}>
+                            <a {{ stimulus_target('groups/actions', 'deleteButton') }}
+                                    class="btn btn-sm btn-outline-danger" {{ stimulus_action('groups/actions', 'confirmDelete') }}>
                                 <i class="bi-trash"></i>
                                 Delete
                             </a>
 
-                            <form {{ stimulus_target('groups/actions', 'deleteForm')}} action="{{ path('web_group_delete', {'id': group.id} ) }}" method="POST" class="d-none">
+                            <form {{ stimulus_target('groups/actions', 'deleteForm') }}
+                                    action="{{ path('web_group_delete', {'id': group.id} ) }}" method="POST"
+                                    class="d-none">
                                 <button type="submit" class="btn btn-sm btn-danger">
                                     <i class="bi-trash-fill"></i>
                                     Confirm delete

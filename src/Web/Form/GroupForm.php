@@ -30,7 +30,11 @@ class GroupForm extends AbstractType
                 'expanded' => true,
                 'choice_label' => static fn (User $u) => $u->getUsername(),
             ])
-            ->add('submit', SubmitType::class);
+            ->add('submit', SubmitType::class, [
+                'row_attr' => [
+                    'class' => 'mb-0', // remove the mb-3 class
+                ],
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void
