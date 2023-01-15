@@ -27,6 +27,7 @@ use Domain\Repository\UserRepository;
 use Infrastructure\Breadcrumbs\BreadcrumbBag;
 use Infrastructure\Breadcrumbs\BreadcrumbItem;
 use Infrastructure\Controller\AppContext;
+use JsonException;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormError;
@@ -93,7 +94,7 @@ class EndpointController extends AbstractController
                     'web_endpoint_details',
                     ['applicationId' => $application->getId(), 'id' => $endpoint->getId()]
                 );
-            } catch (\JsonException $e) {
+            } catch (JsonException) {
                 // no-op, re-enter the form
                 $form->addError(
                     new FormError(
@@ -226,7 +227,7 @@ class EndpointController extends AbstractController
                     'web_endpoint_details',
                     ['applicationId' => $application->getId(), 'id' => $endpoint->getId()]
                 );
-            } catch (\JsonException $e) {
+            } catch (JsonException) {
                 // no-op, re-enter the form
                 $form->addError(
                     new FormError(

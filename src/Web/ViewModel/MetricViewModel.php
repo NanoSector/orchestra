@@ -14,6 +14,7 @@ use Domain\Entity\Metric;
 use Domain\Metric\HealthMetric;
 use Domain\Metric\InvalidMetric;
 use Domain\Metric\MetricInterface;
+use JsonException;
 use Web\Exception\NoUsableDatapointException;
 
 class MetricViewModel
@@ -69,9 +70,13 @@ class MetricViewModel
             return 'N/A';
         }
 
-        $result = json_decode($this->metricObject->getValue(), true, 512, JSON_THROW_ON_ERROR);
+        try {
+            $result = json_decode($this->metricObject->getValue(), true, 512, JSON_THROW_ON_ERROR);
 
-        if (is_array($result)) {
+            if (is_array($result)) {
+                return 'Invalid value';
+            }
+        } catch (JsonException) {
             return 'Invalid value';
         }
 
