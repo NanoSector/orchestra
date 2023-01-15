@@ -9,23 +9,16 @@ declare(strict_types = 1);
 
 namespace Web\Controller;
 
-use Carbon\Carbon;
 use Doctrine\Common\Collections\ArrayCollection;
 use Domain\Collection\MetricsPerProductCollection;
-use Domain\Endpoint\Driver\DriverInterface;
 use Domain\Endpoint\EndpointClient;
 use Domain\Endpoint\EndpointDriverResponseMapper;
 use Domain\Entity\Application;
-use Domain\Entity\Datapoint;
 use Domain\Entity\Endpoint;
 use Domain\Entity\Metric;
 use Domain\Entity\User;
-use Domain\Metric\MetricEnum;
 use Domain\Repository\EndpointRepository;
-use Domain\Repository\MetricRepository;
-use Domain\Repository\UserRepository;
-use Infrastructure\Breadcrumbs\BreadcrumbBag;
-use Infrastructure\Breadcrumbs\BreadcrumbItem;
+use Infrastructure\Breadcrumbs\Breadcrumb;
 use Infrastructure\Controller\AppContext;
 use JsonException;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
@@ -33,42 +26,30 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\KernelInterface;
 use Symfony\Component\Routing\Annotation\Route;
+use Web\Breadcrumb\BreadcrumbBuilder;
 use Web\Form\EndpointForm;
+use Web\Helper\BreadcrumbHelper;
 use Web\Helper\Flash;
 use Web\ViewModel\MetricViewModel;
 
 #[AppContext('app_management')]
+#[Breadcrumb('Applications', 'web_application_index')]
 class EndpointController extends AbstractController
 {
-
-    private EndpointRepository $endpointRepository;
-    private MetricRepository $metricRepository;
-    private UserRepository $userRepository;
-
     public function __construct(
-        EndpointRepository $endpointRepository,
-        MetricRepository $metricRepository,
-        UserRepository $userRepository
+        private readonly EndpointRepository $endpointRepository,
+        private readonly BreadcrumbBuilder $breadcrumbBuilder
     ) {
-        $this->endpointRepository = $endpointRepository;
-        $this->metricRepository = $metricRepository;
-        $this->userRepository = $userRepository;
     }
 
     #[Route('/applications/{applicationId}/endpoints/create', name: 'web_endpoint_create', methods: ["GET", "POST"])]
     #[ParamConverter("application", options: ["id" => "applicationId"])]
     public function create(Application $application, Request $request): Response
     {
-        /** @var BreadcrumbBag $breadcrumbBag */
-        $breadcrumbBag = $request->attributes->get('breadcrumbs');
-        $breadcrumbBag->add([
-            'application' => new BreadcrumbItem(
-                sprintf('Application %s', $application->getName()),
-                $this->generateUrl('web_application_details', ['id' => $application->getId()])
-            ),
-            'endpoint'    => new BreadcrumbItem('Create endpoint', null, true),
+        BreadcrumbHelper::request($request)->add([
+            'application' => $this->breadcrumbBuilder->application($application),
+            'current'     => $this->breadcrumbBuilder->text('Create endpoint', true),
         ]);
 
         $endpoint = new Endpoint();
@@ -129,14 +110,9 @@ class EndpointController extends AbstractController
             throw $this->createNotFoundException();
         }
 
-        /** @var BreadcrumbBag $breadcrumbBag */
-        $breadcrumbBag = $request->attributes->get('breadcrumbs');
-        $breadcrumbBag->add([
-            'application' => new BreadcrumbItem(
-                sprintf('Application %s', $application->getName()),
-                $this->generateUrl('web_application_details', ['id' => $application->getId()])
-            ),
-            'endpoint'    => new BreadcrumbItem('Endpoint', null, true),
+        BreadcrumbHelper::request($request)->add([
+            'application' => $this->breadcrumbBuilder->application($application),
+            'endpoint'    => $this->breadcrumbBuilder->endpoint($endpoint, true),
         ]);
 
         $metricsPerProduct = MetricsPerProductCollection::fromMetricCollection($endpoint->getMetrics());
@@ -169,8 +145,7 @@ class EndpointController extends AbstractController
         Endpoint $endpoint,
         EndpointClient $endpointClient,
         EndpointDriverResponseMapper $mapper
-    ): Response
-    {
+    ): Response {
         $response = $endpointClient->fetch($endpoint);
 
         $log = $mapper->createCollectionLog($endpoint, $response);
@@ -196,14 +171,14 @@ class EndpointController extends AbstractController
     #[ParamConverter("application", options: ["id" => "applicationId"])]
     public function update(Application $application, Endpoint $endpoint, Request $request): Response
     {
-        /** @var BreadcrumbBag $breadcrumbBag */
-        $breadcrumbBag = $request->attributes->get('breadcrumbs');
-        $breadcrumbBag->add([
-            'application' => new BreadcrumbItem(
-                sprintf('Application %s', $application->getName()),
-                $this->generateUrl('web_application_details', ['id' => $application->getId()])
-            ),
-            'endpoint'    => new BreadcrumbItem('Update endpoint', null, true),
+        if (!$endpoint->belongsToApplication($application)) {
+            throw $this->createNotFoundException();
+        }
+
+        BreadcrumbHelper::request($request)->add([
+            'application' => $this->breadcrumbBuilder->application($application),
+            'endpoint'    => $this->breadcrumbBuilder->endpoint($endpoint),
+            'current'     => $this->breadcrumbBuilder->text('Update endpoint', true),
         ]);
 
         $form = $this->createForm(EndpointForm::class, $endpoint);

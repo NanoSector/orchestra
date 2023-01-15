@@ -22,7 +22,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Web\Breadcrumb\BreadcrumbBuilder;
 use Web\Form\ApplicationForm;
+use Web\Helper\BreadcrumbHelper;
 use Web\Helper\Flash;
 use Web\ViewModel\MetricViewModel;
 
@@ -30,12 +32,10 @@ use Web\ViewModel\MetricViewModel;
 #[Breadcrumb('Applications', 'web_application_index')]
 class ApplicationController extends AbstractController
 {
-
-    private ApplicationRepository $applicationRepository;
-
-    public function __construct(ApplicationRepository $applicationRepository)
-    {
-        $this->applicationRepository = $applicationRepository;
+    public function __construct(
+        private readonly ApplicationRepository $applicationRepository,
+        private readonly BreadcrumbBuilder $breadcrumbBuilder
+    ) {
     }
 
     #[Route('/applications/create', name: 'web_application_create', methods: ["GET", "POST"])]
@@ -72,9 +72,12 @@ class ApplicationController extends AbstractController
     }
 
     #[Route('/applications/{id}', name: 'web_application_details', methods: ["GET"])]
-    #[Breadcrumb('Application overview')]
-    public function details(Application $application): Response
+    public function details(Request $request, Application $application): Response
     {
+        BreadcrumbHelper::request($request)->add(
+            ['application' => $this->breadcrumbBuilder->application($application)]
+        );
+
         $pinnedMetricsPerProduct = new ArrayCollection();
 
         $user = $this->getUser();
@@ -109,9 +112,15 @@ class ApplicationController extends AbstractController
     }
 
     #[Route('/applications/{id}/update', name: 'web_application_update', methods: ["GET", "POST"])]
-    #[Breadcrumb('Update application')]
     public function update(Application $application, Request $request): Response
     {
+        BreadcrumbHelper::request($request)->add(
+            [
+                'application' => $this->breadcrumbBuilder->application($application),
+                'current'     => $this->breadcrumbBuilder->text('Update application', true),
+            ]
+        );
+
         $form = $this->createForm(ApplicationForm::class, $application);
 
         $form->handleRequest($request);

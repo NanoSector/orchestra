@@ -14,6 +14,7 @@ use Domain\Entity\Metric;
 use Domain\Metric\HealthMetric;
 use Domain\Metric\InvalidMetric;
 use Domain\Metric\MetricInterface;
+use Generator;
 use JsonException;
 use Web\Exception\NoUsableDatapointException;
 
@@ -83,7 +84,7 @@ class MetricViewModel
         return (string)$result;
     }
 
-    public function getId(): ?int
+    public function getMetricId(): ?int
     {
         return $this->metric->getId();
     }
