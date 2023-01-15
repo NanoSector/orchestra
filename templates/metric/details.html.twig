@@ -1,0 +1,46 @@
+{% extends app.request.attributes.has('isModalRequest') ? 'modal.html.twig' : 'base.html.twig' %}
+
+{% block body %}
+    <h1>History for metric {{ metric.product }}</h1>
+
+    <div class="alert alert-info">
+        Orchestra 'touches' an existing datapoint whenever there is no new value for the metric.
+        This updates the <code>Last updated</code> value to mark the datapoint as new.
+    </div>
+
+    <div class="card shadow-sm">
+        <div class="card-header">
+            <h2 class="card-title">Datapoint history</h2>
+
+            <p class="card-subtitle">
+                This table contains historical data for this metric.
+            </p>
+        </div>
+
+        <div class="table-flush">
+            <table class="table table-hover init-datatable">
+                <thead class="table-light">
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Value</th>
+                    <th scope="col">Has been touched?</th>
+                    <th scope="col">Created at</th>
+                    <th scope="col">Last updated</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for vm in datapointViewModels %}
+                    <tr>
+                        <th scope="row" class="align-middle">{{ vm.id }}</th>
+                        <td class="align-middle">{{ vm.value }}</td>
+                        <td class="align-middle">{{ vm.beenTouched ? 'Yes' : 'No' }}</td>
+                        <td class="align-middle">{{ vm.createdAt }}</td>
+                        <td class="align-middle">{{ vm.updatedAt }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+{% endblock %}

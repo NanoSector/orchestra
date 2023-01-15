@@ -11,17 +11,10 @@ namespace Infrastructure\Breadcrumbs;
 
 readonly class BreadcrumbItem
 {
-    public ?string $url;
-
     public function __construct(
         public string $name,
-        ?string $url,
+        public ?string $url,
         public bool $active = false
     ) {
-        if ($active) {
-            $url = null;
-        }
-
-        $this->url = $url;
     }
 }

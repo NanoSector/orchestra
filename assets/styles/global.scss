@@ -35,6 +35,10 @@ $breadcrumb-height: 54px;
 
 .breadcrumb-bar {
   height: $breadcrumb-height;
+
+  .breadcrumb-item:not(.active) {
+    color: white;
+  }
 }
 
 .main-content {
