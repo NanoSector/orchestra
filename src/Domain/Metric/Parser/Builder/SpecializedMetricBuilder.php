@@ -12,16 +12,11 @@ use Domain\Metric\Parser\Node\RegexVersionNode;
 use Domain\Metric\Parser\Node\TextMetricNode;
 use Domain\Metric\Parser\Node\TryNode;
 
-class SpecializedMetricBuilder
+readonly class SpecializedMetricBuilder
 {
     public function postgresql(): ParserNodeInterface
     {
         return new RegexVersionNode('PostgreSQL', '/^PostgreSQL ([0-9\.]+)/');
-    }
-
-    public function caddy(): ParserNodeInterface
-    {
-        return new RegexVersionNode('Caddy', '/^Caddy\/v(.+)$/');
     }
 
     public function webserverHeader(): ParserNodeInterface
@@ -30,5 +25,10 @@ class SpecializedMetricBuilder
             $this->caddy(),
             new TextMetricNode('Webserver')
         );
+    }
+
+    public function caddy(): ParserNodeInterface
+    {
+        return new RegexVersionNode('Caddy', '/^Caddy\/v(.+)$/');
     }
 }

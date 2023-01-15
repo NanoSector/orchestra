@@ -5,20 +5,23 @@
  * This source code is licensed under the MIT license. See LICENSE for details.
  */
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace Domain\Metric;
 
 use Domain\Entity\Datapoint;
-use Web\Helper\Badge;
 
-class InvalidMetric implements MetricInterface
+readonly class InvalidMetric implements MetricInterface
 {
-    protected string $product;
 
-    public function __construct(string $product)
+    public function __construct(
+        protected string $product
+    ) {
+    }
+
+    public static function fromDatapoint(Datapoint $datapoint): self
     {
-        $this->product = $product;
+        return new self($datapoint->getMetric()->getProduct());
     }
 
     public function getName(): string
@@ -26,13 +29,8 @@ class InvalidMetric implements MetricInterface
         return $this->product;
     }
 
-    public function getValue(): mixed
+    public function getValue(): null
     {
         return null;
-    }
-
-    public static function fromDatapoint(Datapoint $datapoint): self
-    {
-        return new self($datapoint->getMetric()->getProduct());
     }
 }

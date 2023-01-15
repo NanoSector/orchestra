@@ -16,13 +16,11 @@ use Domain\Entity\Metric;
 use Domain\Entity\MetricPin;
 use Domain\Entity\User;
 
-class PinnedMetricUserDecorator
+readonly class PinnedMetricUserDecorator
 {
-    private User $user;
-
-    public function __construct(User $user)
-    {
-        $this->user = $user;
+    public function __construct(
+        private User $user
+    ) {
     }
 
     /**

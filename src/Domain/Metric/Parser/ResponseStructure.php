@@ -5,7 +5,7 @@
  * This source code is licensed under the MIT license. See LICENSE for details.
  */
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace Domain\Metric\Parser;
 
@@ -13,13 +13,11 @@ use Domain\Metric\MetricInterface;
 use Domain\Metric\Parser\Node\ParserControlStructureInterface;
 use Domain\Metric\Parser\Node\ParserNodeInterface;
 
-class ResponseStructure
+readonly class ResponseStructure
 {
-    private array $structure;
-
-    public function __construct(array $structure)
-    {
-        $this->structure = $structure;
+    public function __construct(
+        protected array $structure
+    ) {
     }
 
     /** @return MetricInterface[] */
@@ -43,7 +41,7 @@ class ResponseStructure
             }
 
             if (is_array($structureValue)) {
-                if (!is_array($data[$structureKey]) ) {
+                if (!is_array($data[$structureKey])) {
                     continue;
                 }
 

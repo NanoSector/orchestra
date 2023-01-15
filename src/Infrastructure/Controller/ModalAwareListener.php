@@ -5,7 +5,7 @@
  * This source code is licensed under the MIT license. See LICENSE for details.
  */
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace Infrastructure\Controller;
 
@@ -13,7 +13,7 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpKernel\Event\ControllerEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 
-class ModalAwareListener implements EventSubscriberInterface
+readonly class ModalAwareListener implements EventSubscriberInterface
 {
     public static function getSubscribedEvents(): array
     {

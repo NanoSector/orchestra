@@ -15,13 +15,10 @@ use Web\Helper\Badge;
 
 class TextMetric implements MetricInterface
 {
-    protected string $product;
-    protected string $value;
-
-    public function __construct(string $product, string $value)
-    {
-        $this->product = $product;
-        $this->value = $value;
+    public function __construct(
+        protected string $product,
+        protected string $value
+    ) {
     }
 
     public function getName(): string

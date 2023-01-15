@@ -5,7 +5,7 @@
  * This source code is licensed under the MIT license. See LICENSE for details.
  */
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace Domain\Metric\Parser\Node;
 
@@ -13,19 +13,21 @@ use Domain\Exception\ParserNodeTypeException;
 use Domain\Metric\InvalidMetric;
 use Domain\Metric\MetricInterface;
 use Domain\Metric\VersionMetric;
+use JetBrains\PhpStorm\Language;
 
 /**
  * Matches the given regex against the version.
  * Will use the first capturing group as value.
  */
-class RegexVersionNode implements ParserNodeInterface
+readonly class RegexVersionNode implements ParserNodeInterface
 {
-    private string $product;
-    private string $regex;
+    protected string $regex;
 
-    public function __construct(string $product, /** @lang RegExp */ string $regex)
-    {
-        $this->product = $product;
+    public function __construct(
+        protected string $product,
+        #[Language('RegExp')] string $regex
+    ) {
+        // This is a property so that we can apply the Language attribute.
         $this->regex = $regex;
     }
 
@@ -44,6 +46,6 @@ class RegexVersionNode implements ParserNodeInterface
             return new InvalidMetric($this->product);
         }
 
-        return new VersionMetric($this->product, $matches[1] );
+        return new VersionMetric($this->product, $matches[1]);
     }
 }

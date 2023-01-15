@@ -11,10 +11,10 @@ namespace Domain\Metric\Parser\Specialized;
 
 use Domain\Metric\Parser\Node\RegexVersionNode;
 
-class PostgreSQLVersionNode extends RegexVersionNode
+readonly class PostgreSQLVersionNode extends RegexVersionNode
 {
     public function __construct()
     {
-        parent::__construct('PostgreSQL', '/^PostgreSQL ([0-9\.]+)/');
+        parent::__construct('PostgreSQL', '/^PostgreSQL ([0-9.]+)/');
     }
 }

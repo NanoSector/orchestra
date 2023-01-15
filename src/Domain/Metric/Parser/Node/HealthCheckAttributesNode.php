@@ -9,25 +9,16 @@ declare(strict_types=1);
 
 namespace Domain\Metric\Parser\Node;
 
+use Closure;
 use Domain\Metric\HealthMetric;
 use Domain\Metric\MetricInterface;
 
-class HealthCheckAttributesNode implements ParserNodeInterface
+readonly class HealthCheckAttributesNode implements ParserNodeInterface
 {
-    /**
-     * @var callable
-     */
-    private $condition;
-    private string $product;
-
-    /**
-     * @param string $product
-     * @param callable(string|array): bool $condition
-     */
-    public function __construct(string $product, callable $condition)
-    {
-        $this->condition = $condition;
-        $this->product = $product;
+    public function __construct(
+        protected string $product,
+        protected Closure $condition
+    ) {
     }
 
     public function parse(array|string $value): MetricInterface

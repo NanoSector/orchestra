@@ -5,19 +5,19 @@
  * This source code is licensed under the MIT license. See LICENSE for details.
  */
 
+declare(strict_types = 1);
+
 namespace Domain\Metric;
 
 use Domain\Entity\Datapoint;
 use Domain\Entity\Metric;
 use InvalidArgumentException;
 
-class DatapointSpecialist
+readonly class DatapointSpecialist
 {
-    private Datapoint $datapoint;
-
-    public function __construct(Datapoint $datapoint)
-    {
-        $this->datapoint = $datapoint;
+    public function __construct(
+        private Datapoint $datapoint
+    ) {
     }
 
     public function makeMetricObject(): MetricInterface
@@ -41,6 +41,8 @@ class DatapointSpecialist
                 return new VersionMetric($metric->getProduct(), $this->datapoint->getValue());
         }
 
-        throw new InvalidArgumentException(sprintf('Do not know how to specialize %s', $metric->getDiscriminator()->value));
+        throw new InvalidArgumentException(
+            sprintf('Do not know how to specialize %s', $metric->getDiscriminator()->value)
+        );
     }
 }

@@ -5,7 +5,7 @@
  * This source code is licensed under the MIT license. See LICENSE for details.
  */
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace Domain\Metric\Parser\Node;
 
@@ -17,7 +17,7 @@ use Domain\Metric\MetricInterface;
  * Takes multiple parser nodes and exhausts the list until
  * one returns a valid metric
  */
-class TryNode implements ParserNodeInterface
+readonly class TryNode implements ParserNodeInterface
 {
     /** @var ParserNodeInterface[] */
     private array $nodes;

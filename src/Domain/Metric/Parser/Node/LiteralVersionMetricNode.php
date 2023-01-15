@@ -5,20 +5,18 @@
  * This source code is licensed under the MIT license. See LICENSE for details.
  */
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace Domain\Metric\Parser\Node;
 
 use Domain\Exception\ParserNodeTypeException;
 use Domain\Metric\VersionMetric;
 
-class LiteralVersionMetricNode implements ParserNodeInterface
+readonly class LiteralVersionMetricNode implements ParserNodeInterface
 {
-    private string $product;
-
-    public function __construct(string $product)
-    {
-        $this->product = $product;
+    public function __construct(
+        protected string $product
+    ) {
     }
 
     /**

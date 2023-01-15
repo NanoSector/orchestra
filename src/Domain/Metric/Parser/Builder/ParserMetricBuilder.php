@@ -7,34 +7,28 @@
 
 namespace Domain\Metric\Parser\Builder;
 
+use Closure;
 use Domain\Metric\Parser\Node\HealthCheckAttributesNode;
 use Domain\Metric\Parser\Node\LiteralVersionMetricNode;
 use Domain\Metric\Parser\Node\ParserNodeInterface;
 use Domain\Metric\Parser\Node\RegexVersionNode;
 use Domain\Metric\Parser\Node\TextMetricNode;
 
-class ParserMetricBuilder
+readonly class ParserMetricBuilder
 {
-    private SpecializedMetricBuilder $specializedMetricBuilder;
-
-    public function __construct(SpecializedMetricBuilder $specializedMetricBuilder)
-    {
-        $this->specializedMetricBuilder = $specializedMetricBuilder;
+    public function __construct(
+        protected SpecializedMetricBuilder $specializedMetricBuilder
+    ) {
     }
 
-    public function healthCheck(string $product, callable $callable): ParserNodeInterface
+    public function healthCheck(string $product, Closure $callable): ParserNodeInterface
     {
         return new HealthCheckAttributesNode($product, $callable);
     }
 
-    public function version(string $product): ParserNodeInterface
+    public function specialized(): SpecializedMetricBuilder
     {
-        return new LiteralVersionMetricNode($product);
-    }
-
-    public function versionRegex(string $product, /** @lang RegExp */string $regex): ParserNodeInterface
-    {
-        return new RegexVersionNode($product, $regex);
+        return $this->specializedMetricBuilder;
     }
 
     public function text(string $product): ParserNodeInterface
@@ -42,8 +36,13 @@ class ParserMetricBuilder
         return new TextMetricNode($product);
     }
 
-    public function specialized(): SpecializedMetricBuilder
+    public function version(string $product): ParserNodeInterface
     {
-        return $this->specializedMetricBuilder;
+        return new LiteralVersionMetricNode($product);
+    }
+
+    public function versionRegex(string $product, /** @lang RegExp */ string $regex): ParserNodeInterface
+    {
+        return new RegexVersionNode($product, $regex);
     }
 }

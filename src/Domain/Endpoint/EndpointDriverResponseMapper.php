@@ -5,6 +5,8 @@
  * This source code is licensed under the MIT license. See LICENSE for details.
  */
 
+declare(strict_types = 1);
+
 namespace Domain\Endpoint;
 
 use Domain\Endpoint\Driver\DriverResponseInterface;
@@ -14,7 +16,7 @@ use Domain\Entity\EndpointCollectionLog;
 use Domain\Entity\Metric;
 use Domain\Metric\MetricEnum;
 
-class EndpointDriverResponseMapper
+readonly class EndpointDriverResponseMapper
 {
     /**
      * Calculates the diff between the current Endpoint state and the desired state in the response.

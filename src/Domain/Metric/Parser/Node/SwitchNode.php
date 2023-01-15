@@ -5,30 +5,22 @@
  * This source code is licensed under the MIT license. See LICENSE for details.
  */
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace Domain\Metric\Parser\Node;
 
+use Closure;
 use InvalidArgumentException;
+use JetBrains\PhpStorm\ArrayShape;
 
-class SwitchNode extends AbstractParserControlStructure
+readonly class SwitchNode extends AbstractParserControlStructure
 {
     public const DEFAULT = '_default';
 
-    /**
-     * @var callable
-     */
-    private $reducer;
-    private array $cases;
-
-    /**
-     * @param callable(array|string): string $reducer
-     * @param array[] $cases
-     */
-    public function __construct(callable $reducer, array $cases)
-    {
-        $this->reducer = $reducer;
-        $this->cases = $cases;
+    public function __construct(
+        protected Closure $reducer,
+        protected array $cases
+    ) {
     }
 
     public function parse(string|array $value): array

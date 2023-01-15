@@ -5,19 +5,17 @@
  * This source code is licensed under the MIT license. See LICENSE for details.
  */
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace Infrastructure\Controller;
 
 use Attribute;
 
 #[Attribute(Attribute::TARGET_CLASS)]
-class AppContext
+readonly class AppContext
 {
-    public readonly string $appContext;
-
-    public function __construct(string $appContext)
-    {
-        $this->appContext = $appContext;
+    public function __construct(
+        public string $appContext
+    ) {
     }
 }

@@ -16,13 +16,11 @@ use Domain\Entity\Endpoint;
 use Domain\Exception\EndpointDriverNotInstantiableException;
 use Domain\Exception\EndpointExecutionFailedException;
 
-class EndpointClient
+readonly class EndpointClient
 {
-    private DriverFactory $driverFactory;
-
-    public function __construct(DriverFactory $driverFactory)
-    {
-        $this->driverFactory = $driverFactory;
+    public function __construct(
+        private DriverFactory $driverFactory
+    ) {
     }
 
     /**

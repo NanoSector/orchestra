@@ -9,19 +9,15 @@ declare(strict_types=1);
 
 namespace Infrastructure\Breadcrumbs;
 
-class BreadcrumbItem
+readonly class BreadcrumbItem
 {
-    public readonly string $name;
+    public ?string $url;
 
-    public readonly ?string $url;
-
-    public readonly bool $active;
-
-    public function __construct(string $name, ?string $url, bool $active = false)
-    {
-        $this->name = $name;
-        $this->active = $active;
-
+    public function __construct(
+        public string $name,
+        ?string $url,
+        public bool $active = false
+    ) {
         if ($active) {
             $url = null;
         }

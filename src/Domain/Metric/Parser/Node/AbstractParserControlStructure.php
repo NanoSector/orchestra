@@ -9,7 +9,7 @@ declare(strict_types=1);
 
 namespace Domain\Metric\Parser\Node;
 
-abstract class AbstractParserControlStructure implements ParserControlStructureInterface
+readonly abstract class AbstractParserControlStructure implements ParserControlStructureInterface
 {
     public function handleNotFound(): void
     {

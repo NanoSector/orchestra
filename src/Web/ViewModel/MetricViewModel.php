@@ -18,15 +18,12 @@ use Web\Exception\NoUsableDatapointException;
 
 class MetricViewModel
 {
-    private MetricInterface $metricObject;
-    private Metric $metric;
-
     private bool $pinned = false;
 
-    public function __construct(Metric $metric, MetricInterface $metricObject)
-    {
-        $this->metricObject = $metricObject;
-        $this->metric = $metric;
+    public function __construct(
+        private readonly Metric $metric,
+        private readonly MetricInterface $metricObject
+    ) {
     }
 
     /**

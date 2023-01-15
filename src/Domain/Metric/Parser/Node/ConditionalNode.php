@@ -9,25 +9,15 @@ declare(strict_types=1);
 
 namespace Domain\Metric\Parser\Node;
 
-class ConditionalNode extends AbstractParserControlStructure
-{
-    /**
-     * @var callable(string): bool
-     */
-    private $condition;
-    private array $ifTrue;
-    private array $ifFalse;
+use Closure;
 
-    /**
-     * @param callable(string|array): bool $condition
-     * @param array $ifTrue
-     * @param array $ifFalse
-     */
-    public function __construct(callable $condition, array $ifTrue, array $ifFalse = [])
-    {
-        $this->condition = $condition;
-        $this->ifTrue = $ifTrue;
-        $this->ifFalse = $ifFalse;
+readonly class ConditionalNode extends AbstractParserControlStructure
+{
+    public function __construct(
+        protected Closure $condition,
+        protected array $ifTrue,
+        protected array $ifFalse = []
+    ) {
     }
 
     public function parse(string|array $value): array

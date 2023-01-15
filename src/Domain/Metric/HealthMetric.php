@@ -5,31 +5,25 @@
  * This source code is licensed under the MIT license. See LICENSE for details.
  */
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace Domain\Metric;
 
 use Domain\Entity\Datapoint;
-use Web\Helper\Badge;
+use JetBrains\PhpStorm\ArrayShape;
 
-class HealthMetric implements MetricInterface, HealthMetricInterface
+readonly class HealthMetric implements MetricInterface, HealthMetricInterface
 {
-    protected string $product;
-
-    protected bool $healthy;
-
-    protected array $attributes;
-
-    public function __construct(string $product, bool $healthy, array $attributes)
-    {
-        $this->product = $product;
-        $this->healthy = $healthy;
-        $this->attributes = $attributes;
+    public function __construct(
+        protected string $product,
+        protected bool $healthy,
+        #[ArrayShape(['string' => 'mixed'])] protected array $healthAttributes
+    ) {
     }
 
-    public function getName(): string
+    public static function fromDatapoint(Datapoint $datapoint): self
     {
-        return $this->product;
+        return new self($datapoint->getMetric()->getProduct(), (bool)$datapoint->getValue(), []);
     }
 
     public function getValue(): bool
@@ -42,11 +36,11 @@ class HealthMetric implements MetricInterface, HealthMetricInterface
      */
     public function getHealthAttributes(): array
     {
-        return $this->attributes;
+        return $this->healthAttributes;
     }
 
-    public static function fromDatapoint(Datapoint $datapoint): self
+    public function getName(): string
     {
-        return new self($datapoint->getMetric()->getProduct(), (bool)$datapoint->getValue(), []);
+        return $this->product;
     }
 }

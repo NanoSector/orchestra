@@ -14,15 +14,12 @@ use Domain\Entity\Datapoint;
 use JsonException;
 use Web\Helper\Badge;
 
-class VersionMetric implements SemverMetricInterface
+readonly class VersionMetric implements SemverMetricInterface
 {
-    protected string $value;
-    protected string $product;
-
-    public function __construct(string $product, string $value)
-    {
-        $this->product = $product;
-        $this->value = $value;
+    public function __construct(
+        protected string $product,
+        protected string $value
+    ) {
     }
 
     public function getName(): string
