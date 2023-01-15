@@ -27,7 +27,7 @@
 </head>
 <body>
 <div class="d-flex">
-    <div class="d-flex vh-100 flex-column p-3 text-white bg-dark" style="width: 280px;">
+    <div class="d-flex vh-100 flex-column p-3 text-white bg-dark" style="min-width: 280px; max-width: 280px;">
         <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
             <span class="fs-4">Orchestra</span>
         </a>
@@ -43,10 +43,10 @@
         <div class="dropdown">
             {% if app.user %}
                 <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle"
-                   id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
+                   id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
                     <strong>{{ app.user.username }}</strong>
                 </a>
-                <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1">
+                <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="userDropdown">
                     <li><a class="dropdown-item" href="#">{% trans %}Settings{% endtrans %}</a></li>
                     <li><a class="dropdown-item" href="#">{% trans %}Profile{% endtrans %}</a></li>
                     <li>
