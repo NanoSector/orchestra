@@ -22,6 +22,7 @@ use Infrastructure\Breadcrumbs\Breadcrumb;
 use Infrastructure\Controller\AppContext;
 use JsonException;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
@@ -44,9 +45,10 @@ class EndpointController extends AbstractController
     }
 
     #[Route('/applications/{applicationId}/endpoints/create', name: 'web_endpoint_create', methods: ["GET", "POST"])]
-    #[ParamConverter("application", options: ["id" => "applicationId"])]
-    public function create(Application $application, Request $request): Response
-    {
+    public function create(
+        #[MapEntity(id: 'applicationId')] Application $application,
+        Request $request
+    ): Response {
         BreadcrumbHelper::request($request)->add([
             'application' => $this->breadcrumbBuilder->application($application),
             'current'     => $this->breadcrumbBuilder->text('Create endpoint', true),
@@ -103,9 +105,11 @@ class EndpointController extends AbstractController
     }
 
     #[Route('/applications/{applicationId}/endpoints/{id}', name: 'web_endpoint_details', methods: ["GET"])]
-    #[ParamConverter("application", options: ["id" => "applicationId"])]
-    public function details(Application $application, Endpoint $endpoint, Request $request): Response
-    {
+    public function details(
+        #[MapEntity(id: 'applicationId')] Application $application,
+        Endpoint $endpoint,
+        Request $request
+    ): Response {
         if (!$endpoint->belongsToApplication($application)) {
             throw $this->createNotFoundException();
         }
@@ -139,9 +143,8 @@ class EndpointController extends AbstractController
     }
 
     #[Route('/applications/{applicationId}/endpoints/{id}/test', name: 'web_endpoint_test', methods: ["GET"])]
-    #[ParamConverter("application", options: ["id" => "applicationId"])]
     public function test(
-        Application $application,
+        #[MapEntity(id: 'applicationId')] Application $application,
         Endpoint $endpoint,
         EndpointClient $endpointClient,
         EndpointDriverResponseMapper $mapper
@@ -168,9 +171,11 @@ class EndpointController extends AbstractController
         "GET",
         "POST"
     ])]
-    #[ParamConverter("application", options: ["id" => "applicationId"])]
-    public function update(Application $application, Endpoint $endpoint, Request $request): Response
-    {
+    public function update(
+        #[MapEntity(id: 'applicationId')] Application $application,
+        Endpoint $endpoint,
+        Request $request
+    ): Response {
         if (!$endpoint->belongsToApplication($application)) {
             throw $this->createNotFoundException();
         }

@@ -14,6 +14,7 @@ use Domain\Entity\Endpoint;
 use Domain\Entity\Metric;
 use Infrastructure\Breadcrumbs\Breadcrumb;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -31,10 +32,12 @@ class MetricController extends AbstractController
     }
 
     #[Route('/applications/{applicationId}/endpoints/{endpointId}/metrics/{id}', name: 'web_metric_details', methods: ["GET"])]
-    #[ParamConverter("application", options: ["id" => "applicationId"])]
-    #[ParamConverter("endpoint", options: ["id" => "endpointId"])]
-    public function details(Application $application, Endpoint $endpoint, Metric $metric, Request $request): Response
-    {
+    public function details(
+        #[MapEntity(id: 'applicationId')] Application $application,
+        #[MapEntity(id: 'endpointId')] Endpoint $endpoint,
+        Metric $metric,
+        Request $request
+    ): Response {
         if (!$metric->belongsToEndpoint($endpoint) || !$endpoint->belongsToApplication($application)) {
             throw $this->createNotFoundException();
         }
