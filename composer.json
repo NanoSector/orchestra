@@ -48,7 +48,10 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "App\\Tests\\": "tests/"
+            "Api\\Tests\\": "tests/Api/",
+            "Domain\\Tests\\": "tests/Domain/",
+            "Infrastructure\\Tests\\": "tests/Infrastructure/",
+            "Web\\Tests\\": "tests/Web/"
         }
     },
     "replace": {

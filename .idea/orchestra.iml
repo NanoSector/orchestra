@@ -7,7 +7,11 @@
       <sourceFolder url="file://$MODULE_DIR$/src/Domain" isTestSource="false" packagePrefix="Domain\" />
       <sourceFolder url="file://$MODULE_DIR$/src/Infrastructure" isTestSource="false" packagePrefix="Infrastructure\" />
       <sourceFolder url="file://$MODULE_DIR$/src/Web" isTestSource="false" packagePrefix="Web\" />
-      <sourceFolder url="file://$MODULE_DIR$/tests" isTestSource="true" packagePrefix="App\Tests\" />
+      <sourceFolder url="file://$MODULE_DIR$/tests" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/tests/Api" isTestSource="true" packagePrefix="Api\Tests\" />
+      <sourceFolder url="file://$MODULE_DIR$/tests/Domain" isTestSource="true" packagePrefix="Domain\Tests\" />
+      <sourceFolder url="file://$MODULE_DIR$/tests/Infrastructure" isTestSource="true" packagePrefix="Infrastructure\Tests\" />
+      <sourceFolder url="file://$MODULE_DIR$/tests/Web" isTestSource="true" packagePrefix="Web\Tests\" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/myclabs/deep-copy" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/laminas/laminas-code" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/composer" />

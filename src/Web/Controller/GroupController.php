@@ -11,12 +11,12 @@ namespace Web\Controller;
 
 use Domain\Entity\Group;
 use Domain\Repository\GroupRepository;
-use Infrastructure\Breadcrumbs\Breadcrumb;
 use Infrastructure\Controller\AppContext;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Web\Breadcrumb\Breadcrumb;
 use Web\Breadcrumb\BreadcrumbBuilder;
 use Web\Form\GroupForm;
 use Web\Helper\BreadcrumbHelper;
