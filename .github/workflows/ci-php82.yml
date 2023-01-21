@@ -14,10 +14,10 @@ jobs:
       - name: PHPUnit Tests
         uses: php-actions/phpunit@v3
         env:
-          ACTION_PHPUNIT_PATH: bin/phpunit
           TEST_NAME: Orchestra
         with:
           bootstrap: vendor/autoload.php
           configuration: phpunit.xml.dist
           args: --coverage-text
           php_version: "8.2"
+          vendored_phpunit_path: bin/phpunit

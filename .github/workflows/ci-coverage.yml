@@ -19,7 +19,7 @@ jobs:
           configuration: phpunit.xml.dist
           args: --coverage-text
           php_version: "8.2"
+          vendored_phpunit_path: bin/phpunit
         env:
-          ACTION_PHPUNIT_PATH: bin/phpunit
           XDEBUG_MODE: coverage
           TEST_NAME: Orchestra
