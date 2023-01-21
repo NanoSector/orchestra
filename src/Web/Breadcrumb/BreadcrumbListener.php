@@ -7,11 +7,8 @@
 
 declare(strict_types = 1);
 
-namespace Infrastructure\Controller;
+namespace Web\Breadcrumb;
 
-use Infrastructure\Breadcrumbs\Breadcrumb;
-use Infrastructure\Breadcrumbs\BreadcrumbBag;
-use Infrastructure\Breadcrumbs\BreadcrumbItem;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpKernel\Event\ControllerArgumentsEvent;
 use Symfony\Component\HttpKernel\KernelEvents;

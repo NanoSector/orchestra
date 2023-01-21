@@ -7,7 +7,7 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\Collection;
+namespace Domain\Tests\Collection;
 
 use Infrastructure\Collection\AbstractStronglyTypedArrayCollection;
 use stdClass;

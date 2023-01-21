@@ -5,9 +5,8 @@
  * This source code is licensed under the MIT license. See LICENSE for details.
  */
 
-namespace App\Tests\Collection;
+namespace Domain\Tests\Collection;
 
-use Doctrine\Common\Collections\ArrayCollection;
 use Infrastructure\Collection\AbstractStronglyTypedArrayCollection;
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;

@@ -11,9 +11,8 @@ namespace Web\Breadcrumb;
 
 use Domain\Entity\Application;
 use Domain\Entity\Endpoint;
-use Domain\Entity\Group;
-use Infrastructure\Breadcrumbs\BreadcrumbItem;
 use Symfony\Component\Routing\RouterInterface;
+use Web\Exception\BreadcrumbBuilderException;
 
 readonly class BreadcrumbBuilder
 {
@@ -22,8 +21,17 @@ readonly class BreadcrumbBuilder
     ) {
     }
 
+    /**
+     * @throws BreadcrumbBuilderException
+     */
     public function application(Application $application, bool $active = false): BreadcrumbItem
     {
+        if (!$application->getId()) {
+            throw new BreadcrumbBuilderException(
+                'Building an Endpoint breadcrumb item requires that both the Endpoint and its Application have an ID'
+            );
+        }
+
         return new BreadcrumbItem(
             $application->getName(),
             $this->router->generate(
@@ -34,8 +42,23 @@ readonly class BreadcrumbBuilder
         );
     }
 
+    /**
+     * @throws BreadcrumbBuilderException
+     */
     public function endpoint(Endpoint $endpoint, bool $active = false): BreadcrumbItem
     {
+        if (!$endpoint->getApplication() instanceof Application) {
+            throw new BreadcrumbBuilderException(
+                'Cannot build an Endpoint breadcrumb item without an associated Application'
+            );
+        }
+
+        if (!$endpoint->getId() || !$endpoint->getApplication()->getId()) {
+            throw new BreadcrumbBuilderException(
+                'Building an Endpoint breadcrumb item requires that both the Endpoint and its Application have an ID'
+            );
+        }
+
         return new BreadcrumbItem(
             sprintf('Endpoint %s', $endpoint->getName()),
             $this->router->generate(

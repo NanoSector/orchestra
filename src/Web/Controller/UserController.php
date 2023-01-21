@@ -13,7 +13,6 @@ use Domain\Entity\User;
 use Domain\Enumeration\Role;
 use Domain\Repository\GroupRepository;
 use Domain\Repository\UserRepository;
-use Infrastructure\Breadcrumbs\Breadcrumb;
 use Infrastructure\Controller\AppContext;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -21,6 +20,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
+use Web\Breadcrumb\Breadcrumb;
 use Web\Form\UserForm;
 use Web\Helper\Flash;
 
