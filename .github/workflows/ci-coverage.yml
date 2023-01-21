@@ -15,7 +15,6 @@ jobs:
         uses: php-actions/phpunit@v3
         with:
           php_extensions: xdebug
-          bootstrap: vendor/autoload.php
           configuration: phpunit.xml.dist
           args: --coverage-text
           php_version: "8.2"

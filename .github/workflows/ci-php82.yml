@@ -16,8 +16,6 @@ jobs:
         env:
           TEST_NAME: Orchestra
         with:
-          bootstrap: vendor/autoload.php
           configuration: phpunit.xml.dist
-          args: --coverage-text
           php_version: "8.2"
           vendored_phpunit_path: bin/phpunit
