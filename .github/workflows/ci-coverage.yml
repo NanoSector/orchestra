@@ -1,5 +1,4 @@
 name: CI Code Coverage
-description: Code coverage from PHPUnit
 
 on: [push]
 
