@@ -1,0 +1,24 @@
+name: CI PHP 8.2
+description: PHPUnit tests on PHP 8.2
+
+on: [push]
+
+jobs:
+  build-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: php-actions/composer@v6
+
+      - name: PHPUnit Tests
+        uses: php-actions/phpunit@v3
+        env:
+          ACTION_PHPUNIT_PATH: bin/phpunit
+          TEST_NAME: Orchestra
+        with:
+          bootstrap: vendor/autoload.php
+          configuration: phpunit.xml.dist
+          args: --coverage-text
+          php_version: "8.2"
