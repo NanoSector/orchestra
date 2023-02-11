@@ -86,7 +86,7 @@
     },
     "require-dev": {
         "jetbrains/phpstorm-attributes": "^1.0",
-        "phpunit/phpunit": "^9.5",
+        "phpunit/phpunit": "^10.0",
         "symfony/debug-bundle": "6.2.*",
         "symfony/maker-bundle": "^1.0",
         "symfony/phpunit-bridge": "^6.2",
