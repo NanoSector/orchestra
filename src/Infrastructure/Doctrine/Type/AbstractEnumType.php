@@ -24,7 +24,7 @@ abstract class AbstractEnumType extends Type
         return 'TEXT';
     }
 
-    public function convertToDatabaseValue($value, AbstractPlatform $platform)
+    public function convertToDatabaseValue($value, AbstractPlatform $platform): int|string|null
     {
         if ($value instanceof BackedEnum) {
             return $value->value;
@@ -32,7 +32,7 @@ abstract class AbstractEnumType extends Type
         return null;
     }
 
-    public function convertToPHPValue($value, AbstractPlatform $platform)
+    public function convertToPHPValue($value, AbstractPlatform $platform): BackedEnum|null
     {
         if (false === enum_exists($this::getEnumsClass())) {
             throw new LogicException("This class should be an enum");
