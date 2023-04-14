@@ -5,7 +5,7 @@
  * This source code is licensed under the MIT license. See LICENSE for details.
  */
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace Web\Form;
 
@@ -29,15 +29,15 @@ class EndpointForm extends AbstractType
         $builder
             ->add('name', TextType::class)
             ->add('application', EntityType::class, [
-                'class' => Application::class,
+                'class'        => Application::class,
                 'choice_label' => static fn(Application $u) => $u->getName(),
-                'disabled' => true,
+                'disabled'     => true,
             ])
             ->add('url', UrlType::class, [
                 'label' => 'URL to fetch'
             ])
             ->add('driver', EnumType::class, [
-                'class' => DriverEnum::class,
+                'class'        => DriverEnum::class,
                 'choice_label' => static fn(DriverEnum $d) => $d->getFriendlyName(),
             ])
             ->add('driverOptions', TextareaType::class, [

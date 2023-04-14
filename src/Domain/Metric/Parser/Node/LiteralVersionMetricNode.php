@@ -25,7 +25,7 @@ readonly class LiteralVersionMetricNode implements ParserNodeInterface
     public function parse(string|array $value): VersionMetric
     {
         if (is_array($value)) {
-            throw ParserNodeTypeException::mismatch('array', 'string');
+            throw ParserNodeTypeException::mismatch(got: 'array', wanted: 'string');
         }
 
         // TODO parse version

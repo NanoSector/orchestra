@@ -5,14 +5,13 @@
  * This source code is licensed under the MIT license. See LICENSE for details.
  */
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace Domain\Metric;
 
 use Composer\Semver\Comparator;
 use Domain\Entity\Datapoint;
 use JsonException;
-use Web\Helper\Badge;
 
 readonly class VersionMetric implements SemverMetricInterface
 {
@@ -52,6 +51,9 @@ readonly class VersionMetric implements SemverMetricInterface
      */
     public static function fromDatapoint(Datapoint $datapoint): self
     {
-        return new self($datapoint->getMetric()->getProduct(), (string)json_decode($datapoint->getValue(), true, 512, JSON_THROW_ON_ERROR));
+        return new self(
+            $datapoint->getMetric()->getProduct(),
+            (string)json_decode($datapoint->getValue(), true, 512, JSON_THROW_ON_ERROR)
+        );
     }
 }

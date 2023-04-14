@@ -14,13 +14,11 @@ use Domain\Endpoint\Driver\DriverInterface;
 use Domain\Exception\EndpointDriverNotInstantiableException;
 use Symfony\Component\HttpKernel\KernelInterface;
 
-class DriverFactory
+readonly class DriverFactory
 {
-    private KernelInterface $kernel;
 
-    public function __construct(KernelInterface $kernel)
+    public function __construct(private KernelInterface $kernel)
     {
-        $this->kernel = $kernel;
     }
 
     /**

@@ -5,7 +5,7 @@
  * This source code is licensed under the MIT license. See LICENSE for details.
  */
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace Web\Form;
 
@@ -25,10 +25,10 @@ class GroupForm extends AbstractType
         $builder
             ->add('name', TextType::class)
             ->add('users', EntityType::class, [
-                'class' => User::class,
-                'multiple' => true,
-                'expanded' => true,
-                'choice_label' => static fn (User $u) => $u->getUsername(),
+                'class'        => User::class,
+                'multiple'     => true,
+                'expanded'     => true,
+                'choice_label' => static fn(User $u) => $u->getUsername(),
             ])
             ->add('submit', SubmitType::class, [
                 'row_attr' => [

@@ -14,7 +14,6 @@ use Domain\Entity\Metric;
 use Domain\Metric\HealthMetric;
 use Domain\Metric\InvalidMetric;
 use Domain\Metric\MetricInterface;
-use Generator;
 use JsonException;
 use Web\Exception\NoUsableDatapointException;
 

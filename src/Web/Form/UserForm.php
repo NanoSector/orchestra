@@ -5,7 +5,7 @@
  * This source code is licensed under the MIT license. See LICENSE for details.
  */
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace Web\Form;
 
@@ -31,18 +31,18 @@ class UserForm extends AbstractType
             ->add('username', TextType::class)
             ->add('email', EmailType::class)
             ->add('password', RepeatedType::class, [
-                'type' => PasswordType::class,
-                'mapped' => false, // Prevent the password from ever entering the user object
-                'required' => $options['require_password'],
+                'type'            => PasswordType::class,
+                'mapped'          => false, // Prevent the password from ever entering the user object
+                'required'        => $options['require_password'],
                 'invalid_message' => 'The password fields must match.',
-                'first_options' => ['label' => 'Password'],
-                'second_options' => ['label' => 'Confirm password'],
+                'first_options'   => ['label' => 'Password'],
+                'second_options'  => ['label' => 'Confirm password'],
             ])
             ->add('formRoles', EnumType::class, [
-                'class' => Role::class,
-                'multiple' => true,
-                'expanded' => true,
-                'choice_label' => fn(Role $role) => match ($role) {
+                'class'             => Role::class,
+                'multiple'          => true,
+                'expanded'          => true,
+                'choice_label'      => fn(Role $role) => match ($role) {
                     Role::ROLE_USER => 'Regular user',
                     Role::ROLE_ADMIN => 'Administrator',
                     default => $role->name,
@@ -52,11 +52,11 @@ class UserForm extends AbstractType
                 ]
             ])
             ->add('groups', EntityType::class, [
-                'class' => Group::class,
-                'multiple' => true,
-                'expanded' => true,
-                'disabled' => true, // TODO: persisting does not work?
-                'choice_label' => static fn (Group $g) => $g->getName(),
+                'class'        => Group::class,
+                'multiple'     => true,
+                'expanded'     => true,
+                'disabled'     => true, // TODO: persisting does not work?
+                'choice_label' => static fn(Group $g) => $g->getName(),
             ])
             ->add('submit', SubmitType::class, [
                 'row_attr' => [
@@ -68,7 +68,7 @@ class UserForm extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => User::class,
+            'data_class'       => User::class,
             'require_password' => true,
         ]);
 

@@ -5,27 +5,25 @@
  * This source code is licensed under the MIT license. See LICENSE for details.
  */
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace Domain\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity]
-class MetricPin
+readonly class MetricPin
 {
-    #[ORM\Id]
-    #[ORM\ManyToOne(targetEntity: Metric::class)]
-    private Metric $metric;
 
-    #[ORM\Id]
-    #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'pinnedMetrics')]
-    private User $user;
+    public function __construct(
+        #[ORM\ManyToOne(targetEntity: Metric::class)]
+        #[ORM\Id]
+        private Metric $metric,
 
-    public function __construct(Metric $metric, User $user)
-    {
-        $this->metric = $metric;
-        $this->user = $user;
+        #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'pinnedMetrics')]
+        #[ORM\Id]
+        private User $user
+    ) {
     }
 
 

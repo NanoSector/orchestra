@@ -37,7 +37,7 @@ readonly class RegexVersionNode implements ParserNodeInterface
     public function parse(string|array $value): MetricInterface
     {
         if (is_array($value)) {
-            throw ParserNodeTypeException::mismatch('array', 'string');
+            throw ParserNodeTypeException::mismatch(got: 'array', wanted: 'string');
         }
 
         $result = preg_match($this->regex, $value, $matches);
