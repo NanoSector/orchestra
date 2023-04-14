@@ -123,14 +123,6 @@ class Endpoint implements DriverEndpointInterface
         return $this;
     }
 
-    /**
-     * @return Collection<int, EndpointCollectionLog>
-     */
-    public function getCollectionLogs(): Collection
-    {
-        return $this->collectionLogs;
-    }
-
     public function getDriver(): ?DriverEnum
     {
         return $this->driver;
@@ -165,13 +157,6 @@ class Endpoint implements DriverEndpointInterface
         $this->interval = $interval;
 
         return $this;
-    }
-
-    public function getLastCollectionLog(): ?EndpointCollectionLog
-    {
-        $log = $this->collectionLogs->last();
-
-        return !$log ? null : $log;
     }
 
     public function getLastSuccessfulResponse(): ?Carbon
@@ -210,6 +195,22 @@ class Endpoint implements DriverEndpointInterface
     public function getMetrics(): Collection
     {
         return $this->metrics;
+    }
+
+    public function getMostRecentCollectionLog(): ?EndpointCollectionLog
+    {
+        // Because we sort by id, DESC
+        $log = $this->getCollectionLogs()->first();
+
+        return !$log ? null : $log;
+    }
+
+    /**
+     * @return Collection<int, EndpointCollectionLog>
+     */
+    public function getCollectionLogs(): Collection
+    {
+        return $this->collectionLogs;
     }
 
     public function getName(): ?string
