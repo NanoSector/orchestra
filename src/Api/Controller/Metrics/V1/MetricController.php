@@ -21,12 +21,9 @@ use Symfony\Component\Routing\Annotation\Route;
 class MetricController extends AbstractApiController
 {
 
-    private UserRepository $userRepository;
-
-    public function __construct(UserRepository $userRepository)
+    public function __construct(private readonly UserRepository $userRepository)
     {
         parent::__construct();
-        $this->userRepository = $userRepository;
     }
 
     #[Route('/{id}/pin', name: 'metric_pin', methods: ["POST"])]

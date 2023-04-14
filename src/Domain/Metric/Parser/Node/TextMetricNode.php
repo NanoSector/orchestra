@@ -26,7 +26,7 @@ readonly class TextMetricNode implements ParserNodeInterface
     public function parse(string|array $value): MetricInterface
     {
         if (is_array($value)) {
-            throw ParserNodeTypeException::mismatch('array', 'string');
+            throw ParserNodeTypeException::mismatch(got: 'array', wanted: 'string');
         }
 
         return new TextMetric($this->product, $value);

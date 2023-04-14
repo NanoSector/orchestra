@@ -5,7 +5,7 @@
  * This source code is licensed under the MIT license. See LICENSE for details.
  */
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace Infrastructure\Collection;
 
@@ -19,31 +19,19 @@ use Webmozart\Assert\Assert;
  */
 abstract class AbstractStronglyTypedArrayCollection extends ArrayCollection
 {
-    /** @var class-string<T> */
-    protected string $type;
 
     /** @param class-string<T> $type */
-    public function __construct(string $type, array $elements = [])
-    {
-        $this->type = $type;
-
+    public function __construct(
+        protected string $type,
+        array $elements = []
+    ) {
         Assert::allIsInstanceOf($elements, $type);
         parent::__construct($elements);
     }
 
     /**
-     * @param string|int $key
-     * @param T $value
-     * @return void
-     */
-    public function set(int|string $key, mixed $value): void
-    {
-        Assert::isInstanceOf($value, $this->type);
-        parent::set($key, $value);
-    }
-
-    /**
      * @param T $element
+     *
      * @return void
      */
     public function add(mixed $element): void
@@ -59,6 +47,18 @@ abstract class AbstractStronglyTypedArrayCollection extends ArrayCollection
     {
         // Force a new ArrayCollection because we cannot be sure what type we mapped to.
         return new ArrayCollection(array_map($func, $this->toArray()));
+    }
+
+    /**
+     * @param string|int $key
+     * @param T          $value
+     *
+     * @return void
+     */
+    public function set(int|string $key, mixed $value): void
+    {
+        Assert::isInstanceOf($value, $this->type);
+        parent::set($key, $value);
     }
 
 

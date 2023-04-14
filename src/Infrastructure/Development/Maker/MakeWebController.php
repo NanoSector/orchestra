@@ -5,7 +5,7 @@
  * This source code is licensed under the MIT license. See LICENSE for details.
  */
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace Infrastructure\Development\Maker;
 
@@ -32,10 +32,9 @@ final class MakeWebController extends AbstractMaker
     private MakeController $makeController;
 
     public function __construct(
-        #[Autowire('%kernel.project_dir%')] string                         $projectDirectory,
+        #[Autowire('%kernel.project_dir%')] string $projectDirectory,
         #[Autowire(service: 'maker.maker.make_controller')] MakeController $makeController
-    )
-    {
+    ) {
         $this->projectDirectory = $projectDirectory;
         $this->makeController = $makeController;
     }
@@ -53,9 +52,20 @@ final class MakeWebController extends AbstractMaker
     public function configureCommand(Command $command, InputConfiguration $inputConfig): void
     {
         $command
-            ->addArgument('controller-class', InputArgument::OPTIONAL, sprintf('Choose a name for your controller class (e.g. <fg=yellow>%sController</>)', Str::asClassName(Str::getRandomTerm())))
+            ->addArgument(
+                'controller-class',
+                InputArgument::OPTIONAL,
+                sprintf(
+                    'Choose a name for your controller class (e.g. <fg=yellow>%sController</>)',
+                    Str::asClassName(Str::getRandomTerm())
+                )
+            )
             ->addOption('no-template', null, InputOption::VALUE_NONE, 'Use this option to disable template generation')
-            ->setHelp(file_get_contents($this->projectDirectory . '/vendor/symfony/maker-bundle/src/Resources/help/MakeController.txt'));
+            ->setHelp(
+                file_get_contents(
+                    $this->projectDirectory . '/vendor/symfony/maker-bundle/src/Resources/help/MakeController.txt'
+                )
+            );
     }
 
     public function generate(InputInterface $input, ConsoleStyle $io, Generator $generator): void

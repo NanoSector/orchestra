@@ -5,11 +5,11 @@
  * This source code is licensed under the MIT license. See LICENSE for details.
  */
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace Domain\Endpoint\Driver;
 
-abstract class AbstractDriver implements DriverInterface
+abstract readonly class AbstractDriver implements DriverInterface
 {
     public function sanitizeConfiguration(array $options): array
     {
@@ -30,7 +30,7 @@ abstract class AbstractDriver implements DriverInterface
             }
 
             if ($shouldBeArray) {
-                if (!is_array($options[$skeletonKey]) ) {
+                if (!is_array($options[$skeletonKey])) {
                     $options[$skeletonKey] = [];
                 }
 

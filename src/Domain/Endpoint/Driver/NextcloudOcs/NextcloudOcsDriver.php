@@ -5,7 +5,7 @@
  * This source code is licensed under the MIT license. See LICENSE for details.
  */
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace Domain\Endpoint\Driver\NextcloudOcs;
 
@@ -15,15 +15,13 @@ use Domain\Exception\EndpointExecutionFailedException;
 use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 
-class NextcloudOcsDriver extends AbstractDriver
+readonly class NextcloudOcsDriver extends AbstractDriver
 {
-    private HttpClientInterface $client;
-    private NextcloudOcsResponseParser $responseParser;
 
-    public function __construct(HttpClientInterface $client, NextcloudOcsResponseParser $responseParser)
-    {
-        $this->client = $client;
-        $this->responseParser = $responseParser;
+    public function __construct(
+        private HttpClientInterface $client,
+        private NextcloudOcsResponseParser $responseParser
+    ) {
     }
 
     /**
@@ -38,7 +36,7 @@ class NextcloudOcsDriver extends AbstractDriver
 
         try {
             $response = $this->client->request('GET', $url, [
-                'query' => [
+                'query'   => [
                     'format' => 'json',
                 ],
                 'headers' => [

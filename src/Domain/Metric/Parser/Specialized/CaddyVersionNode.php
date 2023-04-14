@@ -11,10 +11,11 @@ namespace Domain\Metric\Parser\Specialized;
 
 use Domain\Metric\Parser\Node\RegexVersionNode;
 
-readonly class PostgreSQLVersionNode extends RegexVersionNode
+readonly class CaddyVersionNode extends RegexVersionNode
 {
     public function __construct()
     {
-        parent::__construct('PostgreSQL', '/^PostgreSQL ([0-9.]+)/');
+        parent::__construct('Caddy', '/^Caddy\/v(.+)$/');
     }
+
 }

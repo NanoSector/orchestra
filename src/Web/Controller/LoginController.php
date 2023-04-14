@@ -5,7 +5,7 @@
  * This source code is licensed under the MIT license. See LICENSE for details.
  */
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace Web\Controller;
 
@@ -32,8 +32,8 @@ class LoginController extends AbstractController
 
         return $this->render('login/index.html.twig', [
             'controller_name' => 'LoginController',
-            'last_username' => $lastUsername,
-            'error' => $error,
+            'last_username'   => $lastUsername,
+            'error'           => $error,
         ]);
     }
 

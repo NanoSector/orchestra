@@ -29,18 +29,11 @@ use Web\Helper\Flash;
 #[IsGranted(Role::ROLE_ADMIN->value)]
 class UserController extends AbstractController
 {
-    private UserRepository $userRepository;
-    private GroupRepository $groupRepository;
-    private UserPasswordHasherInterface $passwordHasher;
-
     public function __construct(
-        UserRepository $userRepository,
-        GroupRepository $groupRepository,
-        UserPasswordHasherInterface $passwordHasher
+        private readonly UserRepository $userRepository,
+        private readonly GroupRepository $groupRepository,
+        private readonly UserPasswordHasherInterface $passwordHasher
     ) {
-        $this->userRepository = $userRepository;
-        $this->groupRepository = $groupRepository;
-        $this->passwordHasher = $passwordHasher;
     }
 
     #[Route('/users/create', name: 'web_user_create', methods: ["GET", "POST"])]
@@ -83,7 +76,7 @@ class UserController extends AbstractController
     }
 
     #[Route('/users', name: 'web_user_index', methods: ["GET"])]
-    public function index(Request $request): Response
+    public function index(): Response
     {
         return $this->render('users/index.html.twig', [
             'groups' => $this->groupRepository->findAll(),

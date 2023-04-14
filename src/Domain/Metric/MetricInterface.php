@@ -5,12 +5,9 @@
  * This source code is licensed under the MIT license. See LICENSE for details.
  */
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace Domain\Metric;
-
-use Domain\Entity\Datapoint;
-use Web\Helper\Badge;
 
 interface MetricInterface
 {

@@ -19,15 +19,12 @@ use Symfony\Component\HttpFoundation\Response;
 class ApiProblem implements JsonSerializable
 {
     protected string $type = 'orchestra://problem/generic';
-    protected string $title;
-    protected int $status;
-    protected ?string $detail;
 
-    public function __construct(string $title, int $status, ?string $detail = null)
-    {
-        $this->title = $title;
-        $this->status = $status;
-        $this->detail = $detail;
+    public function __construct(
+        protected string $title,
+        protected int $status,
+        protected ?string $detail = null
+    ) {
     }
 
     public static function fromHttpCode(int $code, ?string $detail = null): self

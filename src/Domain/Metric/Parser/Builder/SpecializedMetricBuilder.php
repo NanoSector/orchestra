@@ -5,18 +5,21 @@
  * This source code is licensed under the MIT license. See LICENSE for details.
  */
 
+declare(strict_types = 1);
+
 namespace Domain\Metric\Parser\Builder;
 
 use Domain\Metric\Parser\Node\ParserNodeInterface;
-use Domain\Metric\Parser\Node\RegexVersionNode;
 use Domain\Metric\Parser\Node\TextMetricNode;
 use Domain\Metric\Parser\Node\TryNode;
+use Domain\Metric\Parser\Specialized\CaddyVersionNode;
+use Domain\Metric\Parser\Specialized\PostgreSQLVersionNode;
 
 readonly class SpecializedMetricBuilder
 {
     public function postgresql(): ParserNodeInterface
     {
-        return new RegexVersionNode('PostgreSQL', '/^PostgreSQL ([0-9\.]+)/');
+        return new PostgreSQLVersionNode();
     }
 
     public function webserverHeader(): ParserNodeInterface
@@ -29,6 +32,6 @@ readonly class SpecializedMetricBuilder
 
     public function caddy(): ParserNodeInterface
     {
-        return new RegexVersionNode('Caddy', '/^Caddy\/v(.+)$/');
+        return new CaddyVersionNode();
     }
 }

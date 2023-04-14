@@ -5,6 +5,8 @@
  * This source code is licensed under the MIT license. See LICENSE for details.
  */
 
+declare(strict_types = 1);
+
 namespace Domain\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;

@@ -5,6 +5,8 @@
  * This source code is licensed under the MIT license. See LICENSE for details.
  */
 
+declare(strict_types = 1);
+
 namespace Domain\Endpoint\Driver\NextcloudOcs;
 
 use Doctrine\Common\Collections\ArrayCollection;
@@ -15,13 +17,11 @@ use Domain\Metric\Parser\Specialized\PostgreSQLVersionNode;
 use Symfony\Contracts\HttpClient\Exception\ExceptionInterface;
 use Symfony\Contracts\HttpClient\ResponseInterface;
 
-class NextcloudOcsResponseParser
+readonly class NextcloudOcsResponseParser
 {
-    private ParserBuilder $builder;
 
-    public function __construct(ParserBuilder $builder)
+    public function __construct(private ParserBuilder $builder)
     {
-        $this->builder = $builder;
     }
 
     /**
@@ -47,12 +47,12 @@ class NextcloudOcsResponseParser
                             'version' => $this->builder->metric()->version('Nextcloud'),
                         ]
                     ],
-                    'server' => [
+                    'server'    => [
                         'webserver' => $this->builder->metric()->specialized()->webserverHeader(),
-                        'php' => [
+                        'php'       => [
                             'version' => $this->builder->metric()->version('PHP'),
                         ],
-                        'database' => $this->builder->switch(
+                        'database'  => $this->builder->switch(
                             static fn($value) => is_array($value) ? $value['type'] ?? '' : '',
                             [
                                 // TODO add support for more DBMS here

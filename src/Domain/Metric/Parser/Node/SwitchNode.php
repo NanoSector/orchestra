@@ -11,7 +11,6 @@ namespace Domain\Metric\Parser\Node;
 
 use Closure;
 use InvalidArgumentException;
-use JetBrains\PhpStorm\ArrayShape;
 
 readonly class SwitchNode extends AbstractParserControlStructure
 {

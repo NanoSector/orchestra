@@ -5,6 +5,8 @@
  * This source code is licensed under the MIT license. See LICENSE for details.
  */
 
+declare(strict_types = 1);
+
 namespace Domain\Tests\Collection;
 
 use Infrastructure\Collection\AbstractStronglyTypedArrayCollection;
@@ -13,6 +15,30 @@ use PHPUnit\Framework\TestCase;
 
 class AbstractStronglyTypedArrayCollectionTest extends TestCase
 {
+
+    public function testAddCanAddObjectsOfWantedType(): void
+    {
+        $subject = new SimpleStronglyTypedArrayCollectionTestAsset();
+
+        $subject->add(new \stdClass());
+        self::assertCount(1, $subject);
+    }
+
+    public function testAddCannotAddNull(): void
+    {
+        $subject = new SimpleStronglyTypedArrayCollectionTestAsset();
+
+        $this->expectException(InvalidArgumentException::class);
+        $subject->add(null);
+    }
+
+    public function testAddCannotAddObjectsOfScalarType(): void
+    {
+        $subject = new SimpleStronglyTypedArrayCollectionTestAsset();
+
+        $this->expectException(InvalidArgumentException::class);
+        $subject->add(42);
+    }
 
     public function testConstructCanAddObjectsOfWantedType(): void
     {
@@ -29,18 +55,6 @@ class AbstractStronglyTypedArrayCollectionTest extends TestCase
         self::assertCount(5, $subject);
     }
 
-    public function testConstructCannotAddObjectsOfScalarType(): void
-    {
-        $elements = [
-            1,
-            'test',
-            null,
-        ];
-
-        $this->expectException(InvalidArgumentException::class);
-        $subject = new SimpleStronglyTypedArrayCollectionTestAsset($elements);
-    }
-
     public function testConstructCannotAddNullValues(): void
     {
         $elements = [
@@ -53,52 +67,16 @@ class AbstractStronglyTypedArrayCollectionTest extends TestCase
         $subject = new SimpleStronglyTypedArrayCollectionTestAsset($elements);
     }
 
-    public function testAddCanAddObjectsOfWantedType(): void
+    public function testConstructCannotAddObjectsOfScalarType(): void
     {
-        $subject = new SimpleStronglyTypedArrayCollectionTestAsset();
-
-        $subject->add(new \stdClass());
-        self::assertCount(1, $subject);
-    }
-
-    public function testAddCannotAddObjectsOfScalarType(): void
-    {
-        $subject = new SimpleStronglyTypedArrayCollectionTestAsset();
+        $elements = [
+            1,
+            'test',
+            null,
+        ];
 
         $this->expectException(InvalidArgumentException::class);
-        $subject->add(42);
-    }
-
-    public function testAddCannotAddNull(): void
-    {
-        $subject = new SimpleStronglyTypedArrayCollectionTestAsset();
-
-        $this->expectException(InvalidArgumentException::class);
-        $subject->add(null);
-    }
-
-    public function testSetCanAddObjectsOfWantedType(): void
-    {
-        $subject = new SimpleStronglyTypedArrayCollectionTestAsset();
-
-        $subject->set('test', new \stdClass());
-        self::assertCount(1, $subject);
-    }
-
-    public function testSetCannotAddObjectsOfScalarType(): void
-    {
-        $subject = new SimpleStronglyTypedArrayCollectionTestAsset();
-
-        $this->expectException(InvalidArgumentException::class);
-        $subject->set('test', 42);
-    }
-
-    public function testSetCannotAddNull(): void
-    {
-        $subject = new SimpleStronglyTypedArrayCollectionTestAsset();
-
-        $this->expectException(InvalidArgumentException::class);
-        $subject->set('test', null);
+        $subject = new SimpleStronglyTypedArrayCollectionTestAsset($elements);
     }
 
     public function testMapAlwaysReturnsArrayCollection(): void
@@ -117,5 +95,29 @@ class AbstractStronglyTypedArrayCollectionTest extends TestCase
 
         self::assertNotInstanceOf(AbstractStronglyTypedArrayCollection::class, $result);
         self::assertNotInstanceOf(SimpleStronglyTypedArrayCollectionTestAsset::class, $result);
+    }
+
+    public function testSetCanAddObjectsOfWantedType(): void
+    {
+        $subject = new SimpleStronglyTypedArrayCollectionTestAsset();
+
+        $subject->set('test', new \stdClass());
+        self::assertCount(1, $subject);
+    }
+
+    public function testSetCannotAddNull(): void
+    {
+        $subject = new SimpleStronglyTypedArrayCollectionTestAsset();
+
+        $this->expectException(InvalidArgumentException::class);
+        $subject->set('test', null);
+    }
+
+    public function testSetCannotAddObjectsOfScalarType(): void
+    {
+        $subject = new SimpleStronglyTypedArrayCollectionTestAsset();
+
+        $this->expectException(InvalidArgumentException::class);
+        $subject->set('test', 42);
     }
 }

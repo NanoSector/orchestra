@@ -60,7 +60,7 @@ class Endpoint implements DriverEndpointInterface
     private Collection $metrics;
 
     #[ORM\OneToMany(mappedBy: 'endpoint', targetEntity: EndpointCollectionLog::class, cascade: ['persist'], orphanRemoval: true)]
-    #[ORM\OrderBy([ 'id' => 'DESC' ])]
+    #[ORM\OrderBy(['id' => 'DESC'])]
     private Collection $collectionLogs;
 
     public function __construct()
@@ -167,6 +167,13 @@ class Endpoint implements DriverEndpointInterface
         return $this;
     }
 
+    public function getLastCollectionLog(): ?EndpointCollectionLog
+    {
+        $log = $this->collectionLogs->last();
+
+        return !$log ? null : $log;
+    }
+
     public function getLastSuccessfulResponse(): ?Carbon
     {
         return $this->lastSuccessfulResponse;
@@ -259,6 +266,5 @@ class Endpoint implements DriverEndpointInterface
 
         return $this;
     }
-
 
 }

@@ -5,13 +5,12 @@
  * This source code is licensed under the MIT license. See LICENSE for details.
  */
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace Domain\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Domain\Metric\DatapointSpecialist;
-use Domain\Metric\MetricInterface;
 use Domain\Repository\DatapointRepository;
 use Infrastructure\Doctrine\Traits\TimestampedEntityTrait;
 

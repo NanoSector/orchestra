@@ -7,6 +7,8 @@
  * This source code is licensed under the MIT license. See LICENSE for details.
  */
 
+declare(strict_types = 1);
+
 namespace Domain\Repository;
 
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
