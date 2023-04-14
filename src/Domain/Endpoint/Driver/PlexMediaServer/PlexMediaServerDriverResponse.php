@@ -17,9 +17,9 @@ use Symfony\Contracts\HttpClient\Exception\ExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
 use Symfony\Contracts\HttpClient\ResponseInterface;
 
-class PlexMediaServerDriverResponse extends AbstractDriverResponse implements DriverResponseWithBodyInterface
+readonly class PlexMediaServerDriverResponse extends AbstractDriverResponse implements DriverResponseWithBodyInterface
 {
-    public function __construct(private readonly ResponseInterface $httpResponse, ArrayCollection $metrics)
+    public function __construct(private ResponseInterface $httpResponse, ArrayCollection $metrics)
     {
         parent::__construct($metrics);
     }

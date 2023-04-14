@@ -11,10 +11,10 @@ namespace Domain\Endpoint\Driver;
 
 use Doctrine\Common\Collections\ArrayCollection;
 
-abstract class AbstractDriverResponse implements DriverResponseInterface
+readonly abstract class AbstractDriverResponse implements DriverResponseInterface
 {
 
-    public function __construct(private readonly ArrayCollection $metrics)
+    public function __construct(private ArrayCollection $metrics)
     {
     }
 

@@ -14,7 +14,7 @@ use Domain\Exception\EndpointDriverNotInstantiableException;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
-class DriverCompilerPass implements CompilerPassInterface
+readonly class DriverCompilerPass implements CompilerPassInterface
 {
     /**
      * @throws EndpointDriverNotInstantiableException
