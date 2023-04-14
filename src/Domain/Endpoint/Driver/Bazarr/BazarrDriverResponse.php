@@ -7,7 +7,7 @@
 
 declare(strict_types = 1);
 
-namespace Domain\Endpoint\Driver\PlexMediaServer;
+namespace Domain\Endpoint\Driver\Bazarr;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Domain\Endpoint\Driver\AbstractDriverResponse;
@@ -17,7 +17,7 @@ use Symfony\Contracts\HttpClient\Exception\ExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
 use Symfony\Contracts\HttpClient\ResponseInterface;
 
-readonly class PlexMediaServerDriverResponse extends AbstractDriverResponse implements DriverResponseWithBodyInterface
+readonly class BazarrDriverResponse extends AbstractDriverResponse implements DriverResponseWithBodyInterface
 {
     public function __construct(private ResponseInterface $httpResponse, ArrayCollection $metrics)
     {

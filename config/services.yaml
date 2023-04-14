@@ -37,8 +37,17 @@ services:
               event: 'onFlush'
               priority: 500
 
+    Domain\Endpoint\Driver\Bazarr\BazarrDriver:
+        public: true
+
+    Domain\Endpoint\Driver\GenericPlaintextVersion\GenericPlaintextVersionDriver:
+        public: true
+
     Domain\Endpoint\Driver\NextcloudOcs\NextcloudOcsDriver:
         public: true
 
     Domain\Endpoint\Driver\PlexMediaServer\PlexMediaServerDriver:
+        public: true
+
+    Domain\Endpoint\Driver\Sonarr\SonarrDriver:
         public: true

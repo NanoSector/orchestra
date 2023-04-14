@@ -19,7 +19,7 @@ use Symfony\Contracts\HttpClient\Exception\ExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
 use Symfony\Contracts\HttpClient\ResponseInterface;
 
-class NextcloudOcsDriverResponse extends AbstractDriverResponse implements DriverResponseWithBodyInterface,
+readonly class NextcloudOcsDriverResponse extends AbstractDriverResponse implements DriverResponseWithBodyInterface,
                                                                            DriverResponseWithHealthCheckInterface
 {
     use DriverResponseWithHealthCheckTrait;
