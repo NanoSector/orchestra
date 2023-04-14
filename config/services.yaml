@@ -39,3 +39,6 @@ services:
 
     Domain\Endpoint\Driver\NextcloudOcs\NextcloudOcsDriver:
         public: true
+
+    Domain\Endpoint\Driver\PlexMediaServer\PlexMediaServerDriver:
+        public: true
