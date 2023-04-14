@@ -40,6 +40,9 @@ services:
     Domain\Endpoint\Driver\Bazarr\BazarrDriver:
         public: true
 
+    Domain\Endpoint\Driver\GenericPlaintextVersion\GenericPlaintextVersionDriver:
+        public: true
+
     Domain\Endpoint\Driver\NextcloudOcs\NextcloudOcsDriver:
         public: true
 
