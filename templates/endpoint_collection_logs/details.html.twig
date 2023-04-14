@@ -1,0 +1,112 @@
+{% extends app.request.attributes.has('isModalRequest') ? 'modal.html.twig' : 'base.html.twig' %}
+
+{% block body %}
+    <h1>Collection log for endpoint {{ endpoint.name }}</h1>
+
+    <div class="row">
+        <div class="col-lg-4">
+            <div class="card shadow-sm">
+                <div class="card-header">
+                    <h2 class="card-title">Details</h2>
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item d-flex justify-content-between">
+                        <div>
+                            <strong>Log created at</strong>
+                        </div>
+                        <div>
+                            {{ log.createdAt }}
+                        </div>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between">
+                        <div>
+                            <strong>Log updated at</strong>
+                        </div>
+                        <div>
+                            {{ log.updatedAt }}
+                        </div>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between">
+                        <div>
+                            <strong>Was successful?</strong>
+                        </div>
+                        <div>
+                            {% if log.successful %}
+                                <span class="text-success">Yes</span>
+                            {% else %}
+                                <span class="text-danger">No</span>
+                            {% endif %}
+                        </div>
+                    </li>
+                </ul>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item d-flex justify-content-between">
+                        <div>
+                            <strong>Metrics created</strong>
+                        </div>
+                        <div>
+                            {{ log.createdMetricCount }}
+                        </div>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between">
+                        <div>
+                            <strong>Metrics updated</strong>
+                        </div>
+                        <div>
+                            {{ log.updatedMetricCount }}
+                        </div>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between">
+                        <div>
+                            <strong>Metrics missing in response</strong>
+                        </div>
+                        <div>
+                            {% if log.metricsMissingInResponseCount > 0 %}
+                                <span class="text-danger">
+                                    {{ log.metricsMissingInResponseCount }}
+                                </span>
+                            {% else %}
+                                <span class="text-success">
+                                    {{ log.metricsMissingInResponseCount }}
+                                </span>
+                            {% endif %}
+                        </div>
+                    </li>
+                </ul>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item d-flex justify-content-between">
+                        <div>
+                            <strong>Datapoints created</strong>
+                        </div>
+                        <div>
+                            {{ log.createdDatapointCount }}
+                        </div>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between">
+                        <div>
+                            <strong>Datapoints updated</strong>
+                        </div>
+                        <div>
+                            {{ log.updatedDatapointCount }}
+                        </div>
+                    </li>
+                </ul>
+
+            </div>
+        </div>
+
+        <div class="col-lg-8">
+            <div class="card shadow-sm">
+                <div class="card-header">
+                    <h2 class="card-title">
+                        <label for="log-{{ log.id }}-response-body">Response body</label>
+                    </h2>
+                </div>
+                <div class="card-body">
+                    <textarea class="form-control w-100"
+                              id="log-{{ log.id }}-response-body">{{ log.responseBody }}</textarea>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

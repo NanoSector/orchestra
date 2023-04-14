@@ -80,13 +80,14 @@
                             {% set mostRecentLog = endpoint.mostRecentCollectionLog %}
                             {% if mostRecentLog %}
                                 {% if mostRecentLog.successful %}
-                                    {# TODO: Add link to collection log overview page #}
-                                    <a href="#" class="text-success"
+                                    <a href="{{ url('web_endpoint_collection_log_details', {'applicationId': application.id, 'endpointId': endpoint.id, 'id': mostRecentLog.id}) }}"
+                                       class="text-success"
                                        title="ID: {{ mostRecentLog.id }}, metrics created: {{ mostRecentLog.createdMetricCount }}, metrics updated: {{ mostRecentLog.updatedMetricCount }}, datapoints updated: {{ mostRecentLog.updatedDatapointCount }}">
                                         OK
                                     </a>
                                 {% else %}
-                                    <a href="#" class="text-danger">
+                                    <a href="{{ url('web_endpoint_collection_log_details', {'applicationId': application.id, 'endpointId': endpoint.id, 'id': mostRecentLog.id}) }}"
+                                       class="text-danger">
                                         Failed
                                     </a>
                                 {% endif %}

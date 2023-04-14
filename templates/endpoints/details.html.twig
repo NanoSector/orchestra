@@ -146,13 +146,11 @@
                             {{ log.createdAt }}
                         </td>
                         <td class="align-middle wrap-content">
-
                             <a class="btn btn-sm btn-primary"
-                               href="{{ path('web_application_details', {'id': log.id}) }}">
+                               href="{{ path('web_endpoint_collection_log_details', {'applicationId': application.id, 'endpointId': endpoint.id, 'id': log.id}) }}">
                                 <i class="bi-eye"></i>
                                 View
                             </a>
-
                         </td>
                     </tr>
                 {% endfor %}
