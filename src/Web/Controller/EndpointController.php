@@ -20,7 +20,6 @@ use Domain\Entity\User;
 use Domain\Repository\EndpointRepository;
 use Infrastructure\Controller\AppContext;
 use JsonException;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormError;

@@ -76,7 +76,25 @@
                         <th scope="row" class="align-middle">{{ endpoint.id }}</th>
                         <td class="align-middle">{{ endpoint.name }}</td>
                         <td class="align-middle">{{ endpoint.driver.friendlyName }}</td>
-                        <td class="align-middle">TODO</td>
+                        <td class="align-middle">
+                            {% set mostRecentLog = endpoint.mostRecentCollectionLog %}
+                            {% if mostRecentLog %}
+                                {% if mostRecentLog.successful %}
+                                    <a href="{{ url('web_endpoint_collection_log_details', {'applicationId': application.id, 'endpointId': endpoint.id, 'id': mostRecentLog.id}) }}"
+                                       class="text-success"
+                                       title="ID: {{ mostRecentLog.id }}, metrics created: {{ mostRecentLog.createdMetricCount }}, metrics updated: {{ mostRecentLog.updatedMetricCount }}, datapoints updated: {{ mostRecentLog.updatedDatapointCount }}">
+                                        OK
+                                    </a>
+                                {% else %}
+                                    <a href="{{ url('web_endpoint_collection_log_details', {'applicationId': application.id, 'endpointId': endpoint.id, 'id': mostRecentLog.id}) }}"
+                                       class="text-danger">
+                                        Failed
+                                    </a>
+                                {% endif %}
+                            {% else %}
+                                <span class="text-muted">N/A</span>
+                            {% endif %}
+                        </td>
                         <td class="align-middle">{{ endpoint.lastSuccessfulResponse }}</td>
                         <td class="align-middle wrap-content">
 

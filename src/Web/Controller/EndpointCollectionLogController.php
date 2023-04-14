@@ -11,7 +11,8 @@ namespace Web\Controller;
 
 use Domain\Entity\Application;
 use Domain\Entity\Endpoint;
-use Domain\Entity\Metric;
+use Domain\Entity\EndpointCollectionLog;
+use Infrastructure\Controller\AppContext;
 use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -20,40 +21,37 @@ use Symfony\Component\Routing\Annotation\Route;
 use Web\Breadcrumb\Breadcrumb;
 use Web\Breadcrumb\BreadcrumbBuilder;
 use Web\Helper\BreadcrumbHelper;
-use Web\ViewModel\DatapointViewModel;
 
+#[AppContext('app_management')]
 #[Breadcrumb('Applications', 'web_application_index')]
-class MetricController extends AbstractController
+class EndpointCollectionLogController extends AbstractController
 {
     public function __construct(
         private readonly BreadcrumbBuilder $breadcrumbBuilder
     ) {
     }
 
-    #[Route('/applications/{applicationId}/endpoints/{endpointId}/metrics/{id}', name: 'web_metric_details', methods: ["GET"])]
+    #[Route('/applications/{applicationId}/endpoints/{endpointId}/log/{id}', name: 'web_endpoint_collection_log_details', methods: ["GET"])]
     public function details(
         #[MapEntity(id: 'applicationId')] Application $application,
         #[MapEntity(id: 'endpointId')] Endpoint $endpoint,
-        Metric $metric,
+        EndpointCollectionLog $log,
         Request $request
     ): Response {
-        if (!$metric->belongsToEndpoint($endpoint) || !$endpoint->belongsToApplication($application)) {
+        if (!$endpoint->belongsToApplication($application) || !$log->belongsToEndpoint($endpoint)) {
             throw $this->createNotFoundException();
         }
 
         BreadcrumbHelper::request($request)->add([
             'application' => $this->breadcrumbBuilder->application($application),
             'endpoint'    => $this->breadcrumbBuilder->endpoint($endpoint),
-            'current'     => $this->breadcrumbBuilder->text(sprintf('Metric %s', $metric->getProduct()), true),
+            'current'     => $this->breadcrumbBuilder->text('Collection log', true),
         ]);
 
-        /** @var DatapointViewModel[] $datapointViewModels */
-        $datapointViewModels = iterator_to_array(DatapointViewModel::fromAllDatapointsInMetric($metric));
-
-        return $this->render('metric/details.html.twig', [
-            'controller_name'     => 'MetricController',
-            'metric'              => $metric,
-            'datapointViewModels' => $datapointViewModels,
+        return $this->render('endpoint_collection_logs/details.html.twig', [
+            'application' => $application,
+            'endpoint'    => $endpoint,
+            'log'         => $log,
         ]);
     }
 }

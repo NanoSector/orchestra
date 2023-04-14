@@ -9,11 +9,41 @@ declare(strict_types = 1);
 
 namespace Domain\Endpoint\Driver\NextcloudOcs;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Domain\Endpoint\Driver\AbstractDriverResponse;
+use Domain\Endpoint\Driver\DriverResponseWithBodyInterface;
 use Domain\Endpoint\Driver\DriverResponseWithHealthCheckInterface;
 use Domain\Endpoint\Driver\DriverResponseWithHealthCheckTrait;
+use Domain\Exception\EndpointExecutionFailedException;
+use Symfony\Contracts\HttpClient\Exception\ExceptionInterface;
+use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
+use Symfony\Contracts\HttpClient\ResponseInterface;
 
-class NextcloudOcsDriverResponse extends AbstractDriverResponse implements DriverResponseWithHealthCheckInterface
+class NextcloudOcsDriverResponse extends AbstractDriverResponse implements DriverResponseWithBodyInterface,
+                                                                           DriverResponseWithHealthCheckInterface
 {
     use DriverResponseWithHealthCheckTrait;
+
+    public function __construct(private readonly ResponseInterface $httpResponse, ArrayCollection $metrics)
+    {
+        parent::__construct($metrics);
+    }
+
+    /**
+     * @throws EndpointExecutionFailedException
+     */
+    public function getResponseBody(): string
+    {
+        try {
+            return $this->httpResponse->getContent(throw: false);
+        } catch (TransportExceptionInterface $e) {
+            return sprintf('Network error occurred (%s)', $e->getMessage());
+        } catch (ExceptionInterface $e) {
+            throw new EndpointExecutionFailedException(
+                'Response body is invalid and unexpected exception was thrown',
+                0,
+                $e
+            );
+        }
+    }
 }

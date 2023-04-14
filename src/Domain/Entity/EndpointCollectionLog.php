@@ -46,8 +46,22 @@ class EndpointCollectionLog
     #[ORM\Column]
     private int $metricsMissingInResponseCount = 0;
 
-    #[ORM\Column(length: 51000)]
+    #[ORM\Column(length: 51000, nullable: true)]
     private ?string $responseBody = null;
+
+    public function belongsToEndpoint(Endpoint $endpoint): bool
+    {
+        if (!$this->endpoint instanceof Endpoint) {
+            return false;
+        }
+
+        return $endpoint->getId() === $this->endpoint->getId();
+    }
+
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
 
     public function getCreatedDatapointCount(): int
     {
@@ -85,9 +99,16 @@ class EndpointCollectionLog
         return $this;
     }
 
-    public function getId(): ?int
+    public function getMetricsMissingInResponseCount(): int
     {
-        return $this->id;
+        return $this->metricsMissingInResponseCount;
+    }
+
+    public function setMetricsMissingInResponseCount(int $metricsMissingInResponseCount): self
+    {
+        $this->metricsMissingInResponseCount = $metricsMissingInResponseCount;
+
+        return $this;
     }
 
     public function getResponseBody(): ?string
@@ -134,18 +155,6 @@ class EndpointCollectionLog
     public function setSuccessful(bool $successful): self
     {
         $this->successful = $successful;
-
-        return $this;
-    }
-
-    public function getMetricsMissingInResponseCount(): int
-    {
-        return $this->metricsMissingInResponseCount;
-    }
-
-    public function setMetricsMissingInResponseCount(int $metricsMissingInResponseCount): self
-    {
-        $this->metricsMissingInResponseCount = $metricsMissingInResponseCount;
 
         return $this;
     }
