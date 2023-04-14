@@ -30,7 +30,7 @@ readonly class NextcloudOcsResponseParser
     public function parse(ResponseInterface $response): NextcloudOcsDriverResponse
     {
         try {
-            $response = $response->toArray();
+            $payload = $response->toArray();
         } catch (ExceptionInterface $e) {
             throw new EndpointExecutionFailedException('Payload failed to decode', 0, $e);
         }
@@ -67,8 +67,8 @@ readonly class NextcloudOcsResponseParser
             ])
         ]);
 
-        $metrics = $structure->parseMetrics($response);
+        $metrics = $structure->parseMetrics($payload);
 
-        return new NextcloudOcsDriverResponse(new ArrayCollection($metrics));
+        return new NextcloudOcsDriverResponse($response, new ArrayCollection($metrics));
     }
 }

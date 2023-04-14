@@ -103,8 +103,12 @@
                     </h2>
                 </div>
                 <div class="card-body">
-                    <textarea class="form-control w-100"
-                              id="log-{{ log.id }}-response-body">{{ log.responseBody }}</textarea>
+                    {% if log.responseBody %}
+                        <textarea id="log-{{ log.id }}-response-body" class="form-control w-100 font-monospace"
+                                  rows="25">{{ log.responseBody }}</textarea>
+                    {% else %}
+                        <i>The endpoint did not expose a response body.</i>
+                    {% endif %}
                 </div>
             </div>
         </div>

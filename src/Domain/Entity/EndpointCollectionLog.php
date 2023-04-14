@@ -46,7 +46,7 @@ class EndpointCollectionLog
     #[ORM\Column]
     private int $metricsMissingInResponseCount = 0;
 
-    #[ORM\Column(length: 51000)]
+    #[ORM\Column(length: 51000, nullable: true)]
     private ?string $responseBody = null;
 
     public function belongsToEndpoint(Endpoint $endpoint): bool

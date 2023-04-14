@@ -10,6 +10,7 @@ declare(strict_types = 1);
 namespace Domain\Endpoint;
 
 use Domain\Endpoint\Driver\DriverResponseInterface;
+use Domain\Endpoint\Driver\DriverResponseWithBodyInterface;
 use Domain\Entity\Datapoint;
 use Domain\Entity\Endpoint;
 use Domain\Entity\EndpointCollectionLog;
@@ -25,7 +26,10 @@ readonly class EndpointDriverResponseMapper
     {
         $log = new EndpointCollectionLog();
         $log->setSuccessful(true);
-        $log->setResponseBody('N/A');
+
+        if ($response instanceof DriverResponseWithBodyInterface) {
+            $log->setResponseBody($response->getResponseBody());
+        }
 
         $metrics = $response->getMetrics();
         $log->setMetricsMissingInResponseCount(
