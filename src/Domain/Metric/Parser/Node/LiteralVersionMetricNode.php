@@ -7,10 +7,10 @@
 
 declare(strict_types = 1);
 
-namespace Domain\Metric\Parser\Node;
+namespace Orchestra\Domain\Metric\Parser\Node;
 
-use Domain\Exception\ParserNodeTypeException;
-use Domain\Metric\VersionMetric;
+use Orchestra\Domain\Exception\ParserNodeTypeException;
+use Orchestra\Domain\Metric\VersionMetric;
 
 readonly class LiteralVersionMetricNode implements ParserNodeInterface
 {

@@ -7,13 +7,13 @@
 
 declare(strict_types = 1);
 
-namespace Web\ViewModel;
+namespace Orchestra\Web\ViewModel;
 
 use Carbon\Carbon;
-use Domain\Entity\Datapoint;
-use Domain\Entity\Metric;
-use Domain\Metric\MetricInterface;
 use Generator;
+use Orchestra\Domain\Entity\Datapoint;
+use Orchestra\Domain\Entity\Metric;
+use Orchestra\Domain\Metric\MetricInterface;
 
 readonly class DatapointViewModel
 {

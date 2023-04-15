@@ -7,10 +7,10 @@
 
 declare(strict_types = 1);
 
-namespace Domain\Doctrine\Type;
+namespace Orchestra\Domain\Doctrine\Type;
 
-use Domain\Endpoint\Driver\DriverEnum;
-use Infrastructure\Doctrine\Type\AbstractEnumType;
+use Orchestra\Domain\Endpoint\Driver\DriverEnum;
+use Orchestra\Infrastructure\Doctrine\Type\AbstractEnumType;
 
 class EndpointDriverType extends AbstractEnumType
 {

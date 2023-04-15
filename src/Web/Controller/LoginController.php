@@ -7,9 +7,9 @@
 
 declare(strict_types = 1);
 
-namespace Web\Controller;
+namespace Orchestra\Web\Controller;
 
-use Domain\Entity\User;
+use Orchestra\Domain\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;

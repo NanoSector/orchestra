@@ -7,7 +7,7 @@
 
 declare(strict_types = 1);
 
-namespace Infrastructure\Exception;
+namespace Orchestra\Infrastructure\Exception;
 
 use Exception;
 

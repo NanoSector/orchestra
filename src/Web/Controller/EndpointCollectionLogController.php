@@ -7,20 +7,20 @@
 
 declare(strict_types = 1);
 
-namespace Web\Controller;
+namespace Orchestra\Web\Controller;
 
-use Domain\Entity\Application;
-use Domain\Entity\Endpoint;
-use Domain\Entity\EndpointCollectionLog;
-use Infrastructure\Controller\AppContext;
+use Orchestra\Domain\Entity\Application;
+use Orchestra\Domain\Entity\Endpoint;
+use Orchestra\Domain\Entity\EndpointCollectionLog;
+use Orchestra\Infrastructure\Controller\AppContext;
+use Orchestra\Web\Breadcrumb\Breadcrumb;
+use Orchestra\Web\Breadcrumb\BreadcrumbBuilder;
+use Orchestra\Web\Helper\BreadcrumbHelper;
 use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Web\Breadcrumb\Breadcrumb;
-use Web\Breadcrumb\BreadcrumbBuilder;
-use Web\Helper\BreadcrumbHelper;
 
 #[AppContext('app_management')]
 #[Breadcrumb('Applications', 'web_application_index')]

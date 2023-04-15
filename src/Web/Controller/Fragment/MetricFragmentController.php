@@ -7,14 +7,14 @@
 
 declare(strict_types = 1);
 
-namespace Web\Controller\Fragment;
+namespace Orchestra\Web\Controller\Fragment;
 
-use Domain\Entity\Metric;
-use Domain\Entity\User;
+use Orchestra\Domain\Entity\Metric;
+use Orchestra\Domain\Entity\User;
+use Orchestra\Web\ViewModel\MetricViewModel;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Web\ViewModel\MetricViewModel;
 
 class MetricFragmentController extends AbstractController
 {

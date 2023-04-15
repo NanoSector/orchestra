@@ -7,11 +7,11 @@
 
 declare(strict_types = 1);
 
-namespace Domain\Metric;
+namespace Orchestra\Domain\Metric;
 
-use Domain\Entity\Datapoint;
-use Domain\Entity\Metric;
 use InvalidArgumentException;
+use Orchestra\Domain\Entity\Datapoint;
+use Orchestra\Domain\Entity\Metric;
 
 readonly class DatapointSpecialist
 {

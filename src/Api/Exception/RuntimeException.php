@@ -7,7 +7,7 @@
 
 declare(strict_types = 1);
 
-namespace Api\Exception;
+namespace Orchestra\Api\Exception;
 
 class RuntimeException extends \RuntimeException
 {

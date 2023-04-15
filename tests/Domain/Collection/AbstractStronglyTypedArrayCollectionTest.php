@@ -7,11 +7,12 @@
 
 declare(strict_types = 1);
 
-namespace Domain\Tests\Collection;
+namespace Orchestra\Domain\Tests\Collection;
 
-use Infrastructure\Collection\AbstractStronglyTypedArrayCollection;
 use InvalidArgumentException;
+use Orchestra\Infrastructure\Collection\AbstractStronglyTypedArrayCollection;
 use PHPUnit\Framework\TestCase;
+use stdClass;
 
 class AbstractStronglyTypedArrayCollectionTest extends TestCase
 {
@@ -20,7 +21,7 @@ class AbstractStronglyTypedArrayCollectionTest extends TestCase
     {
         $subject = new SimpleStronglyTypedArrayCollectionTestAsset();
 
-        $subject->add(new \stdClass());
+        $subject->add(new stdClass());
         self::assertCount(1, $subject);
     }
 
@@ -43,11 +44,11 @@ class AbstractStronglyTypedArrayCollectionTest extends TestCase
     public function testConstructCanAddObjectsOfWantedType(): void
     {
         $elements = [
-            new \stdClass(),
-            new \stdClass(),
-            new \stdClass(),
-            new \stdClass(),
-            new \stdClass(),
+            new stdClass(),
+            new stdClass(),
+            new stdClass(),
+            new stdClass(),
+            new stdClass(),
         ];
 
         $subject = new SimpleStronglyTypedArrayCollectionTestAsset($elements);
@@ -58,7 +59,7 @@ class AbstractStronglyTypedArrayCollectionTest extends TestCase
     public function testConstructCannotAddNullValues(): void
     {
         $elements = [
-            new \stdClass(),
+            new stdClass(),
             null,
             null,
         ];
@@ -82,16 +83,16 @@ class AbstractStronglyTypedArrayCollectionTest extends TestCase
     public function testMapAlwaysReturnsArrayCollection(): void
     {
         $elements = [
-            new \stdClass(),
-            new \stdClass(),
-            new \stdClass(),
-            new \stdClass(),
-            new \stdClass(),
+            new stdClass(),
+            new stdClass(),
+            new stdClass(),
+            new stdClass(),
+            new stdClass(),
         ];
 
         $subject = new SimpleStronglyTypedArrayCollectionTestAsset($elements);
 
-        $result = $subject->map(static fn(\stdClass $e) => $e);
+        $result = $subject->map(static fn(stdClass $e) => $e);
 
         self::assertNotInstanceOf(AbstractStronglyTypedArrayCollection::class, $result);
         self::assertNotInstanceOf(SimpleStronglyTypedArrayCollectionTestAsset::class, $result);
@@ -101,7 +102,7 @@ class AbstractStronglyTypedArrayCollectionTest extends TestCase
     {
         $subject = new SimpleStronglyTypedArrayCollectionTestAsset();
 
-        $subject->set('test', new \stdClass());
+        $subject->set('test', new stdClass());
         self::assertCount(1, $subject);
     }
 

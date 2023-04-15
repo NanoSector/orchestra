@@ -7,22 +7,22 @@
 
 declare(strict_types = 1);
 
-namespace Web\Controller;
+namespace Orchestra\Web\Controller;
 
-use Domain\Entity\User;
-use Domain\Enumeration\Role;
-use Domain\Repository\GroupRepository;
-use Domain\Repository\UserRepository;
-use Infrastructure\Controller\AppContext;
+use Orchestra\Domain\Entity\User;
+use Orchestra\Domain\Enumeration\Role;
+use Orchestra\Domain\Repository\GroupRepository;
+use Orchestra\Domain\Repository\UserRepository;
+use Orchestra\Infrastructure\Controller\AppContext;
+use Orchestra\Web\Breadcrumb\Breadcrumb;
+use Orchestra\Web\Form\UserForm;
+use Orchestra\Web\Helper\Flash;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
-use Web\Breadcrumb\Breadcrumb;
-use Web\Form\UserForm;
-use Web\Helper\Flash;
 
 #[AppContext('user_management')]
 #[Breadcrumb('Users & Groups', 'web_user_index')]

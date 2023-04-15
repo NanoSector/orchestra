@@ -7,14 +7,14 @@
 
 declare(strict_types = 1);
 
-namespace Domain\Entity\Decorator;
+namespace Orchestra\Domain\Entity\Decorator;
 
 use Doctrine\Common\Collections\ReadableCollection;
-use Domain\Entity\Application;
-use Domain\Entity\Endpoint;
-use Domain\Entity\Metric;
-use Domain\Entity\MetricPin;
-use Domain\Entity\User;
+use Orchestra\Domain\Entity\Application;
+use Orchestra\Domain\Entity\Endpoint;
+use Orchestra\Domain\Entity\Metric;
+use Orchestra\Domain\Entity\MetricPin;
+use Orchestra\Domain\Entity\User;
 
 readonly class PinnedMetricUserDecorator
 {

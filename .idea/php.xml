@@ -119,6 +119,8 @@
       <path value="$PROJECT_DIR$/vendor/simple-cli/simple-cli" />
       <path value="$PROJECT_DIR$/vendor/carbon-cli/carbon-cli" />
       <path value="$PROJECT_DIR$/vendor/sebastian/resource-operations" />
+      <path value="$PROJECT_DIR$/vendor/masterminds/html5" />
+      <path value="$PROJECT_DIR$/vendor/symfony/dom-crawler" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="8.2" />

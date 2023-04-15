@@ -7,7 +7,7 @@
 
 declare(strict_types = 1);
 
-namespace Domain\Enumeration;
+namespace Orchestra\Domain\Enumeration;
 
 enum Role: string
 {

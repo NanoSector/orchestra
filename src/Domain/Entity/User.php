@@ -7,18 +7,18 @@
 
 declare(strict_types = 1);
 
-namespace Domain\Entity;
+namespace Orchestra\Domain\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use Domain\Collection\RoleCollection;
-use Domain\Entity\Decorator\PinnedMetricUserDecorator;
-use Domain\Enumeration\Role;
-use Domain\Repository\UserRepository;
-use Infrastructure\Doctrine\Traits\SoftDeleteEntityTrait;
-use Infrastructure\Doctrine\Traits\TimestampedEntityTrait;
 use InvalidArgumentException;
+use Orchestra\Domain\Collection\RoleCollection;
+use Orchestra\Domain\Entity\Decorator\PinnedMetricUserDecorator;
+use Orchestra\Domain\Enumeration\Role;
+use Orchestra\Domain\Repository\UserRepository;
+use Orchestra\Infrastructure\Doctrine\Traits\SoftDeleteEntityTrait;
+use Orchestra\Infrastructure\Doctrine\Traits\TimestampedEntityTrait;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints;

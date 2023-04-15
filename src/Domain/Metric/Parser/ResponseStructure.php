@@ -7,11 +7,11 @@
 
 declare(strict_types = 1);
 
-namespace Domain\Metric\Parser;
+namespace Orchestra\Domain\Metric\Parser;
 
-use Domain\Metric\MetricInterface;
-use Domain\Metric\Parser\Node\ParserControlStructureInterface;
-use Domain\Metric\Parser\Node\ParserNodeInterface;
+use Orchestra\Domain\Metric\MetricInterface;
+use Orchestra\Domain\Metric\Parser\Node\ParserControlStructureInterface;
+use Orchestra\Domain\Metric\Parser\Node\ParserNodeInterface;
 
 readonly class ResponseStructure
 {

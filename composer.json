@@ -41,18 +41,18 @@
     },
     "autoload": {
         "psr-4": {
-            "Api\\": "src/Api/",
-            "Domain\\": "src/Domain/",
-            "Infrastructure\\": "src/Infrastructure/",
-            "Web\\": "src/Web/"
+            "Orchestra\\Api\\": "src/Api/",
+            "Orchestra\\Domain\\": "src/Domain/",
+            "Orchestra\\Infrastructure\\": "src/Infrastructure/",
+            "Orchestra\\Web\\": "src/Web/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Api\\Tests\\": "tests/Api/",
-            "Domain\\Tests\\": "tests/Domain/",
-            "Infrastructure\\Tests\\": "tests/Infrastructure/",
-            "Web\\Tests\\": "tests/Web/"
+            "Orchestra\\Api\\Tests\\": "tests/Api/",
+            "Orchestra\\Domain\\Tests\\": "tests/Domain/",
+            "Orchestra\\Infrastructure\\Tests\\": "tests/Infrastructure/",
+            "Orchestra\\Web\\Tests\\": "tests/Web/"
         }
     },
     "replace": {

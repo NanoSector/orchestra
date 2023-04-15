@@ -9,11 +9,11 @@
 
 declare(strict_types = 1);
 
-namespace Domain\Repository;
+namespace Orchestra\Domain\Repository;
 
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
-use Domain\Entity\EndpointCollectionLog;
+use Orchestra\Domain\Entity\EndpointCollectionLog;
 
 /**
  * @extends ServiceEntityRepository<EndpointCollectionLog>

@@ -7,12 +7,12 @@
 
 declare(strict_types = 1);
 
-namespace Domain\Collection;
+namespace Orchestra\Domain\Collection;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
-use Domain\Entity\Metric;
-use Domain\Exception\InvalidArgumentException;
+use Orchestra\Domain\Entity\Metric;
+use Orchestra\Domain\Exception\InvalidArgumentException;
 
 class MetricsPerProductCollection
 {

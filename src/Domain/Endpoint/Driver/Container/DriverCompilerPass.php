@@ -7,10 +7,10 @@
 
 declare(strict_types = 1);
 
-namespace Domain\Endpoint\Driver\Container;
+namespace Orchestra\Domain\Endpoint\Driver\Container;
 
-use Domain\Endpoint\Driver\DriverEnum;
-use Domain\Exception\EndpointDriverNotInstantiableException;
+use Orchestra\Domain\Endpoint\Driver\DriverEnum;
+use Orchestra\Domain\Exception\EndpointDriverNotInstantiableException;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 

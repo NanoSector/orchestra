@@ -7,15 +7,15 @@
 
 declare(strict_types = 1);
 
-namespace Web\ViewModel;
+namespace Orchestra\Web\ViewModel;
 
-use Domain\Entity\Datapoint;
-use Domain\Entity\Metric;
-use Domain\Metric\HealthMetric;
-use Domain\Metric\InvalidMetric;
-use Domain\Metric\MetricInterface;
 use JsonException;
-use Web\Exception\NoUsableDatapointException;
+use Orchestra\Domain\Entity\Datapoint;
+use Orchestra\Domain\Entity\Metric;
+use Orchestra\Domain\Metric\HealthMetric;
+use Orchestra\Domain\Metric\InvalidMetric;
+use Orchestra\Domain\Metric\MetricInterface;
+use Orchestra\Web\Exception\NoUsableDatapointException;
 
 class MetricViewModel
 {

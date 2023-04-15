@@ -7,10 +7,10 @@
 
 declare(strict_types = 1);
 
-namespace Domain\Doctrine\Type;
+namespace Orchestra\Domain\Doctrine\Type;
 
-use Domain\Metric\MetricEnum;
-use Infrastructure\Doctrine\Type\AbstractEnumType;
+use Orchestra\Domain\Metric\MetricEnum;
+use Orchestra\Infrastructure\Doctrine\Type\AbstractEnumType;
 
 class MetricEnumType extends AbstractEnumType
 {

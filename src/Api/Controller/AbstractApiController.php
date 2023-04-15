@@ -7,11 +7,11 @@
 
 declare(strict_types = 1);
 
-namespace Api\Controller;
+namespace Orchestra\Api\Controller;
 
-use Api\Support\ApiProblem;
-use Api\Support\LinkBag;
-use Api\Support\VerboseMessageBag;
+use Orchestra\Api\Support\ApiProblem;
+use Orchestra\Api\Support\LinkBag;
+use Orchestra\Api\Support\VerboseMessageBag;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\HttpFoundation\JsonResponse;

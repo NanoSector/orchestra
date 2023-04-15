@@ -7,9 +7,9 @@
 
 declare(strict_types = 1);
 
-namespace Domain\Metric\Parser\Specialized;
+namespace Orchestra\Domain\Metric\Parser\Specialized;
 
-use Domain\Metric\Parser\Node\RegexVersionNode;
+use Orchestra\Domain\Metric\Parser\Node\RegexVersionNode;
 
 readonly class PostgreSQLVersionNode extends RegexVersionNode
 {

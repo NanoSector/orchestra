@@ -7,11 +7,11 @@
 
 declare(strict_types = 1);
 
-namespace Domain\Repository;
+namespace Orchestra\Domain\Repository;
 
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
-use Domain\Entity\Application;
+use Orchestra\Domain\Entity\Application;
 
 /**
  * @extends ServiceEntityRepository<Application>

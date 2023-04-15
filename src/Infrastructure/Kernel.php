@@ -7,9 +7,9 @@
 
 declare(strict_types = 1);
 
-namespace Infrastructure;
+namespace Orchestra\Infrastructure;
 
-use Domain\Endpoint\Driver\Container\DriverCompilerPass;
+use Orchestra\Domain\Endpoint\Driver\Container\DriverCompilerPass;
 use Symfony\Bundle\FrameworkBundle\Kernel\MicroKernelTrait;
 use Symfony\Component\DependencyInjection\Compiler\PassConfig;
 use Symfony\Component\DependencyInjection\ContainerBuilder;

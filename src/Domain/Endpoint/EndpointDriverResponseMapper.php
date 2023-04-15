@@ -7,15 +7,16 @@
 
 declare(strict_types = 1);
 
-namespace Domain\Endpoint;
+namespace Orchestra\Domain\Endpoint;
 
-use Domain\Endpoint\Driver\DriverResponseInterface;
-use Domain\Endpoint\Driver\DriverResponseWithBodyInterface;
-use Domain\Entity\Datapoint;
-use Domain\Entity\Endpoint;
-use Domain\Entity\EndpointCollectionLog;
-use Domain\Entity\Metric;
-use Domain\Metric\MetricEnum;
+use JsonException;
+use Orchestra\Domain\Endpoint\Driver\DriverResponseInterface;
+use Orchestra\Domain\Endpoint\Driver\DriverResponseWithBodyInterface;
+use Orchestra\Domain\Entity\Datapoint;
+use Orchestra\Domain\Entity\Endpoint;
+use Orchestra\Domain\Entity\EndpointCollectionLog;
+use Orchestra\Domain\Entity\Metric;
+use Orchestra\Domain\Metric\MetricEnum;
 
 readonly class EndpointDriverResponseMapper
 {
@@ -68,7 +69,7 @@ readonly class EndpointDriverResponseMapper
      * Maps the metrics in the given response onto the given endpoint object,
      * creating or updating Metrics and Datapoints as necessary.
      *
-     * @throws \JsonException
+     * @throws JsonException
      */
     public function map(Endpoint $endpoint, DriverResponseInterface $response): Endpoint
     {

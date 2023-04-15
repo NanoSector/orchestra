@@ -7,13 +7,13 @@
 
 declare(strict_types = 1);
 
-namespace Web\Tests\Breadcrumb;
+namespace Orchestra\Web\Tests\Breadcrumb;
 
-use Domain\Entity\Application;
-use Domain\Entity\Endpoint;
+use Orchestra\Domain\Entity\Application;
+use Orchestra\Domain\Entity\Endpoint;
+use Orchestra\Web\Breadcrumb\BreadcrumbBuilder;
+use Orchestra\Web\Exception\BreadcrumbBuilderException;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
-use Web\Breadcrumb\BreadcrumbBuilder;
-use Web\Exception\BreadcrumbBuilderException;
 
 class BreadcrumbBuilderTest extends KernelTestCase
 {

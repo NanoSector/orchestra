@@ -7,7 +7,7 @@
 
 declare(strict_types = 1);
 
-namespace Domain\Metric\Parser\Node;
+namespace Orchestra\Domain\Metric\Parser\Node;
 
 interface ParserControlStructureInterface
 {

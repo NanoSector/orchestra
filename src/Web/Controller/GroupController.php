@@ -7,20 +7,20 @@
 
 declare(strict_types = 1);
 
-namespace Web\Controller;
+namespace Orchestra\Web\Controller;
 
-use Domain\Entity\Group;
-use Domain\Repository\GroupRepository;
-use Infrastructure\Controller\AppContext;
+use Orchestra\Domain\Entity\Group;
+use Orchestra\Domain\Repository\GroupRepository;
+use Orchestra\Infrastructure\Controller\AppContext;
+use Orchestra\Web\Breadcrumb\Breadcrumb;
+use Orchestra\Web\Breadcrumb\BreadcrumbBuilder;
+use Orchestra\Web\Form\GroupForm;
+use Orchestra\Web\Helper\BreadcrumbHelper;
+use Orchestra\Web\Helper\Flash;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Web\Breadcrumb\Breadcrumb;
-use Web\Breadcrumb\BreadcrumbBuilder;
-use Web\Form\GroupForm;
-use Web\Helper\BreadcrumbHelper;
-use Web\Helper\Flash;
 
 #[AppContext('user_management')]
 #[Breadcrumb('Users & Groups', 'web_user_index')]

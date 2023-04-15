@@ -7,9 +7,9 @@
 
 declare(strict_types = 1);
 
-namespace Domain\Metric\Parser\Node;
+namespace Orchestra\Domain\Metric\Parser\Node;
 
-use Domain\Metric\MetricInterface;
+use Orchestra\Domain\Metric\MetricInterface;
 
 interface ParserNodeInterface
 {

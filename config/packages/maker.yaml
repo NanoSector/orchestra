@@ -3,4 +3,4 @@ when@dev:
     # tell MakerBundle that all of your classes live in an
     # Acme namespace, instead of the default App
     # (e.g. Acme\Entity\Article, Acme\Command\MyCommand, etc)
-    root_namespace: 'Domain'
+    root_namespace: 'Orchestra\Domain'

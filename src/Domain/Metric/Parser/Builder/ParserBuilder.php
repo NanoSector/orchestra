@@ -7,15 +7,15 @@
 
 declare(strict_types = 1);
 
-namespace Domain\Metric\Parser\Builder;
+namespace Orchestra\Domain\Metric\Parser\Builder;
 
 use Closure;
-use Domain\Metric\Parser\Node\ConditionalNode;
-use Domain\Metric\Parser\Node\ParserControlStructureInterface;
-use Domain\Metric\Parser\Node\ParserNodeInterface;
-use Domain\Metric\Parser\Node\RequiredNode;
-use Domain\Metric\Parser\Node\SwitchNode;
-use Domain\Metric\Parser\Node\TryNode;
+use Orchestra\Domain\Metric\Parser\Node\ConditionalNode;
+use Orchestra\Domain\Metric\Parser\Node\ParserControlStructureInterface;
+use Orchestra\Domain\Metric\Parser\Node\ParserNodeInterface;
+use Orchestra\Domain\Metric\Parser\Node\RequiredNode;
+use Orchestra\Domain\Metric\Parser\Node\SwitchNode;
+use Orchestra\Domain\Metric\Parser\Node\TryNode;
 
 readonly class ParserBuilder
 {

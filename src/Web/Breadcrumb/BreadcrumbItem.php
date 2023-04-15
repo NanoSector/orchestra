@@ -7,7 +7,7 @@
 
 declare(strict_types = 1);
 
-namespace Web\Breadcrumb;
+namespace Orchestra\Web\Breadcrumb;
 
 readonly class BreadcrumbItem
 {

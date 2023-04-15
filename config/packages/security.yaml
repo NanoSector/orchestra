@@ -7,7 +7,7 @@ security:
         domain_user_provider:
             entity:
                 # the class of the entity that represents users
-                class: 'Domain\Entity\User'
+                class: 'Orchestra\Domain\Entity\User'
                 # the property to query by - e.g. email, username, etc
                 property: 'email'
 

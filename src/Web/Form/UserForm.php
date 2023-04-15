@@ -7,11 +7,11 @@
 
 declare(strict_types = 1);
 
-namespace Web\Form;
+namespace Orchestra\Web\Form;
 
-use Domain\Entity\Group;
-use Domain\Entity\User;
-use Domain\Enumeration\Role;
+use Orchestra\Domain\Entity\Group;
+use Orchestra\Domain\Entity\User;
+use Orchestra\Domain\Enumeration\Role;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;

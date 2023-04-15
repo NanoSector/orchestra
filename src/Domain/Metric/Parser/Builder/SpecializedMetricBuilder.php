@@ -7,13 +7,13 @@
 
 declare(strict_types = 1);
 
-namespace Domain\Metric\Parser\Builder;
+namespace Orchestra\Domain\Metric\Parser\Builder;
 
-use Domain\Metric\Parser\Node\ParserNodeInterface;
-use Domain\Metric\Parser\Node\TextMetricNode;
-use Domain\Metric\Parser\Node\TryNode;
-use Domain\Metric\Parser\Specialized\CaddyVersionNode;
-use Domain\Metric\Parser\Specialized\PostgreSQLVersionNode;
+use Orchestra\Domain\Metric\Parser\Node\ParserNodeInterface;
+use Orchestra\Domain\Metric\Parser\Node\TextMetricNode;
+use Orchestra\Domain\Metric\Parser\Node\TryNode;
+use Orchestra\Domain\Metric\Parser\Specialized\CaddyVersionNode;
+use Orchestra\Domain\Metric\Parser\Specialized\PostgreSQLVersionNode;
 
 readonly class SpecializedMetricBuilder
 {

@@ -7,9 +7,9 @@
 
 declare(strict_types = 1);
 
-namespace Domain\Tests\Collection;
+namespace Orchestra\Domain\Tests\Collection;
 
-use Infrastructure\Collection\AbstractStronglyTypedArrayCollection;
+use Orchestra\Infrastructure\Collection\AbstractStronglyTypedArrayCollection;
 use stdClass;
 
 class SimpleStronglyTypedArrayCollectionTestAsset extends AbstractStronglyTypedArrayCollection

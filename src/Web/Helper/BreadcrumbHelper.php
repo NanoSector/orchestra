@@ -7,12 +7,12 @@
 
 declare(strict_types = 1);
 
-namespace Web\Helper;
+namespace Orchestra\Web\Helper;
 
+use Orchestra\Web\Breadcrumb\BreadcrumbBag;
+use Orchestra\Web\Breadcrumb\BreadcrumbListener;
+use Orchestra\Web\Exception\BreadcrumbException;
 use Symfony\Component\HttpFoundation\Request;
-use Web\Breadcrumb\BreadcrumbBag;
-use Web\Breadcrumb\BreadcrumbListener;
-use Web\Exception\BreadcrumbException;
 
 class BreadcrumbHelper
 {

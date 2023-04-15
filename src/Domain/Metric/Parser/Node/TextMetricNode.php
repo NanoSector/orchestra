@@ -7,11 +7,11 @@
 
 declare(strict_types = 1);
 
-namespace Domain\Metric\Parser\Node;
+namespace Orchestra\Domain\Metric\Parser\Node;
 
-use Domain\Exception\ParserNodeTypeException;
-use Domain\Metric\MetricInterface;
-use Domain\Metric\TextMetric;
+use Orchestra\Domain\Exception\ParserNodeTypeException;
+use Orchestra\Domain\Metric\MetricInterface;
+use Orchestra\Domain\Metric\TextMetric;
 
 readonly class TextMetricNode implements ParserNodeInterface
 {

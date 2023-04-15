@@ -7,11 +7,11 @@
 
 declare(strict_types = 1);
 
-namespace Infrastructure\Doctrine\Listener;
+namespace Orchestra\Infrastructure\Doctrine\Listener;
 
 use Doctrine\ORM\Event\OnFlushEventArgs;
-use Infrastructure\Doctrine\Exception\EntityHardDeletedException;
-use Infrastructure\Doctrine\Traits\SoftDeleteEntityTrait;
+use Orchestra\Infrastructure\Doctrine\Exception\EntityHardDeletedException;
+use Orchestra\Infrastructure\Doctrine\Traits\SoftDeleteEntityTrait;
 
 class SoftDeleteListener
 {

@@ -7,7 +7,7 @@
 
 declare(strict_types = 1);
 
-namespace Infrastructure\Controller;
+namespace Orchestra\Infrastructure\Controller;
 
 use Attribute;
 

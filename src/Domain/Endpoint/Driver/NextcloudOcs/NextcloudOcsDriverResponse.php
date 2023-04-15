@@ -7,14 +7,14 @@
 
 declare(strict_types = 1);
 
-namespace Domain\Endpoint\Driver\NextcloudOcs;
+namespace Orchestra\Domain\Endpoint\Driver\NextcloudOcs;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use Domain\Endpoint\Driver\AbstractDriverResponse;
-use Domain\Endpoint\Driver\DriverResponseWithBodyInterface;
-use Domain\Endpoint\Driver\DriverResponseWithHealthCheckInterface;
-use Domain\Endpoint\Driver\DriverResponseWithHealthCheckTrait;
-use Domain\Exception\EndpointExecutionFailedException;
+use Orchestra\Domain\Endpoint\Driver\AbstractDriverResponse;
+use Orchestra\Domain\Endpoint\Driver\DriverResponseWithBodyInterface;
+use Orchestra\Domain\Endpoint\Driver\DriverResponseWithHealthCheckInterface;
+use Orchestra\Domain\Endpoint\Driver\DriverResponseWithHealthCheckTrait;
+use Orchestra\Domain\Exception\EndpointExecutionFailedException;
 use Symfony\Contracts\HttpClient\Exception\ExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
 use Symfony\Contracts\HttpClient\ResponseInterface;

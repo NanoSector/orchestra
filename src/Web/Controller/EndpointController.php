@@ -7,31 +7,31 @@
 
 declare(strict_types = 1);
 
-namespace Web\Controller;
+namespace Orchestra\Web\Controller;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use Domain\Collection\MetricsPerProductCollection;
-use Domain\Endpoint\EndpointClient;
-use Domain\Endpoint\EndpointDriverResponseMapper;
-use Domain\Entity\Application;
-use Domain\Entity\Endpoint;
-use Domain\Entity\Metric;
-use Domain\Entity\User;
-use Domain\Repository\EndpointRepository;
-use Infrastructure\Controller\AppContext;
 use JsonException;
+use Orchestra\Domain\Collection\MetricsPerProductCollection;
+use Orchestra\Domain\Endpoint\EndpointClient;
+use Orchestra\Domain\Endpoint\EndpointDriverResponseMapper;
+use Orchestra\Domain\Entity\Application;
+use Orchestra\Domain\Entity\Endpoint;
+use Orchestra\Domain\Entity\Metric;
+use Orchestra\Domain\Entity\User;
+use Orchestra\Domain\Repository\EndpointRepository;
+use Orchestra\Infrastructure\Controller\AppContext;
+use Orchestra\Web\Breadcrumb\Breadcrumb;
+use Orchestra\Web\Breadcrumb\BreadcrumbBuilder;
+use Orchestra\Web\Form\EndpointForm;
+use Orchestra\Web\Helper\BreadcrumbHelper;
+use Orchestra\Web\Helper\Flash;
+use Orchestra\Web\ViewModel\MetricViewModel;
 use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Web\Breadcrumb\Breadcrumb;
-use Web\Breadcrumb\BreadcrumbBuilder;
-use Web\Form\EndpointForm;
-use Web\Helper\BreadcrumbHelper;
-use Web\Helper\Flash;
-use Web\ViewModel\MetricViewModel;
 
 #[AppContext('app_management')]
 #[Breadcrumb('Applications', 'web_application_index')]

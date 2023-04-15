@@ -8,9 +8,9 @@ doctrine:
 
         types:
             CarbonDateTimeType: Carbon\Doctrine\DateTimeType
-            EndpointDriverType: Domain\Doctrine\Type\EndpointDriverType
-            MetricEnumType: Domain\Doctrine\Type\MetricEnumType
-            RoleCollectionType: Domain\Doctrine\Type\RoleCollectionType
+            EndpointDriverType: Orchestra\Domain\Doctrine\Type\EndpointDriverType
+            MetricEnumType: Orchestra\Domain\Doctrine\Type\MetricEnumType
+            RoleCollectionType: Orchestra\Domain\Doctrine\Type\RoleCollectionType
     orm:
         auto_generate_proxy_classes: true
         enable_lazy_ghost_objects: true
@@ -20,12 +20,12 @@ doctrine:
             App:
                 is_bundle: false
                 dir: '%kernel.project_dir%/src/Domain/Entity'
-                prefix: 'Domain\Entity'
+                prefix: 'Orchestra\Domain\Entity'
                 alias: Domain
 
         filters:
             softDelete:
-                class: Infrastructure\Doctrine\Filter\SoftDeleteFilter
+                class: Orchestra\Infrastructure\Doctrine\Filter\SoftDeleteFilter
                 enabled: true
 
 when@test:

@@ -7,13 +7,13 @@
 
 declare(strict_types = 1);
 
-namespace Api\Controller\Metrics\V1;
+namespace Orchestra\Api\Controller\Metrics\V1;
 
-use Api\Controller\AbstractApiController;
-use Api\Support\ApiProblem;
-use Domain\Entity\Metric;
-use Domain\Entity\User;
-use Domain\Repository\UserRepository;
+use Orchestra\Api\Controller\AbstractApiController;
+use Orchestra\Api\Support\ApiProblem;
+use Orchestra\Domain\Entity\Metric;
+use Orchestra\Domain\Entity\User;
+use Orchestra\Domain\Repository\UserRepository;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 

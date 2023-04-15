@@ -7,9 +7,9 @@
 
 declare(strict_types = 1);
 
-namespace Infrastructure\Controller;
+namespace Orchestra\Infrastructure\Controller;
 
-use Infrastructure\Exception\DuplicateAppContextException;
+use Orchestra\Infrastructure\Exception\DuplicateAppContextException;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpKernel\Event\ControllerEvent;
 use Symfony\Component\HttpKernel\KernelEvents;

@@ -7,14 +7,14 @@
 
 declare(strict_types = 1);
 
-namespace Domain\Endpoint;
+namespace Orchestra\Domain\Endpoint;
 
 
-use Domain\Endpoint\Driver\Container\DriverFactory;
-use Domain\Endpoint\Driver\DriverResponseInterface;
-use Domain\Entity\Endpoint;
-use Domain\Exception\EndpointDriverNotInstantiableException;
-use Domain\Exception\EndpointExecutionFailedException;
+use Orchestra\Domain\Endpoint\Driver\Container\DriverFactory;
+use Orchestra\Domain\Endpoint\Driver\DriverResponseInterface;
+use Orchestra\Domain\Entity\Endpoint;
+use Orchestra\Domain\Exception\EndpointDriverNotInstantiableException;
+use Orchestra\Domain\Exception\EndpointExecutionFailedException;
 
 readonly class EndpointClient
 {

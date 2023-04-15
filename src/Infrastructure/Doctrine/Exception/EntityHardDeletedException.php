@@ -7,7 +7,7 @@
 
 declare(strict_types = 1);
 
-namespace Infrastructure\Doctrine\Exception;
+namespace Orchestra\Infrastructure\Doctrine\Exception;
 
 use RuntimeException;
 use Throwable;

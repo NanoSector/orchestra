@@ -7,9 +7,11 @@
 
 declare(strict_types = 1);
 
-namespace Web\Exception;
+namespace Orchestra\Web\Exception;
 
-class RuntimeException extends \Exception
+use Exception;
+
+class RuntimeException extends Exception
 {
 
 }

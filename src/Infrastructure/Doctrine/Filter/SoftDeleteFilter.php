@@ -7,11 +7,11 @@
 
 declare(strict_types = 1);
 
-namespace Infrastructure\Doctrine\Filter;
+namespace Orchestra\Infrastructure\Doctrine\Filter;
 
 use Doctrine\ORM\Mapping\ClassMetadata;
 use Doctrine\ORM\Query\Filter\SQLFilter;
-use Infrastructure\Doctrine\Traits\SoftDeleteEntityTrait;
+use Orchestra\Infrastructure\Doctrine\Traits\SoftDeleteEntityTrait;
 
 class SoftDeleteFilter extends SQLFilter
 {

@@ -7,12 +7,12 @@
 
 declare(strict_types = 1);
 
-namespace Domain\Entity;
+namespace Orchestra\Domain\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Domain\Metric\DatapointSpecialist;
-use Domain\Repository\DatapointRepository;
-use Infrastructure\Doctrine\Traits\TimestampedEntityTrait;
+use Orchestra\Domain\Metric\DatapointSpecialist;
+use Orchestra\Domain\Repository\DatapointRepository;
+use Orchestra\Infrastructure\Doctrine\Traits\TimestampedEntityTrait;
 
 #[ORM\Entity(repositoryClass: DatapointRepository::class)]
 #[ORM\HasLifecycleCallbacks]

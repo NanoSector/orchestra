@@ -7,7 +7,7 @@
 
 declare(strict_types = 1);
 
-namespace Domain\Exception;
+namespace Orchestra\Domain\Exception;
 
 class CompositeParserExhaustedException extends DomainException
 {

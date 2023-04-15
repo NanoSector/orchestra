@@ -7,9 +7,9 @@
 
 declare(strict_types = 1);
 
-namespace Api\Support;
+namespace Orchestra\Api\Support;
 
-use Api\Exception\InvalidArgumentException;
+use Orchestra\Api\Exception\InvalidArgumentException;
 use Symfony\Component\HttpFoundation\Request;
 
 final class LinkBag

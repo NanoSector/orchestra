@@ -7,11 +7,11 @@
 
 declare(strict_types = 1);
 
-namespace Web\Form;
+namespace Orchestra\Web\Form;
 
-use Domain\Endpoint\Driver\DriverEnum;
-use Domain\Entity\Application;
-use Domain\Entity\Endpoint;
+use Orchestra\Domain\Endpoint\Driver\DriverEnum;
+use Orchestra\Domain\Entity\Application;
+use Orchestra\Domain\Entity\Endpoint;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\EnumType;

@@ -7,13 +7,13 @@
 
 declare(strict_types = 1);
 
-namespace Domain\Metric\Parser\Node;
+namespace Orchestra\Domain\Metric\Parser\Node;
 
-use Domain\Exception\ParserNodeTypeException;
-use Domain\Metric\InvalidMetric;
-use Domain\Metric\MetricInterface;
-use Domain\Metric\VersionMetric;
 use JetBrains\PhpStorm\Language;
+use Orchestra\Domain\Exception\ParserNodeTypeException;
+use Orchestra\Domain\Metric\InvalidMetric;
+use Orchestra\Domain\Metric\MetricInterface;
+use Orchestra\Domain\Metric\VersionMetric;
 
 /**
  * Matches the given regex against the version.
