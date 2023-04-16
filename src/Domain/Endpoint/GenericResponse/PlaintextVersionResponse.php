@@ -7,12 +7,12 @@
 
 declare(strict_types = 1);
 
-namespace Domain\Endpoint\GenericResponse;
+namespace Orchestra\Domain\Endpoint\GenericResponse;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use Domain\Endpoint\Driver\AbstractDriverResponse;
-use Domain\Metric\VersionMetric;
 use InvalidArgumentException;
+use Orchestra\Domain\Endpoint\Driver\AbstractDriverResponse;
+use Orchestra\Domain\Metric\VersionMetric;
 
 readonly class PlaintextVersionResponse extends AbstractDriverResponse
 {

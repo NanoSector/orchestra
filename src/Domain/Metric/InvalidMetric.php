@@ -7,9 +7,9 @@
 
 declare(strict_types = 1);
 
-namespace Domain\Metric;
+namespace Orchestra\Domain\Metric;
 
-use Domain\Entity\Datapoint;
+use Orchestra\Domain\Entity\Datapoint;
 
 readonly class InvalidMetric implements MetricInterface
 {

@@ -7,7 +7,7 @@
 
 declare(strict_types = 1);
 
-namespace Domain\Entity;
+namespace Orchestra\Domain\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 

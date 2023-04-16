@@ -7,13 +7,13 @@
 
 declare(strict_types = 1);
 
-namespace Domain\Endpoint\Driver;
+namespace Orchestra\Domain\Endpoint\Driver;
 
-use Domain\Endpoint\Driver\Bazarr\BazarrDriver;
-use Domain\Endpoint\Driver\GenericPlaintextVersion\GenericPlaintextVersionDriver;
-use Domain\Endpoint\Driver\NextcloudOcs\NextcloudOcsDriver;
-use Domain\Endpoint\Driver\PlexMediaServer\PlexMediaServerDriver;
-use Domain\Endpoint\Driver\Sonarr\SonarrDriver;
+use Orchestra\Domain\Endpoint\Driver\Bazarr\BazarrDriver;
+use Orchestra\Domain\Endpoint\Driver\GenericPlaintextVersion\GenericPlaintextVersionDriver;
+use Orchestra\Domain\Endpoint\Driver\NextcloudOcs\NextcloudOcsDriver;
+use Orchestra\Domain\Endpoint\Driver\PlexMediaServer\PlexMediaServerDriver;
+use Orchestra\Domain\Endpoint\Driver\Sonarr\SonarrDriver;
 
 enum DriverEnum: string
 {

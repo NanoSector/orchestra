@@ -7,7 +7,7 @@
 
 declare(strict_types = 1);
 
-namespace Infrastructure\Doctrine\Type;
+namespace Orchestra\Infrastructure\Doctrine\Type;
 
 use BackedEnum;
 use Doctrine\DBAL\Platforms\AbstractPlatform;

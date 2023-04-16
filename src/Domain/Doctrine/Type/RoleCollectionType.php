@@ -7,12 +7,12 @@
 
 declare(strict_types = 1);
 
-namespace Domain\Doctrine\Type;
+namespace Orchestra\Domain\Doctrine\Type;
 
 use Doctrine\DBAL\Platforms\AbstractPlatform;
 use Doctrine\DBAL\Types\Type;
-use Domain\Collection\RoleCollection;
-use Domain\Enumeration\Role;
+use Orchestra\Domain\Collection\RoleCollection;
+use Orchestra\Domain\Enumeration\Role;
 
 class RoleCollectionType extends Type
 {

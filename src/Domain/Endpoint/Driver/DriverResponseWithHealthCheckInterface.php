@@ -7,9 +7,9 @@
 
 declare(strict_types = 1);
 
-namespace Domain\Endpoint\Driver;
+namespace Orchestra\Domain\Endpoint\Driver;
 
-use Domain\Metric\HealthMetricInterface;
+use Orchestra\Domain\Metric\HealthMetricInterface;
 
 interface DriverResponseWithHealthCheckInterface
 {

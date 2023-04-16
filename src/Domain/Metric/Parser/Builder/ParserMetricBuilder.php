@@ -7,14 +7,14 @@
 
 declare(strict_types = 1);
 
-namespace Domain\Metric\Parser\Builder;
+namespace Orchestra\Domain\Metric\Parser\Builder;
 
 use Closure;
-use Domain\Metric\Parser\Node\HealthCheckAttributesNode;
-use Domain\Metric\Parser\Node\LiteralVersionMetricNode;
-use Domain\Metric\Parser\Node\ParserNodeInterface;
-use Domain\Metric\Parser\Node\RegexVersionNode;
-use Domain\Metric\Parser\Node\TextMetricNode;
+use Orchestra\Domain\Metric\Parser\Node\HealthCheckAttributesNode;
+use Orchestra\Domain\Metric\Parser\Node\LiteralVersionMetricNode;
+use Orchestra\Domain\Metric\Parser\Node\ParserNodeInterface;
+use Orchestra\Domain\Metric\Parser\Node\RegexVersionNode;
+use Orchestra\Domain\Metric\Parser\Node\TextMetricNode;
 
 readonly class ParserMetricBuilder
 {

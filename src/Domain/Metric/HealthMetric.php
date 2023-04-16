@@ -7,10 +7,10 @@
 
 declare(strict_types = 1);
 
-namespace Domain\Metric;
+namespace Orchestra\Domain\Metric;
 
-use Domain\Entity\Datapoint;
 use JetBrains\PhpStorm\ArrayShape;
+use Orchestra\Domain\Entity\Datapoint;
 
 readonly class HealthMetric implements MetricInterface, HealthMetricInterface
 {

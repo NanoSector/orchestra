@@ -7,10 +7,10 @@
 
 declare(strict_types = 1);
 
-namespace Web\Breadcrumb;
+namespace Orchestra\Web\Breadcrumb;
 
+use Orchestra\Web\Exception\BreadcrumbException;
 use Symfony\Component\HttpFoundation\ParameterBag;
-use Web\Exception\BreadcrumbException;
 use Webmozart\Assert\Assert;
 use Webmozart\Assert\InvalidArgumentException;
 

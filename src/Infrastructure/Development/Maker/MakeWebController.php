@@ -7,7 +7,7 @@
 
 declare(strict_types = 1);
 
-namespace Infrastructure\Development\Maker;
+namespace Orchestra\Infrastructure\Development\Maker;
 
 use Symfony\Bundle\MakerBundle\ConsoleStyle;
 use Symfony\Bundle\MakerBundle\DependencyBuilder;

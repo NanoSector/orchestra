@@ -7,11 +7,12 @@
 
 declare(strict_types = 1);
 
-namespace Domain\Command;
+namespace Orchestra\Domain\Command;
 
-use Domain\Entity\User;
-use Domain\Enumeration\Role;
-use Domain\Repository\UserRepository;
+use Orchestra\Domain\Entity\User;
+use Orchestra\Domain\Enumeration\Role;
+use Orchestra\Domain\Repository\UserRepository;
+use RuntimeException;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -42,7 +43,7 @@ final class CreateAdministratorCommand extends Command
             ]);
 
             if ($user !== null) {
-                throw new \RuntimeException('This username is already taken');
+                throw new RuntimeException('This username is already taken');
             }
 
             return $username;
@@ -55,7 +56,7 @@ final class CreateAdministratorCommand extends Command
             $email = filter_var($email, FILTER_VALIDATE_EMAIL);
 
             if ($email === false) {
-                throw new \RuntimeException('Invalid e-mail address');
+                throw new RuntimeException('Invalid e-mail address');
             }
 
             $user = $this->userRepository->findOneBy([
@@ -63,7 +64,7 @@ final class CreateAdministratorCommand extends Command
             ]);
 
             if ($user !== null) {
-                throw new \RuntimeException('This e-mail address is already taken');
+                throw new RuntimeException('This e-mail address is already taken');
             }
 
             return $email;

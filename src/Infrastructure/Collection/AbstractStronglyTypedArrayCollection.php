@@ -7,8 +7,9 @@
 
 declare(strict_types = 1);
 
-namespace Infrastructure\Collection;
+namespace Orchestra\Infrastructure\Collection;
 
+use Closure;
 use Doctrine\Common\Collections\ArrayCollection;
 use Webmozart\Assert\Assert;
 
@@ -43,7 +44,7 @@ abstract class AbstractStronglyTypedArrayCollection extends ArrayCollection
     /**
      * {@inheritDoc}
      */
-    public function map(\Closure $func): ArrayCollection
+    public function map(Closure $func): ArrayCollection
     {
         // Force a new ArrayCollection because we cannot be sure what type we mapped to.
         return new ArrayCollection(array_map($func, $this->toArray()));

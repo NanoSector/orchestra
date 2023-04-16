@@ -7,12 +7,12 @@
 
 declare(strict_types = 1);
 
-namespace Web\Breadcrumb;
+namespace Orchestra\Web\Breadcrumb;
 
-use Domain\Entity\Application;
-use Domain\Entity\Endpoint;
+use Orchestra\Domain\Entity\Application;
+use Orchestra\Domain\Entity\Endpoint;
+use Orchestra\Web\Exception\BreadcrumbBuilderException;
 use Symfony\Component\Routing\RouterInterface;
-use Web\Exception\BreadcrumbBuilderException;
 
 readonly class BreadcrumbBuilder
 {

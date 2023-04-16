@@ -5,7 +5,7 @@
  * This source code is licensed under the MIT license. See LICENSE for details.
  */
 
-use Infrastructure\Kernel;
+use Orchestra\Infrastructure\Kernel;
 
 require_once dirname(__DIR__).'/vendor/autoload_runtime.php';
 

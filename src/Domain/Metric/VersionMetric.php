@@ -7,11 +7,11 @@
 
 declare(strict_types = 1);
 
-namespace Domain\Metric;
+namespace Orchestra\Domain\Metric;
 
 use Composer\Semver\Comparator;
-use Domain\Entity\Datapoint;
 use JsonException;
+use Orchestra\Domain\Entity\Datapoint;
 
 readonly class VersionMetric implements SemverMetricInterface
 {

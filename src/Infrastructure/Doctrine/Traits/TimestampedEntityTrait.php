@@ -7,7 +7,7 @@
 
 declare(strict_types = 1);
 
-namespace Infrastructure\Doctrine\Traits;
+namespace Orchestra\Infrastructure\Doctrine\Traits;
 
 use Carbon\Carbon;
 use Doctrine\ORM\Mapping as ORM;

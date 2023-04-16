@@ -7,11 +7,11 @@
 
 declare(strict_types = 1);
 
-namespace Domain\Collection;
+namespace Orchestra\Domain\Collection;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use Domain\Enumeration\Role;
-use Infrastructure\Collection\AbstractStronglyTypedArrayCollection;
+use Orchestra\Domain\Enumeration\Role;
+use Orchestra\Infrastructure\Collection\AbstractStronglyTypedArrayCollection;
 
 /**
  * @extends AbstractStronglyTypedArrayCollection<array-key, Role>

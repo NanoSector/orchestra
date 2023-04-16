@@ -7,20 +7,20 @@
 
 declare(strict_types = 1);
 
-namespace Web\Controller;
+namespace Orchestra\Web\Controller;
 
-use Domain\Entity\Application;
-use Domain\Entity\Endpoint;
-use Domain\Entity\Metric;
+use Orchestra\Domain\Entity\Application;
+use Orchestra\Domain\Entity\Endpoint;
+use Orchestra\Domain\Entity\Metric;
+use Orchestra\Web\Breadcrumb\Breadcrumb;
+use Orchestra\Web\Breadcrumb\BreadcrumbBuilder;
+use Orchestra\Web\Helper\BreadcrumbHelper;
+use Orchestra\Web\ViewModel\DatapointViewModel;
 use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Web\Breadcrumb\Breadcrumb;
-use Web\Breadcrumb\BreadcrumbBuilder;
-use Web\Helper\BreadcrumbHelper;
-use Web\ViewModel\DatapointViewModel;
 
 #[Breadcrumb('Applications', 'web_application_index')]
 class MetricController extends AbstractController

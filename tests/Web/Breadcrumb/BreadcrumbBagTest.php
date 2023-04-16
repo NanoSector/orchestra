@@ -7,12 +7,13 @@
 
 declare(strict_types = 1);
 
-namespace Web\Tests\Breadcrumb;
+namespace Orchestra\Web\Tests\Breadcrumb;
 
+use Orchestra\Web\Breadcrumb\BreadcrumbBag;
+use Orchestra\Web\Breadcrumb\BreadcrumbItem;
+use Orchestra\Web\Exception\BreadcrumbException;
 use PHPUnit\Framework\TestCase;
-use Web\Breadcrumb\BreadcrumbBag;
-use Web\Breadcrumb\BreadcrumbItem;
-use Web\Exception\BreadcrumbException;
+use stdClass;
 
 class BreadcrumbBagTest extends TestCase
 {
@@ -142,6 +143,6 @@ class BreadcrumbBagTest extends TestCase
 
         // Act
         $this->expectException(BreadcrumbException::class);
-        $bag->set('first', new \stdClass());
+        $bag->set('first', new stdClass());
     }
 }

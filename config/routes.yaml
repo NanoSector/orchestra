@@ -1,12 +1,12 @@
 controllers_api:
     resource:
         path: ../src/Api/Controller/
-        namespace: Api\Controller
+        namespace: Orchestra\Api\Controller
     type: attribute
     prefix: '/api'
 
 controllers_web:
     resource:
         path: ../src/Web/Controller/
-        namespace: Web\Controller
+        namespace: Orchestra\Web\Controller
     type: attribute

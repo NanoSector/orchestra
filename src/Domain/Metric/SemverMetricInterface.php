@@ -7,7 +7,7 @@
 
 declare(strict_types = 1);
 
-namespace Domain\Metric;
+namespace Orchestra\Domain\Metric;
 
 interface SemverMetricInterface extends MetricInterface
 {

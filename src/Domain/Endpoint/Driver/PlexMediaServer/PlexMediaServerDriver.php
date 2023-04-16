@@ -7,11 +7,11 @@
 
 declare(strict_types = 1);
 
-namespace Domain\Endpoint\Driver\PlexMediaServer;
+namespace Orchestra\Domain\Endpoint\Driver\PlexMediaServer;
 
-use Domain\Endpoint\Driver\AbstractDriver;
-use Domain\Endpoint\Driver\DriverEndpointInterface;
-use Domain\Exception\EndpointExecutionFailedException;
+use Orchestra\Domain\Endpoint\Driver\AbstractDriver;
+use Orchestra\Domain\Endpoint\Driver\DriverEndpointInterface;
+use Orchestra\Domain\Exception\EndpointExecutionFailedException;
 use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 

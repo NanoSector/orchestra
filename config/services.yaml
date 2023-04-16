@@ -13,41 +13,41 @@ services:
 
     # makes classes in src/ available to be used as services
     # this creates a service per class whose id is the fully-qualified class name
-    Api\:
+    Orchestra\Api\:
         resource: '../src/Api/'
 
-    Infrastructure\:
+    Orchestra\Infrastructure\:
         resource: '../src/Infrastructure/'
         exclude:
             - '../src/Infrastructure/DependencyInjection/'
             - '../src/Infrastructure/Entity/'
             - '../src/Infrastructure/Kernel.php'
 
-    Domain\:
+    Orchestra\Domain\:
         resource: '../src/Domain/'
 
-    Web\:
+    Orchestra\Web\:
         resource: '../src/Web/'
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
-    Infrastructure\Doctrine\Listener\SoftDeleteListener:
+    Orchestra\Infrastructure\Doctrine\Listener\SoftDeleteListener:
         tags:
             - name: 'doctrine.event_listener'
               event: 'onFlush'
               priority: 500
 
-    Domain\Endpoint\Driver\Bazarr\BazarrDriver:
+    Orchestra\Domain\Endpoint\Driver\Bazarr\BazarrDriver:
         public: true
 
-    Domain\Endpoint\Driver\GenericPlaintextVersion\GenericPlaintextVersionDriver:
+    Orchestra\Domain\Endpoint\Driver\GenericPlaintextVersion\GenericPlaintextVersionDriver:
         public: true
 
-    Domain\Endpoint\Driver\NextcloudOcs\NextcloudOcsDriver:
+    Orchestra\Domain\Endpoint\Driver\NextcloudOcs\NextcloudOcsDriver:
         public: true
 
-    Domain\Endpoint\Driver\PlexMediaServer\PlexMediaServerDriver:
+    Orchestra\Domain\Endpoint\Driver\PlexMediaServer\PlexMediaServerDriver:
         public: true
 
-    Domain\Endpoint\Driver\Sonarr\SonarrDriver:
+    Orchestra\Domain\Endpoint\Driver\Sonarr\SonarrDriver:
         public: true

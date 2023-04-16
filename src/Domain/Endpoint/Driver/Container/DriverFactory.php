@@ -7,11 +7,11 @@
 
 declare(strict_types = 1);
 
-namespace Domain\Endpoint\Driver\Container;
+namespace Orchestra\Domain\Endpoint\Driver\Container;
 
-use Domain\Endpoint\Driver\DriverEnum;
-use Domain\Endpoint\Driver\DriverInterface;
-use Domain\Exception\EndpointDriverNotInstantiableException;
+use Orchestra\Domain\Endpoint\Driver\DriverEnum;
+use Orchestra\Domain\Endpoint\Driver\DriverInterface;
+use Orchestra\Domain\Exception\EndpointDriverNotInstantiableException;
 use Symfony\Component\HttpKernel\KernelInterface;
 
 readonly class DriverFactory

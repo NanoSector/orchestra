@@ -7,9 +7,9 @@
 
 declare(strict_types = 1);
 
-namespace Domain\Endpoint\Driver;
+namespace Orchestra\Domain\Endpoint\Driver;
 
-use Domain\Exception\EndpointExecutionFailedException;
+use Orchestra\Domain\Exception\EndpointExecutionFailedException;
 
 interface DriverInterface
 {

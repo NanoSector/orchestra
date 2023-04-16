@@ -7,7 +7,7 @@
  */
 declare(strict_types = 1);
 
-namespace Web\Exception;
+namespace Orchestra\Web\Exception;
 
 class BreadcrumbException extends RuntimeException
 {

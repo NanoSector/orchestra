@@ -7,7 +7,7 @@
 
 declare(strict_types = 1);
 
-namespace Web\Helper;
+namespace Orchestra\Web\Helper;
 
 enum Badge: string
 {

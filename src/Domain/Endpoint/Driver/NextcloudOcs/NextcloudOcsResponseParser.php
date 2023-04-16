@@ -7,13 +7,13 @@
 
 declare(strict_types = 1);
 
-namespace Domain\Endpoint\Driver\NextcloudOcs;
+namespace Orchestra\Domain\Endpoint\Driver\NextcloudOcs;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use Domain\Exception\EndpointExecutionFailedException;
-use Domain\Metric\Parser\Builder\ParserBuilder;
-use Domain\Metric\Parser\ResponseStructure;
-use Domain\Metric\Parser\Specialized\PostgreSQLVersionNode;
+use Orchestra\Domain\Exception\EndpointExecutionFailedException;
+use Orchestra\Domain\Metric\Parser\Builder\ParserBuilder;
+use Orchestra\Domain\Metric\Parser\ResponseStructure;
+use Orchestra\Domain\Metric\Parser\Specialized\PostgreSQLVersionNode;
 use Symfony\Contracts\HttpClient\Exception\ExceptionInterface;
 use Symfony\Contracts\HttpClient\ResponseInterface;
 

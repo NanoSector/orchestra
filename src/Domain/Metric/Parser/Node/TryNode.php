@@ -7,11 +7,11 @@
 
 declare(strict_types = 1);
 
-namespace Domain\Metric\Parser\Node;
+namespace Orchestra\Domain\Metric\Parser\Node;
 
-use Domain\Exception\CompositeParserExhaustedException;
-use Domain\Metric\InvalidMetric;
-use Domain\Metric\MetricInterface;
+use Orchestra\Domain\Exception\CompositeParserExhaustedException;
+use Orchestra\Domain\Metric\InvalidMetric;
+use Orchestra\Domain\Metric\MetricInterface;
 
 /**
  * Takes multiple parser nodes and exhausts the list until

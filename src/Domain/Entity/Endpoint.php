@@ -7,16 +7,16 @@
 
 declare(strict_types = 1);
 
-namespace Domain\Entity;
+namespace Orchestra\Domain\Entity;
 
 use Carbon\Carbon;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use Domain\Endpoint\Driver\DriverEndpointInterface;
-use Domain\Endpoint\Driver\DriverEnum;
-use Domain\Repository\EndpointRepository;
-use Infrastructure\Doctrine\Traits\TimestampedEntityTrait;
+use Orchestra\Domain\Endpoint\Driver\DriverEndpointInterface;
+use Orchestra\Domain\Endpoint\Driver\DriverEnum;
+use Orchestra\Domain\Repository\EndpointRepository;
+use Orchestra\Infrastructure\Doctrine\Traits\TimestampedEntityTrait;
 use Symfony\Component\Validator\Constraints;
 
 #[ORM\Entity(repositoryClass: EndpointRepository::class)]

@@ -7,9 +7,11 @@
 
 declare(strict_types = 1);
 
-namespace Domain\Exception;
+namespace Orchestra\Domain\Exception;
 
-class DomainException extends \Exception
+use Exception;
+
+class DomainException extends Exception
 {
 
 }

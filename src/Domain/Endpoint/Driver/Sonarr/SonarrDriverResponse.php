@@ -7,12 +7,12 @@
 
 declare(strict_types = 1);
 
-namespace Domain\Endpoint\Driver\Sonarr;
+namespace Orchestra\Domain\Endpoint\Driver\Sonarr;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use Domain\Endpoint\Driver\AbstractDriverResponse;
-use Domain\Endpoint\Driver\DriverResponseWithBodyInterface;
-use Domain\Exception\EndpointExecutionFailedException;
+use Orchestra\Domain\Endpoint\Driver\AbstractDriverResponse;
+use Orchestra\Domain\Endpoint\Driver\DriverResponseWithBodyInterface;
+use Orchestra\Domain\Exception\EndpointExecutionFailedException;
 use Symfony\Contracts\HttpClient\Exception\ExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
 use Symfony\Contracts\HttpClient\ResponseInterface;

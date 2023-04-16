@@ -7,11 +7,11 @@
 
 declare(strict_types = 1);
 
-namespace Domain\Metric\Parser\Node;
+namespace Orchestra\Domain\Metric\Parser\Node;
 
 use Closure;
-use Domain\Metric\HealthMetric;
-use Domain\Metric\MetricInterface;
+use Orchestra\Domain\Metric\HealthMetric;
+use Orchestra\Domain\Metric\MetricInterface;
 
 readonly class HealthCheckAttributesNode implements ParserNodeInterface
 {
