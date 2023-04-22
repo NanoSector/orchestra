@@ -1,0 +1,29 @@
+{
+  "name": "nanosector/orchestra-endpoint-bundle",
+  "type": "symfony-bundle",
+  "description": "Provides an endpoint which can be used to provide metrics to Orchestra",
+  "keywords": [],
+  "license": "MIT",
+  "authors": [],
+  "require": {
+    "php": ">=8.2",
+    "symfony/config": "^5.4|^6.0",
+    "symfony/framework-bundle": "^5.4|^6.0",
+    "symfony/http-kernel": "^6.1",
+    "symfony/routing": "^5.4|^6.0"
+  },
+  "require-dev": {
+  },
+  "conflict": {
+  },
+  "suggest": {},
+  "autoload": {
+    "psr-4": {
+      "Orchestra\\Bundle\\Endpoint\\": "."
+    },
+    "exclude-from-classmap": [
+      "/Tests/"
+    ]
+  },
+  "minimum-stability": "dev"
+}

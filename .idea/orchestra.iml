@@ -12,6 +12,7 @@
       <sourceFolder url="file://$MODULE_DIR$/tests/Domain" isTestSource="true" packagePrefix="Orchestra\Domain\Tests\" />
       <sourceFolder url="file://$MODULE_DIR$/tests/Infrastructure" isTestSource="true" packagePrefix="Orchestra\Infrastructure\Tests\" />
       <sourceFolder url="file://$MODULE_DIR$/tests/Web" isTestSource="true" packagePrefix="Orchestra\Web\Tests\" />
+      <sourceFolder url="file://$MODULE_DIR$/src/Bundle/OrchestraSymfonyEndpoint/." isTestSource="false" packagePrefix="Orchestra\Bundle\Endpoint\" />
       <excludeFolder url="file://$MODULE_DIR$/var" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/symfony/error-handler" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/symfony/flex" />
