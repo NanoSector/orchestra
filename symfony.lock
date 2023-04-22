@@ -26,6 +26,9 @@
             "migrations/.gitignore"
         ]
     },
+    "nanosector/orchestra-endpoint-bundle": {
+        "version": "dev-feature/prefix"
+    },
     "phpunit/phpunit": {
         "version": "9.5",
         "recipe": {

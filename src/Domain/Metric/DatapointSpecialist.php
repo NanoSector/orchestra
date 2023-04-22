@@ -32,6 +32,7 @@ readonly class DatapointSpecialist
                 return new HealthMetric($metric->getProduct(), (bool)$this->datapoint->getValue(), []);
 
             case MetricEnum::Invalid:
+            case null:
                 return new InvalidMetric($metric->getProduct());
 
             case MetricEnum::Text:
@@ -42,7 +43,7 @@ readonly class DatapointSpecialist
         }
 
         throw new InvalidArgumentException(
-            sprintf('Do not know how to specialize %s', $metric->getDiscriminator()->value)
+            sprintf('Do not know how to specialize %s', $metric->getDiscriminator()?->value ?? 'Unknown')
         );
     }
 }

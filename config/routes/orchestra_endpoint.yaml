@@ -1,0 +1,3 @@
+orchestra_details:
+    resource: '@OrchestraEndpointBundle/Resources/config/routing/orchestra.xml'
+    prefix: /internal/info

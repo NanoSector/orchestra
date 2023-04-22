@@ -10,6 +10,7 @@ declare(strict_types = 1);
 namespace Orchestra\Domain\Metric\Parser\Builder;
 
 use Closure;
+use Orchestra\Domain\Metric\Parser\Node\ApplyToEachNode;
 use Orchestra\Domain\Metric\Parser\Node\ConditionalNode;
 use Orchestra\Domain\Metric\Parser\Node\ParserControlStructureInterface;
 use Orchestra\Domain\Metric\Parser\Node\ParserNodeInterface;
@@ -27,6 +28,11 @@ readonly class ParserBuilder
     public function anyOf(ParserNodeInterface...$nodes): ParserNodeInterface
     {
         return new TryNode(...$nodes);
+    }
+
+    public function each(Closure $consumer): ParserControlStructureInterface
+    {
+        return new ApplyToEachNode($consumer);
     }
 
     public function if(Closure $condition, array $ifTrue, array $ifFalse): ParserControlStructureInterface

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!--
+  ~ Copyright (c) 2023 NanoSector & Orchestra contributors
+  ~
+  ~ This source code is licensed under the MIT license. See LICENSE for details.
+  -->
+
+<routes xmlns="http://symfony.com/schema/routing"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://symfony.com/schema/routing https://symfony.com/schema/routing/routing-1.0.xsd">
+
+    <route id="orchestra_details" path="/">
+        <default key="_controller">orchestra.controller.details::__invoke</default>
+    </route>
+
+</routes>

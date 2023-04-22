@@ -1,0 +1,9 @@
+orchestra_endpoint:
+  custom_versions:
+    - name: Orchestra Dashboard
+      version: "%env(APP_VERSION)%"
+  include_php: true
+  include_symfony: true
+  include_webserver: true
+  include_operating_system: true
+  token: '%env(ORCHESTRA_ENDPOINT_TOKEN)%' # Enables authentication on the bundle level

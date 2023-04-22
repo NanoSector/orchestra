@@ -50,7 +50,13 @@ readonly class ResponseStructure
             }
 
             if ($structureValue instanceof ParserNodeInterface) {
-                $metrics[] = [$structureValue->parse($data[$structureKey])];
+                $value = $data[$structureKey];
+
+                if (!is_array($value)) {
+                    $value = (string)$value;
+                }
+
+                $metrics[] = [$structureValue->parse($value)];
             }
         }
 
