@@ -46,6 +46,9 @@ services:
     Orchestra\Domain\Endpoint\Driver\NextcloudOcs\NextcloudOcsDriver:
         public: true
 
+    Orchestra\Domain\Endpoint\Driver\OrchestraEndpoint\OrchestraEndpointDriver:
+        public: true
+
     Orchestra\Domain\Endpoint\Driver\PlexMediaServer\PlexMediaServerDriver:
         public: true
 
