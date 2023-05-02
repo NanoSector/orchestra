@@ -1,3 +1,10 @@
 <component name="CopyrightManager">
-  <settings default="Orchestra" />
+  <settings default="Orchestra">
+    <LanguageOptions name="PHP">
+      <option name="fileTypeOverride" value="3" />
+      <option name="separateBefore" value="true" />
+      <option name="lenBefore" value="1" />
+      <option name="filler" value="*" />
+    </LanguageOptions>
+  </settings>
 </component>
