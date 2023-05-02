@@ -1,11 +1,12 @@
 <?php
+
 /*
  * Copyright (c) 2023 NanoSector & Orchestra contributors
  *
  * This source code is licensed under the MIT license. See LICENSE for details.
  */
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Orchestra\Web\Controller;
 
@@ -107,7 +108,7 @@ class ApplicationController extends AbstractController
     public function index(): Response
     {
         return $this->render('applications/index.html.twig', [
-            'applications' => $this->applicationRepository->findAll()
+            'applications' => $this->applicationRepository->findAll(),
         ]);
     }
 

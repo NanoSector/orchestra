@@ -1,11 +1,12 @@
 <?php
+
 /*
  * Copyright (c) 2023 NanoSector & Orchestra contributors
  *
  * This source code is licensed under the MIT license. See LICENSE for details.
  */
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Orchestra\Domain\Repository;
 
@@ -28,18 +29,18 @@ class EndpointRepository extends ServiceEntityRepository
         parent::__construct($registry, Endpoint::class);
     }
 
-    public function save(Endpoint $entity, bool $flush = false): void
+    public function remove(Endpoint $entity, bool $flush = false): void
     {
-        $this->getEntityManager()->persist($entity);
+        $this->getEntityManager()->remove($entity);
 
         if ($flush) {
             $this->getEntityManager()->flush();
         }
     }
 
-    public function remove(Endpoint $entity, bool $flush = false): void
+    public function save(Endpoint $entity, bool $flush = false): void
     {
-        $this->getEntityManager()->remove($entity);
+        $this->getEntityManager()->persist($entity);
 
         if ($flush) {
             $this->getEntityManager()->flush();

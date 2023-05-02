@@ -20,10 +20,7 @@
   "autoload": {
     "psr-4": {
       "Orchestra\\Bundle\\Endpoint\\": "."
-    },
-    "exclude-from-classmap": [
-      "/Tests/"
-    ]
+    }
   },
   "minimum-stability": "dev"
 }

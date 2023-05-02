@@ -1,11 +1,12 @@
 <?php
+
 /*
  * Copyright (c) 2023 NanoSector & Orchestra contributors
  *
  * This source code is licensed under the MIT license. See LICENSE for details.
  */
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Orchestra\Domain\Entity;
 
@@ -42,6 +43,33 @@ class Group
         $this->applications = new ArrayCollection();
     }
 
+    public function addApplication(Application $application): self
+    {
+        if (!$this->applications->contains($application)) {
+            $this->applications->add($application);
+            $application->addGroup($this);
+        }
+
+        return $this;
+    }
+
+    public function addUser(User $user): self
+    {
+        if (!$this->users->contains($user)) {
+            $this->users->add($user);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Application>
+     */
+    public function getApplications(): Collection
+    {
+        return $this->applications;
+    }
+
     public function getId(): ?int
     {
         return $this->id;
@@ -67,10 +95,10 @@ class Group
         return $this->users;
     }
 
-    public function addUser(User $user): self
+    public function removeApplication(Application $application): self
     {
-        if (!$this->users->contains($user)) {
-            $this->users->add($user);
+        if ($this->applications->removeElement($application)) {
+            $application->removeGroup($this);
         }
 
         return $this;
@@ -79,33 +107,6 @@ class Group
     public function removeUser(User $user): self
     {
         $this->users->removeElement($user);
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Application>
-     */
-    public function getApplications(): Collection
-    {
-        return $this->applications;
-    }
-
-    public function addApplication(Application $application): self
-    {
-        if (!$this->applications->contains($application)) {
-            $this->applications->add($application);
-            $application->addGroup($this);
-        }
-
-        return $this;
-    }
-
-    public function removeApplication(Application $application): self
-    {
-        if ($this->applications->removeElement($application)) {
-            $application->removeGroup($this);
-        }
 
         return $this;
     }

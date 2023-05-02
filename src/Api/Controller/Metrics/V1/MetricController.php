@@ -1,11 +1,12 @@
 <?php
+
 /*
  * Copyright (c) 2023 NanoSector & Orchestra contributors
  *
  * This source code is licensed under the MIT license. See LICENSE for details.
  */
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Orchestra\Api\Controller\Metrics\V1;
 
@@ -20,7 +21,6 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/v1/metrics', name: 'api_metrics_v1_')]
 class MetricController extends AbstractApiController
 {
-
     public function __construct(private readonly UserRepository $userRepository)
     {
         parent::__construct();

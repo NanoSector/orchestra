@@ -1,11 +1,12 @@
 <?php
+
 /*
  * Copyright (c) 2023 NanoSector & Orchestra contributors
  *
  * This source code is licensed under the MIT license. See LICENSE for details.
  */
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Orchestra\Domain\Entity;
 
@@ -41,6 +42,41 @@ class Application
         $this->endpoints = new ArrayCollection();
     }
 
+    public function addEndpoint(Endpoint $endpoint): self
+    {
+        if (!$this->endpoints->contains($endpoint)) {
+            $this->endpoints->add($endpoint);
+            $endpoint->setApplication($this);
+        }
+
+        return $this;
+    }
+
+    public function addGroup(Group $group): self
+    {
+        if (!$this->groups->contains($group)) {
+            $this->groups->add($group);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Endpoint>
+     */
+    public function getEndpoints(): Collection
+    {
+        return $this->endpoints;
+    }
+
+    /**
+     * @return Collection<int, Group>
+     */
+    public function getGroups(): Collection
+    {
+        return $this->groups;
+    }
+
     public function getId(): ?int
     {
         return $this->id;
@@ -54,6 +90,14 @@ class Application
         $this->id = $id;
     }
 
+    /**
+     * @return ArrayCollection<Metric>
+     */
+    public function getMetrics(): ArrayCollection
+    {
+        return new ArrayCollection(...$this->endpoints->map(fn(Endpoint $e) => $e->getMetrics()->toArray())->toArray());
+    }
+
     public function getName(): ?string
     {
         return $this->name;
@@ -62,48 +106,6 @@ class Application
     public function setName(string $name): self
     {
         $this->name = $name;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Group>
-     */
-    public function getGroups(): Collection
-    {
-        return $this->groups;
-    }
-
-    public function addGroup(Group $group): self
-    {
-        if (!$this->groups->contains($group)) {
-            $this->groups->add($group);
-        }
-
-        return $this;
-    }
-
-    public function removeGroup(Group $group): self
-    {
-        $this->groups->removeElement($group);
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Endpoint>
-     */
-    public function getEndpoints(): Collection
-    {
-        return $this->endpoints;
-    }
-
-    public function addEndpoint(Endpoint $endpoint): self
-    {
-        if (!$this->endpoints->contains($endpoint)) {
-            $this->endpoints->add($endpoint);
-            $endpoint->setApplication($this);
-        }
 
         return $this;
     }
@@ -120,11 +122,10 @@ class Application
         return $this;
     }
 
-    /**
-     * @return ArrayCollection<Metric>
-     */
-    public function getMetrics(): ArrayCollection
+    public function removeGroup(Group $group): self
     {
-        return new ArrayCollection(...$this->endpoints->map(fn(Endpoint $e) => $e->getMetrics()->toArray())->toArray());
+        $this->groups->removeElement($group);
+
+        return $this;
     }
 }

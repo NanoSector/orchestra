@@ -1,11 +1,12 @@
 <?php
+
 /*
  * Copyright (c) 2023 NanoSector & Orchestra contributors
  *
  * This source code is licensed under the MIT license. See LICENSE for details.
  */
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Orchestra\Infrastructure\Development\Maker;
 
@@ -39,14 +40,14 @@ final class MakeApiController extends AbstractMaker
         $this->makeController = $makeController;
     }
 
-    public static function getCommandName(): string
-    {
-        return 'make:controller:api';
-    }
-
     public static function getCommandDescription(): string
     {
         return 'Creates a new API controller class';
+    }
+
+    public static function getCommandName(): string
+    {
+        return 'make:controller:api';
     }
 
     public function configureCommand(Command $command, InputConfiguration $inputConfig): void
@@ -73,16 +74,16 @@ final class MakeApiController extends AbstractMaker
             );
     }
 
+    public function configureDependencies(DependencyBuilder $dependencies): void
+    {
+        $this->makeController->configureDependencies($dependencies);
+    }
+
     public function generate(InputInterface $input, ConsoleStyle $io, Generator $generator): void
     {
         $input->setArgument('controller-class', '\\Api\\Controller\\' . $input->getArgument('controller-class'));
         $input->setOption('no-template', true);
 
         $this->makeController->generate($input, $io, $generator);
-    }
-
-    public function configureDependencies(DependencyBuilder $dependencies): void
-    {
-        $this->makeController->configureDependencies($dependencies);
     }
 }

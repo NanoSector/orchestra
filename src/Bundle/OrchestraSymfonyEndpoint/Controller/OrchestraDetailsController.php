@@ -6,7 +6,7 @@
  * This source code is licensed under the MIT license. See LICENSE for details.
  */
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Orchestra\Bundle\Endpoint\Controller;
 
@@ -87,8 +87,8 @@ readonly class OrchestraDetailsController
             'type'    => 'orchestra/external/endpoint',
             'payload' => [
                 'healthy'  => true,
-                'software' => $software
-            ]
+                'software' => $software,
+            ],
         ]);
     }
 }

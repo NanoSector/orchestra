@@ -1,11 +1,12 @@
 <?php
+
 /*
  * Copyright (c) 2023 NanoSector & Orchestra contributors
  *
  * This source code is licensed under the MIT license. See LICENSE for details.
  */
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Orchestra\Domain\Metric\Parser\Node;
 
@@ -19,6 +20,7 @@ use Orchestra\Domain\Metric\VersionMetric;
  * Matches the given regex against the version.
  * Will use the first capturing group as value.
  */
+
 readonly class RegexVersionNode implements ParserNodeInterface
 {
     protected string $regex;

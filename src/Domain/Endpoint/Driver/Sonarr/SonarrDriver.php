@@ -1,11 +1,12 @@
 <?php
+
 /*
  * Copyright (c) 2023 NanoSector & Orchestra contributors
  *
  * This source code is licensed under the MIT license. See LICENSE for details.
  */
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Orchestra\Domain\Endpoint\Driver\Sonarr;
 
@@ -17,7 +18,6 @@ use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 readonly class SonarrDriver extends AbstractDriver
 {
-
     public function __construct(
         private HttpClientInterface $client,
         private SonarrResponseParser $responseParser
@@ -38,7 +38,7 @@ readonly class SonarrDriver extends AbstractDriver
             $response = $this->client->request('GET', $url, [
                 'headers' => [
                     'X-Api-Key' => $options['token'],
-                ]
+                ],
             ]);
         } catch (TransportExceptionInterface $e) {
             throw new EndpointExecutionFailedException('HTTP Client execution failed', 0, $e);
@@ -50,7 +50,7 @@ readonly class SonarrDriver extends AbstractDriver
     public function getConfigurationSkeleton(): array
     {
         return [
-            'token' => 'API token found in Sonarr\'s settings'
+            'token' => 'API token found in Sonarr\'s settings',
         ];
     }
 }

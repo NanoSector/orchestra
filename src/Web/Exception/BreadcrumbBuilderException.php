@@ -5,11 +5,10 @@
  *
  * This source code is licensed under the MIT license. See LICENSE for details.
  */
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Orchestra\Web\Exception;
 
 class BreadcrumbBuilderException extends BreadcrumbException
 {
-
 }

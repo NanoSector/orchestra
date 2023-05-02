@@ -1,11 +1,12 @@
 <?php
+
 /*
  * Copyright (c) 2023 NanoSector & Orchestra contributors
  *
  * This source code is licensed under the MIT license. See LICENSE for details.
  */
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Orchestra\Domain\Entity;
 
@@ -40,18 +41,6 @@ class Datapoint
         return $this->id;
     }
 
-    public function getValue(): ?string
-    {
-        return $this->value;
-    }
-
-    public function setValue(string $value): self
-    {
-        $this->value = $value;
-
-        return $this;
-    }
-
     public function getMetric(): ?Metric
     {
         return $this->metric;
@@ -60,6 +49,18 @@ class Datapoint
     public function setMetric(?Metric $metric): self
     {
         $this->metric = $metric;
+
+        return $this;
+    }
+
+    public function getValue(): ?string
+    {
+        return $this->value;
+    }
+
+    public function setValue(string $value): self
+    {
+        $this->value = $value;
 
         return $this;
     }

@@ -1,11 +1,12 @@
 <?php
+
 /*
  * Copyright (c) 2023 NanoSector & Orchestra contributors
  *
  * This source code is licensed under the MIT license. See LICENSE for details.
  */
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Orchestra\Api\Support;
 
@@ -37,16 +38,6 @@ class ApiProblem implements JsonSerializable
         return $self;
     }
 
-    public function jsonSerialize(): array
-    {
-        return [
-            'type'   => $this->type,
-            'title'  => $this->title,
-            'status' => $this->status,
-            'detail' => $this->detail,
-        ];
-    }
-
     public function setType(string $type): static
     {
         if (!filter_var($type, FILTER_VALIDATE_URL)) {
@@ -56,5 +47,15 @@ class ApiProblem implements JsonSerializable
         $this->type = $type;
 
         return $this;
+    }
+
+    public function jsonSerialize(): array
+    {
+        return [
+            'type'   => $this->type,
+            'title'  => $this->title,
+            'status' => $this->status,
+            'detail' => $this->detail,
+        ];
     }
 }

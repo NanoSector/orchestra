@@ -6,7 +6,7 @@
  * This source code is licensed under the MIT license. See LICENSE for details.
  */
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Orchestra\Bundle\Endpoint\Domain;
 
@@ -20,7 +20,6 @@ namespace Orchestra\Bundle\Endpoint\Domain;
  */
 class ServerSoftwareParser
 {
-
     public static function parse(string $value): ?SoftwareDetails
     {
         if (empty($value)) {

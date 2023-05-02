@@ -1,11 +1,12 @@
 <?php
+
 /*
  * Copyright (c) 2023 NanoSector & Orchestra contributors
  *
  * This source code is licensed under the MIT license. See LICENSE for details.
  */
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Orchestra\Domain\Command;
 
@@ -92,6 +93,7 @@ final class CreateAdministratorCommand extends Command
 
         if ($validationResult->count() > 0) {
             $output->writeln('<error>The user did not pass validation.</error>');
+
             return self::FAILURE;
         }
 
