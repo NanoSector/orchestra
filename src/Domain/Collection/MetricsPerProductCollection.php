@@ -1,11 +1,12 @@
 <?php
-/*
+
+/**
  * Copyright (c) 2023 NanoSector & Orchestra contributors
  *
  * This source code is licensed under the MIT license. See LICENSE for details.
  */
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Orchestra\Domain\Collection;
 
@@ -14,7 +15,7 @@ use Doctrine\Common\Collections\Collection;
 use Orchestra\Domain\Entity\Metric;
 use Orchestra\Domain\Exception\InvalidArgumentException;
 
-class MetricsPerProductCollection
+readonly class MetricsPerProductCollection
 {
     /**
      * @var Collection<string, ArrayCollection<Metric>>
@@ -44,7 +45,7 @@ class MetricsPerProductCollection
     public function add(Metric $metric): self
     {
         if ($metric->getProduct() === null) {
-            throw new InvalidArgumentException(sprintf("Product cannot be null when using %s", __CLASS__));
+            throw new InvalidArgumentException(sprintf("Product cannot be null when using %s", self::class));
         }
 
         if (!$this->state->containsKey($metric->getProduct())) {
@@ -63,5 +64,4 @@ class MetricsPerProductCollection
     {
         return $this->state;
     }
-
 }

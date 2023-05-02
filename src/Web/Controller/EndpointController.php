@@ -1,11 +1,12 @@
 <?php
-/*
+
+/**
  * Copyright (c) 2023 NanoSector & Orchestra contributors
  *
  * This source code is licensed under the MIT license. See LICENSE for details.
  */
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Orchestra\Web\Controller;
 
@@ -61,7 +62,7 @@ class EndpointController extends AbstractController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             try {
-                $driverOptions = json_decode($form->get('driverOptions')->getData(), true, 512, JSON_THROW_ON_ERROR);
+                $driverOptions = json_decode((string)$form->get('driverOptions')->getData(), true, 512, JSON_THROW_ON_ERROR);
 
                 if (!is_array($driverOptions)) {
                     $driverOptions = [$driverOptions];
@@ -135,8 +136,8 @@ class EndpointController extends AbstractController
         );
 
         return $this->render('endpoints/details.html.twig', [
-            'application' => $application,
-            'endpoint' => $endpoint,
+            'application'           => $application,
+            'endpoint'              => $endpoint,
             'lastMetricsPerProduct' => $lastMetricsPerProduct,
         ]);
     }
@@ -168,7 +169,7 @@ class EndpointController extends AbstractController
 
     #[Route('/applications/{applicationId}/endpoints/{id}/update', name: 'web_endpoint_update', methods: [
         "GET",
-        "POST"
+        "POST",
     ])]
     public function update(
         #[MapEntity(id: 'applicationId')] Application $application,
@@ -191,7 +192,7 @@ class EndpointController extends AbstractController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             try {
-                $driverOptions = json_decode($form->get('driverOptions')->getData(), true, 512, JSON_THROW_ON_ERROR);
+                $driverOptions = json_decode((string)$form->get('driverOptions')->getData(), true, 512, JSON_THROW_ON_ERROR);
 
                 if (!is_array($driverOptions)) {
                     $driverOptions = [$driverOptions];

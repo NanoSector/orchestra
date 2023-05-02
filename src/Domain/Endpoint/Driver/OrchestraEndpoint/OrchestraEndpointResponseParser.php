@@ -1,11 +1,12 @@
 <?php
-/*
+
+/**
  * Copyright (c) 2023 NanoSector & Orchestra contributors
  *
  * This source code is licensed under the MIT license. See LICENSE for details.
  */
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Orchestra\Domain\Endpoint\Driver\OrchestraEndpoint;
 
@@ -18,7 +19,6 @@ use Symfony\Contracts\HttpClient\ResponseInterface;
 
 readonly class OrchestraEndpointResponseParser
 {
-
     public function __construct(private ParserBuilder $builder)
     {
     }
@@ -41,9 +41,9 @@ readonly class OrchestraEndpointResponseParser
                     fn() => true,
                 ),
                 'software' => $this->builder->each(fn($value) => [
-                    'version' => $this->builder->metric()->version($value['name'] ?? 'Unknown')
+                    'version' => $this->builder->metric()->version($value['name'] ?? 'Unknown'),
                 ]),
-            ])
+            ]),
         ]);
 
         $metrics = $structure->parseMetrics($payload);

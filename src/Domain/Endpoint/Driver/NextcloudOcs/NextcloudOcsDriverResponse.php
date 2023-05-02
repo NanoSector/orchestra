@@ -1,11 +1,12 @@
 <?php
-/*
+
+/**
  * Copyright (c) 2023 NanoSector & Orchestra contributors
  *
  * This source code is licensed under the MIT license. See LICENSE for details.
  */
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Orchestra\Domain\Endpoint\Driver\NextcloudOcs;
 
@@ -19,12 +20,13 @@ use Symfony\Contracts\HttpClient\Exception\ExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
 use Symfony\Contracts\HttpClient\ResponseInterface;
 
-readonly class NextcloudOcsDriverResponse extends AbstractDriverResponse implements DriverResponseWithBodyInterface,
-                                                                           DriverResponseWithHealthCheckInterface
+readonly class NextcloudOcsDriverResponse extends AbstractDriverResponse implements
+    DriverResponseWithBodyInterface,
+    DriverResponseWithHealthCheckInterface
 {
     use DriverResponseWithHealthCheckTrait;
 
-    public function __construct(private readonly ResponseInterface $httpResponse, ArrayCollection $metrics)
+    public function __construct(private ResponseInterface $httpResponse, ArrayCollection $metrics)
     {
         parent::__construct($metrics);
     }

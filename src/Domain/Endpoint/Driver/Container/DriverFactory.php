@@ -1,11 +1,12 @@
 <?php
-/*
+
+/**
  * Copyright (c) 2023 NanoSector & Orchestra contributors
  *
  * This source code is licensed under the MIT license. See LICENSE for details.
  */
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Orchestra\Domain\Endpoint\Driver\Container;
 
@@ -16,7 +17,6 @@ use Symfony\Component\HttpKernel\KernelInterface;
 
 readonly class DriverFactory
 {
-
     public function __construct(private KernelInterface $kernel)
     {
     }
@@ -53,5 +53,4 @@ readonly class DriverFactory
 
         return $driverInstance;
     }
-
 }

@@ -1,11 +1,12 @@
 <?php
-/*
+
+/**
  * Copyright (c) 2023 NanoSector & Orchestra contributors
  *
  * This source code is licensed under the MIT license. See LICENSE for details.
  */
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Orchestra\Infrastructure\Collection;
 
@@ -20,7 +21,6 @@ use Webmozart\Assert\Assert;
  */
 abstract class AbstractStronglyTypedArrayCollection extends ArrayCollection
 {
-
     /** @param class-string<T> $type */
     public function __construct(
         protected string $type,
@@ -52,7 +52,7 @@ abstract class AbstractStronglyTypedArrayCollection extends ArrayCollection
 
     /**
      * @param string|int $key
-     * @param T          $value
+     * @param T $value
      *
      * @return void
      */
@@ -61,6 +61,4 @@ abstract class AbstractStronglyTypedArrayCollection extends ArrayCollection
         Assert::isInstanceOf($value, $this->type);
         parent::set($key, $value);
     }
-
-
 }

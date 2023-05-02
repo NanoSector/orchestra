@@ -1,0 +1,3 @@
+<component name="DependencyValidationManager">
+  <scope name="Orchestra" pattern="file[orchestra]:src//*||file[orchestra]:assets//*||file[orchestra]:templates//*||file[orchestra]:tests//*" />
+</component>

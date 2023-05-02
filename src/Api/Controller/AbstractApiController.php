@@ -1,11 +1,12 @@
 <?php
-/*
+
+/**
  * Copyright (c) 2023 NanoSector & Orchestra contributors
  *
  * This source code is licensed under the MIT license. See LICENSE for details.
  */
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Orchestra\Api\Controller;
 
@@ -19,9 +20,9 @@ use Symfony\Contracts\Service\Attribute\Required;
 
 class AbstractApiController extends AbstractController
 {
-    private VerboseMessageBag $verbose;
+    private readonly VerboseMessageBag $verbose;
 
-    private LinkBag $links;
+    private readonly LinkBag $links;
 
     private string $environment;
 

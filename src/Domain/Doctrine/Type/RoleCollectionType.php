@@ -1,11 +1,12 @@
 <?php
-/*
+
+/**
  * Copyright (c) 2023 NanoSector & Orchestra contributors
  *
  * This source code is licensed under the MIT license. See LICENSE for details.
  */
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Orchestra\Domain\Doctrine\Type;
 
@@ -39,18 +40,9 @@ class RoleCollectionType extends Type
         return new RoleCollection(
             array_map(
                 static fn(string $e) => Role::from($e),
-                explode(',', $value)
+                explode(',', (string)$value)
             )
         );
-    }
-
-
-    /**
-     * @inheritDoc
-     */
-    public function getSQLDeclaration(array $column, AbstractPlatform $platform): string
-    {
-        return $platform->getStringTypeDeclarationSQL($column);
     }
 
     /**
@@ -58,6 +50,14 @@ class RoleCollectionType extends Type
      */
     public function getName(): string
     {
-        return __CLASS__;
+        return self::class;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getSQLDeclaration(array $column, AbstractPlatform $platform): string
+    {
+        return $platform->getStringTypeDeclarationSQL($column);
     }
 }

@@ -1,11 +1,12 @@
 <?php
-/*
+
+/**
  * Copyright (c) 2023 NanoSector & Orchestra contributors
  *
  * This source code is licensed under the MIT license. See LICENSE for details.
  */
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Orchestra\Web\Form;
 
@@ -34,7 +35,7 @@ class EndpointForm extends AbstractType
                 'disabled'     => true,
             ])
             ->add('url', UrlType::class, [
-                'label' => 'URL to fetch'
+                'label' => 'URL to fetch',
             ])
             ->add('driver', EnumType::class, [
                 'class'        => DriverEnum::class,

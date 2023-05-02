@@ -1,11 +1,12 @@
 <?php
-/*
+
+/**
  * Copyright (c) 2023 NanoSector & Orchestra contributors
  *
  * This source code is licensed under the MIT license. See LICENSE for details.
  */
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Orchestra\Infrastructure\Doctrine\Type;
 
@@ -19,16 +20,12 @@ use LogicException;
  */
 abstract class AbstractEnumType extends Type
 {
-    public function getSQLDeclaration(array $column, AbstractPlatform $platform): string
-    {
-        return 'TEXT';
-    }
-
     public function convertToDatabaseValue($value, AbstractPlatform $platform): int|string|null
     {
         if ($value instanceof BackedEnum) {
             return $value->value;
         }
+
         return null;
     }
 
@@ -49,4 +46,9 @@ abstract class AbstractEnumType extends Type
      * @return class-string<BackedEnum> an enum class string
      */
     abstract public static function getEnumsClass(): string;
+
+    public function getSQLDeclaration(array $column, AbstractPlatform $platform): string
+    {
+        return 'TEXT';
+    }
 }

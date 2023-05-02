@@ -1,11 +1,12 @@
 <?php
-/*
+
+/**
  * Copyright (c) 2023 NanoSector & Orchestra contributors
  *
  * This source code is licensed under the MIT license. See LICENSE for details.
  */
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Orchestra\Domain\Endpoint\Driver\NextcloudOcs;
 
@@ -17,7 +18,6 @@ use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 readonly class NextcloudOcsDriver extends AbstractDriver
 {
-
     public function __construct(
         private HttpClientInterface $client,
         private NextcloudOcsResponseParser $responseParser
@@ -41,7 +41,7 @@ readonly class NextcloudOcsDriver extends AbstractDriver
                 ],
                 'headers' => [
                     'NC-Token' => $options['token'],
-                ]
+                ],
             ]);
         } catch (TransportExceptionInterface $e) {
             throw new EndpointExecutionFailedException('HTTP Client execution failed', 0, $e);

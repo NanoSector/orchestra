@@ -1,11 +1,12 @@
 <?php
-/*
+
+/**
  * Copyright (c) 2023 NanoSector & Orchestra contributors
  *
  * This source code is licensed under the MIT license. See LICENSE for details.
  */
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Orchestra\Domain\Endpoint;
 
@@ -40,7 +41,7 @@ readonly class EndpointDriverResponseMapper
         foreach ($metrics as $metric) {
             $metricEntity = $endpoint->getMetrics()->findFirst(
                 fn($key, Metric $m) => $m->getProduct() === $metric->getName()
-                    && $m->getDiscriminator()->value === get_class($metric)
+                    && $m->getDiscriminator()->value === $metric::class
             );
 
             if (!$metricEntity instanceof Metric) {
@@ -76,14 +77,14 @@ readonly class EndpointDriverResponseMapper
         foreach ($response->getMetrics() as $metric) {
             $metricEntity = $endpoint->getMetrics()->findFirst(
                 fn($key, Metric $m) => $m->getProduct() === $metric->getName()
-                    && $m->getDiscriminator()->value === get_class($metric)
+                    && $m->getDiscriminator()->value === $metric::class
             );
 
             if (!$metricEntity instanceof Metric) {
                 $metricEntity = new Metric();
                 $metricEntity->setEndpoint($endpoint);
                 $metricEntity->setProduct($metric->getName());
-                $metricEntity->setDiscriminator(MetricEnum::from(get_class($metric)));
+                $metricEntity->setDiscriminator(MetricEnum::from($metric::class));
 
                 $endpoint->addMetric($metricEntity);
             }

@@ -1,11 +1,12 @@
 <?php
-/*
+
+/**
  * Copyright (c) 2023 NanoSector & Orchestra contributors
  *
  * This source code is licensed under the MIT license. See LICENSE for details.
  */
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Orchestra\Domain\Endpoint\Driver\GenericPlaintextVersion;
 
@@ -20,7 +21,6 @@ use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 readonly class GenericPlaintextVersionDriver extends AbstractDriver
 {
-
     public function __construct(
         private HttpClientInterface $client
     ) {
@@ -50,7 +50,7 @@ readonly class GenericPlaintextVersionDriver extends AbstractDriver
 
         try {
             $response = $this->client->request('GET', $url, [
-                'headers' => $headers
+                'headers' => $headers,
             ]);
         } catch (TransportExceptionInterface $e) {
             throw new EndpointExecutionFailedException('HTTP Client execution failed', 0, $e);
@@ -58,7 +58,7 @@ readonly class GenericPlaintextVersionDriver extends AbstractDriver
 
         try {
             return new PlaintextVersionResponse($product, $response->getContent());
-        } catch (HttpExceptionInterface|TransportExceptionInterface $e) {
+        } catch (HttpExceptionInterface | TransportExceptionInterface $e) {
             throw new EndpointExecutionFailedException('HTTP client got invalid response', $e->getCode(), $e);
         } catch (InvalidArgumentException $e) {
             throw new EndpointExecutionFailedException('Got invalid version string', $e->getCode(), $e);
@@ -69,7 +69,7 @@ readonly class GenericPlaintextVersionDriver extends AbstractDriver
     {
         return [
             'product' => 'Product name to set for this version',
-            'headers' => ['Sample' => 'Header that will be sent with the GET request']
+            'headers' => ['Sample' => 'Header that will be sent with the GET request'],
         ];
     }
 }

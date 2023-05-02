@@ -1,11 +1,12 @@
 <?php
-/*
+
+/**
  * Copyright (c) 2023 NanoSector & Orchestra contributors
  *
  * This source code is licensed under the MIT license. See LICENSE for details.
  */
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Orchestra\Api\Support;
 
@@ -17,6 +18,13 @@ final class LinkBag
     /** @var array<string, string> */
     private array $links = [];
 
+    public function addSelf(Request $request): self
+    {
+        $this->set('self', $request->getUri());
+
+        return $this;
+    }
+
     public function set(string $key, string $url): self
     {
         if (!filter_var($url, FILTER_VALIDATE_URL)) {
@@ -24,13 +32,6 @@ final class LinkBag
         }
 
         $this->links[$key] = $url;
-
-        return $this;
-    }
-
-    public function addSelf(Request $request): self
-    {
-        $this->set('self', $request->getUri());
 
         return $this;
     }

@@ -1,5 +1,11 @@
 <?php
 
+/**
+ * Copyright (c) 2023 NanoSector & Orchestra contributors
+ *
+ * This source code is licensed under the MIT license. See LICENSE for details.
+ */
+
 return [
     Symfony\Bundle\FrameworkBundle\FrameworkBundle::class            => ['all' => true],
     Doctrine\Bundle\DoctrineBundle\DoctrineBundle::class             => ['all' => true],

@@ -1,11 +1,12 @@
 <?php
-/*
+
+/**
  * Copyright (c) 2023 NanoSector & Orchestra contributors
  *
  * This source code is licensed under the MIT license. See LICENSE for details.
  */
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Orchestra\Domain\Entity;
 
@@ -30,7 +31,10 @@ class Metric
     #[ORM\Column(length: 255)]
     private ?string $product = null;
 
-    #[ORM\OneToMany(mappedBy: 'metric', targetEntity: Datapoint::class, cascade: ['persist', 'remove'], orphanRemoval: true)]
+    #[ORM\OneToMany(mappedBy: 'metric', targetEntity: Datapoint::class, cascade: [
+        'persist',
+        'remove',
+    ], orphanRemoval: true)]
     private Collection $datapoints;
 
     #[ORM\ManyToOne(inversedBy: 'metrics')]
@@ -45,31 +49,6 @@ class Metric
         $this->datapoints = new ArrayCollection();
     }
 
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
-
-    public function getProduct(): ?string
-    {
-        return $this->product;
-    }
-
-    public function setProduct(string $product): self
-    {
-        $this->product = $product;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Datapoint>
-     */
-    public function getDatapoints(): Collection
-    {
-        return $this->datapoints;
-    }
-
     public function addDatapoint(Datapoint $datapoint): self
     {
         if (!$this->datapoints->contains($datapoint)) {
@@ -80,22 +59,38 @@ class Metric
         return $this;
     }
 
-    public function removeDatapoint(Datapoint $datapoint): self
+    public function belongsToEndpoint(Endpoint $endpoint): bool
     {
-        if ($this->datapoints->removeElement($datapoint)) {
-            // set the owning side to null (unless already changed)
-            if ($datapoint->getMetric() === $this) {
-                $datapoint->setMetric(null);
-            }
+        if (!$this->endpoint instanceof Endpoint) {
+            return false;
         }
 
-        return $this;
+        return $this->endpoint->getId() === $endpoint->getId();
     }
 
-    public function getLastDatapoint(): ?Datapoint
+    public function getId(): ?int
     {
-        $datapoint = $this->datapoints->last();
-        return $datapoint instanceof Datapoint ? $datapoint : null;
+        return $this->id;
+    }
+
+    /**
+     * @return Collection<int, Datapoint>
+     */
+    public function getDatapoints(): Collection
+    {
+        return $this->datapoints;
+    }
+
+    public function getDiscriminator(): ?MetricEnum
+    {
+        return $this->discriminator;
+    }
+
+    public function setDiscriminator(MetricEnum $discriminator): self
+    {
+        $this->discriminator = $discriminator;
+
+        return $this;
     }
 
     public function getEndpoint(): ?Endpoint
@@ -110,23 +105,33 @@ class Metric
         return $this;
     }
 
-    public function belongsToEndpoint(Endpoint $endpoint): bool
+    public function getLastDatapoint(): ?Datapoint
     {
-        if (!$this->endpoint instanceof Endpoint) {
-            return false;
+        $datapoint = $this->datapoints->last();
+
+        return $datapoint instanceof Datapoint ? $datapoint : null;
+    }
+
+    public function getProduct(): ?string
+    {
+        return $this->product;
+    }
+
+    public function setProduct(string $product): self
+    {
+        $this->product = $product;
+
+        return $this;
+    }
+
+    public function removeDatapoint(Datapoint $datapoint): self
+    {
+        if ($this->datapoints->removeElement($datapoint)) {
+            // set the owning side to null (unless already changed)
+            if ($datapoint->getMetric() === $this) {
+                $datapoint->setMetric(null);
+            }
         }
-
-        return $this->endpoint->getId() === $endpoint->getId();
-    }
-
-    public function getDiscriminator(): ?MetricEnum
-    {
-        return $this->discriminator;
-    }
-
-    public function setDiscriminator(MetricEnum $discriminator): self
-    {
-        $this->discriminator = $discriminator;
 
         return $this;
     }
