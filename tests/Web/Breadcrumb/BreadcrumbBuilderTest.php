@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright (c) 2023 NanoSector & Orchestra contributors
  *
@@ -17,7 +18,6 @@ use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
 class BreadcrumbBuilderTest extends KernelTestCase
 {
-
     public function testApplication(): void
     {
         // Arrange

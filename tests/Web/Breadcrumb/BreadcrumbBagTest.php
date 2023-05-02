@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright (c) 2023 NanoSector & Orchestra contributors
  *
@@ -17,7 +18,6 @@ use stdClass;
 
 class BreadcrumbBagTest extends TestCase
 {
-
     public function testAdd(): void
     {
         // Arrange

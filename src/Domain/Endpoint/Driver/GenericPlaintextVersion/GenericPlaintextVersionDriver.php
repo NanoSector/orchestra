@@ -58,7 +58,7 @@ readonly class GenericPlaintextVersionDriver extends AbstractDriver
 
         try {
             return new PlaintextVersionResponse($product, $response->getContent());
-        } catch (HttpExceptionInterface|TransportExceptionInterface $e) {
+        } catch (HttpExceptionInterface | TransportExceptionInterface $e) {
             throw new EndpointExecutionFailedException('HTTP client got invalid response', $e->getCode(), $e);
         } catch (InvalidArgumentException $e) {
             throw new EndpointExecutionFailedException('Got invalid version string', $e->getCode(), $e);

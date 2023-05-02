@@ -1,6 +1,5 @@
 <?php
 
-
 /**
  * Copyright (c) 2023 NanoSector & Orchestra contributors
  *

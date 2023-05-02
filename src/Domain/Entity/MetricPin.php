@@ -19,7 +19,6 @@ readonly class MetricPin
         #[ORM\Id]
         #[ORM\ManyToOne(targetEntity: Metric::class)]
         private Metric $metric,
-
         #[ORM\Id]
         #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'pinnedMetrics')]
         private User $user

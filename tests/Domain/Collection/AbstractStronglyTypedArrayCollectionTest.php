@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright (c) 2023 NanoSector & Orchestra contributors
  *
@@ -16,7 +17,6 @@ use stdClass;
 
 class AbstractStronglyTypedArrayCollectionTest extends TestCase
 {
-
     public function testAddCanAddObjectsOfWantedType(): void
     {
         $subject = new SimpleStronglyTypedArrayCollectionTestAsset();

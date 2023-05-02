@@ -3,6 +3,7 @@
     <PHPCodeStyleSettings>
       <option name="ALIGN_KEY_VALUE_PAIRS" value="true" />
       <option name="KEEP_RPAREN_AND_LBRACE_ON_ONE_LINE" value="true" />
+      <option name="SPACES_AROUND_PIPE_IN_UNION_TYPE" value="true" />
     </PHPCodeStyleSettings>
     <codeStyleSettings language="PHP">
       <option name="ALIGN_MULTILINE_CHAINED_METHODS" value="true" />

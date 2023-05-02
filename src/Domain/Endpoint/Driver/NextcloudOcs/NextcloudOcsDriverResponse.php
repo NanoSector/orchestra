@@ -26,7 +26,7 @@ readonly class NextcloudOcsDriverResponse extends AbstractDriverResponse impleme
 {
     use DriverResponseWithHealthCheckTrait;
 
-    public function __construct(private readonly ResponseInterface $httpResponse, ArrayCollection $metrics)
+    public function __construct(private ResponseInterface $httpResponse, ArrayCollection $metrics)
     {
         parent::__construct($metrics);
     }

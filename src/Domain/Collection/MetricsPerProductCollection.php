@@ -15,12 +15,12 @@ use Doctrine\Common\Collections\Collection;
 use Orchestra\Domain\Entity\Metric;
 use Orchestra\Domain\Exception\InvalidArgumentException;
 
-class MetricsPerProductCollection
+readonly class MetricsPerProductCollection
 {
     /**
      * @var Collection<string, ArrayCollection<Metric>>
      */
-    private readonly Collection $state;
+    private Collection $state;
 
     public function __construct()
     {

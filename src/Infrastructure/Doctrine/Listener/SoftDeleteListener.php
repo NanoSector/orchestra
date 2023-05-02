@@ -16,7 +16,7 @@ use Orchestra\Infrastructure\Doctrine\Traits\SoftDeleteEntityTrait;
 
 class SoftDeleteListener
 {
-    public function onFlush(OnFlushEventArgs $eventArgs)
+    public function onFlush(OnFlushEventArgs $eventArgs): void
     {
         $em = $eventArgs->getObjectManager();
         $uow = $em->getUnitOfWork();
