@@ -1,6 +1,6 @@
 <?php
 
-/*
+/**
  * Copyright (c) 2023 NanoSector & Orchestra contributors
  *
  * This source code is licensed under the MIT license. See LICENSE for details.
@@ -40,7 +40,7 @@ class RoleCollectionType extends Type
         return new RoleCollection(
             array_map(
                 static fn(string $e) => Role::from($e),
-                explode(',', $value)
+                explode(',', (string)$value)
             )
         );
     }
@@ -50,7 +50,7 @@ class RoleCollectionType extends Type
      */
     public function getName(): string
     {
-        return __CLASS__;
+        return self::class;
     }
 
     /**

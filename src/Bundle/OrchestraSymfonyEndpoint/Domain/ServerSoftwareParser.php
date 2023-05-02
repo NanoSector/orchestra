@@ -1,6 +1,6 @@
 <?php
 
-/*
+/**
  * Copyright (c) 2023 NanoSector & Orchestra contributors
  *
  * This source code is licensed under the MIT license. See LICENSE for details.
@@ -30,7 +30,7 @@ class ServerSoftwareParser
 
         if (count($parts) >= 2) {
             return new SoftwareDetails(
-                name         : $parts[0],
+                name: $parts[0],
                 versionString: $parts[1]
             );
         }
@@ -39,7 +39,7 @@ class ServerSoftwareParser
         // https://github.com/symfony-cli/symfony-cli/commit/19fb53026822fc837a81581ce938a368eeda5b01
         if (preg_match('/^Symfony Local Server (.+)$/', $value, $matches)) {
             return new SoftwareDetails(
-                name         : 'Symfony-Local-Server',
+                name: 'Symfony-Local-Server',
                 versionString: $matches[1]
             );
         }

@@ -1,6 +1,6 @@
 <?php
 
-/*
+/**
  * Copyright (c) 2023 NanoSector & Orchestra contributors
  *
  * This source code is licensed under the MIT license. See LICENSE for details.
@@ -39,7 +39,7 @@ class LoginController extends AbstractController
     }
 
     #[Route('/logout', name: 'web_login_logout', methods: ['GET'])]
-    public function logout(): void
+    public function logout(): never
     {
         // As per https://symfony.com/doc/current/security.html#logging-out this should never be called;
         // pretend it does not exist.

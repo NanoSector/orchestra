@@ -1,6 +1,6 @@
 <?php
 
-/*
+/**
  * Copyright (c) 2023 NanoSector & Orchestra contributors
  *
  * This source code is licensed under the MIT license. See LICENSE for details.
@@ -31,7 +31,7 @@ class Metric
     #[ORM\Column(length: 255)]
     private ?string $product = null;
 
-    #[ORM\OneToMany(mappedBy     : 'metric', targetEntity: Datapoint::class, cascade: [
+    #[ORM\OneToMany(mappedBy: 'metric', targetEntity: Datapoint::class, cascade: [
         'persist',
         'remove',
     ], orphanRemoval: true)]

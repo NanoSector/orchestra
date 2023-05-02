@@ -1,6 +1,6 @@
 <?php
 
-/*
+/**
  * Copyright (c) 2023 NanoSector & Orchestra contributors
  *
  * This source code is licensed under the MIT license. See LICENSE for details.
@@ -48,14 +48,14 @@ readonly class OrchestraDetailsController
 
         if ($this->includePHP && !empty($phpVersion = $this->configDataCollector->getPhpVersion())) {
             $software[] = new SoftwareDetails(
-                name         : 'PHP',
+                name: 'PHP',
                 versionString: $phpVersion
             );
         }
 
         if ($this->includeSymfony && !empty($symfonyVersion = $this->configDataCollector->getSymfonyVersion())) {
             $software[] = new SoftwareDetails(
-                name         : 'Symfony',
+                name: 'Symfony',
                 versionString: $symfonyVersion
             );
         }
@@ -70,14 +70,14 @@ readonly class OrchestraDetailsController
 
         if ($this->includeOperatingSystem) {
             $software[] = new SoftwareDetails(
-                name         : php_uname('s'),
+                name: php_uname('s'),
                 versionString: php_uname('r')
             );
         }
 
         foreach ($this->customVersions as $customVersion) {
             $software[] = new SoftwareDetails(
-                name         : $customVersion['name'],
+                name: $customVersion['name'],
                 versionString: $customVersion['version']
             );
         }

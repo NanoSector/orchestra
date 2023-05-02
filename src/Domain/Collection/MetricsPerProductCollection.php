@@ -1,6 +1,6 @@
 <?php
 
-/*
+/**
  * Copyright (c) 2023 NanoSector & Orchestra contributors
  *
  * This source code is licensed under the MIT license. See LICENSE for details.
@@ -20,7 +20,7 @@ class MetricsPerProductCollection
     /**
      * @var Collection<string, ArrayCollection<Metric>>
      */
-    private Collection $state;
+    private readonly Collection $state;
 
     public function __construct()
     {
@@ -45,7 +45,7 @@ class MetricsPerProductCollection
     public function add(Metric $metric): self
     {
         if ($metric->getProduct() === null) {
-            throw new InvalidArgumentException(sprintf("Product cannot be null when using %s", __CLASS__));
+            throw new InvalidArgumentException(sprintf("Product cannot be null when using %s", self::class));
         }
 
         if (!$this->state->containsKey($metric->getProduct())) {

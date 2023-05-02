@@ -1,6 +1,6 @@
 <?php
 
-/*
+/**
  * Copyright (c) 2023 NanoSector & Orchestra contributors
  *
  * This source code is licensed under the MIT license. See LICENSE for details.
@@ -16,11 +16,12 @@ use Doctrine\ORM\Mapping as ORM;
 readonly class MetricPin
 {
     public function __construct(
+        #[ORM\Id]
         #[ORM\ManyToOne(targetEntity: Metric::class)]
-        #[ORM\Id]
         private Metric $metric,
-        #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'pinnedMetrics')]
+
         #[ORM\Id]
+        #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'pinnedMetrics')]
         private User $user
     ) {
     }

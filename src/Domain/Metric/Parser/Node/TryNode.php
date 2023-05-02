@@ -1,6 +1,6 @@
 <?php
 
-/*
+/**
  * Copyright (c) 2023 NanoSector & Orchestra contributors
  *
  * This source code is licensed under the MIT license. See LICENSE for details.
@@ -18,7 +18,6 @@ use Orchestra\Domain\Metric\MetricInterface;
  * Takes multiple parser nodes and exhausts the list until
  * one returns a valid metric
  */
-
 readonly class TryNode implements ParserNodeInterface
 {
     /** @var ParserNodeInterface[] */

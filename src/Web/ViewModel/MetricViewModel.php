@@ -1,6 +1,6 @@
 <?php
 
-/*
+/**
  * Copyright (c) 2023 NanoSector & Orchestra contributors
  *
  * This source code is licensed under the MIT license. See LICENSE for details.
@@ -73,7 +73,7 @@ class MetricViewModel
         }
 
         try {
-            $result = json_decode($this->metricObject->getValue(), true, 512, JSON_THROW_ON_ERROR);
+            $result = json_decode((string)$this->metricObject->getValue(), true, 512, JSON_THROW_ON_ERROR);
 
             if (is_array($result)) {
                 return 'Invalid value';

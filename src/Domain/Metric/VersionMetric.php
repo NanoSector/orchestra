@@ -1,6 +1,6 @@
 <?php
 
-/*
+/**
  * Copyright (c) 2023 NanoSector & Orchestra contributors
  *
  * This source code is licensed under the MIT license. See LICENSE for details.
@@ -33,6 +33,11 @@ readonly class VersionMetric implements SemverMetricInterface
         );
     }
 
+    public function getValue(): string
+    {
+        return $this->value;
+    }
+
     public function getName(): string
     {
         return $this->product;
@@ -41,11 +46,6 @@ readonly class VersionMetric implements SemverMetricInterface
     public function isEqualTo(SemverMetricInterface $other): bool
     {
         return Comparator::equalTo($this->getValue(), $other->getValue());
-    }
-
-    public function getValue(): string
-    {
-        return $this->value;
     }
 
     public function isGreaterThan(SemverMetricInterface $other): bool

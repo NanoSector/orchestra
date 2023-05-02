@@ -1,6 +1,6 @@
 <?php
 
-/*
+/**
  * Copyright (c) 2023 NanoSector & Orchestra contributors
  *
  * This source code is licensed under the MIT license. See LICENSE for details.
@@ -57,7 +57,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\ManyToMany(targetEntity: Group::class, mappedBy: 'users', fetch: 'EAGER')]
     private Collection $groups;
 
-    #[ORM\OneToMany(mappedBy     : 'user', targetEntity: MetricPin::class, cascade: [
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: MetricPin::class, cascade: [
         'persist',
         'remove',
     ], orphanRemoval: true)]

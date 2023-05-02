@@ -1,6 +1,6 @@
 <?php
 
-/*
+/**
  * Copyright (c) 2023 NanoSector & Orchestra contributors
  *
  * This source code is licensed under the MIT license. See LICENSE for details.
@@ -15,7 +15,7 @@ use InvalidArgumentException;
 
 readonly class SwitchNode extends AbstractParserControlStructure
 {
-    public const DEFAULT = '_default';
+    final public const DEFAULT = '_default';
 
     public function __construct(
         protected Closure $reducer,

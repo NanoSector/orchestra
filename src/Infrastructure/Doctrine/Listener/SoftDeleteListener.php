@@ -1,6 +1,6 @@
 <?php
 
-/*
+/**
  * Copyright (c) 2023 NanoSector & Orchestra contributors
  *
  * This source code is licensed under the MIT license. See LICENSE for details.
@@ -22,7 +22,7 @@ class SoftDeleteListener
         $uow = $em->getUnitOfWork();
 
         foreach ($uow->getScheduledEntityDeletions() as $entity) {
-            $classMetadata = $em->getClassMetadata(get_class($entity));
+            $classMetadata = $em->getClassMetadata($entity::class);
 
             $traits = $classMetadata->reflClass->getTraitNames();
             if (in_array(SoftDeleteEntityTrait::class, $traits)) {
