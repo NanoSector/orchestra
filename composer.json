@@ -96,6 +96,7 @@
     "escapestudios/symfony2-coding-standard": "^3.13.0",
     "jetbrains/phpstorm-attributes": "^1.0",
     "phpunit/phpunit": "^9.5",
+    "rector/rector": "^0.15.25",
     "roave/security-advisories": "dev-latest",
     "squizlabs/php_codesniffer": "^3.7.2",
     "symfony/debug-bundle": "6.2.*",
