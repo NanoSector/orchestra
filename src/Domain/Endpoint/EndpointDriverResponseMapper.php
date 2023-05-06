@@ -17,12 +17,14 @@ use Orchestra\Domain\Entity\Datapoint;
 use Orchestra\Domain\Entity\Endpoint;
 use Orchestra\Domain\Entity\EndpointCollectionLog;
 use Orchestra\Domain\Entity\Metric;
+use Orchestra\Domain\Exception\InvalidMetricValueException;
 use Orchestra\Domain\Metric\MetricEnum;
 
 readonly class EndpointDriverResponseMapper
 {
     /**
      * Calculates the diff between the current Endpoint state and the desired state in the response.
+     * @throws InvalidMetricValueException
      */
     public function createCollectionLog(Endpoint $endpoint, DriverResponseInterface $response): EndpointCollectionLog
     {
@@ -54,7 +56,11 @@ readonly class EndpointDriverResponseMapper
             }
 
             $lastDatapoint = $metricEntity->getLastDatapoint();
-            $newValue = json_encode($metric->getValue(), JSON_THROW_ON_ERROR);
+            try {
+                $newValue = json_encode($metric->getValue(), JSON_THROW_ON_ERROR);
+            } catch (JsonException $e) {
+                throw new InvalidMetricValueException('Metric value could not be JSON encoded', 0, $e);
+            }
 
             if ($lastDatapoint instanceof Datapoint && $newValue === $lastDatapoint->getValue()) {
                 $log->setUpdatedDatapointCount($log->getUpdatedDatapointCount() + 1);
@@ -70,7 +76,7 @@ readonly class EndpointDriverResponseMapper
      * Maps the metrics in the given response onto the given endpoint object,
      * creating or updating Metrics and Datapoints as necessary.
      *
-     * @throws JsonException
+     * @throws InvalidMetricValueException
      */
     public function map(Endpoint $endpoint, DriverResponseInterface $response): Endpoint
     {
@@ -90,7 +96,11 @@ readonly class EndpointDriverResponseMapper
             }
 
             $lastDatapoint = $metricEntity->getLastDatapoint();
-            $newValue = json_encode($metric->getValue(), JSON_THROW_ON_ERROR);
+            try {
+                $newValue = json_encode($metric->getValue(), JSON_THROW_ON_ERROR);
+            } catch (JsonException $e) {
+                throw new InvalidMetricValueException('Metric value could not be JSON encoded', 0, $e);
+            }
 
             if ($lastDatapoint instanceof Datapoint && $newValue === $lastDatapoint->getValue()) {
                 $lastDatapoint->touchUpdatedAt();

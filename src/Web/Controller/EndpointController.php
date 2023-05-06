@@ -19,15 +19,20 @@ use Orchestra\Domain\Entity\Application;
 use Orchestra\Domain\Entity\Endpoint;
 use Orchestra\Domain\Entity\Metric;
 use Orchestra\Domain\Entity\User;
-use Orchestra\Domain\Repository\EndpointRepository;
+use Orchestra\Domain\Exception\EndpointDriverNotInstantiableException;
+use Orchestra\Domain\Exception\EndpointExecutionFailedException;
+use Orchestra\Domain\Exception\InvalidMetricValueException;
 use Orchestra\Domain\Repository\EndpointRepositoryInterface;
 use Orchestra\Infrastructure\Controller\AppContext;
 use Orchestra\Web\Breadcrumb\Breadcrumb;
 use Orchestra\Web\Breadcrumb\BreadcrumbBuilder;
+use Orchestra\Web\Exception\BreadcrumbBuilderException;
+use Orchestra\Web\Exception\BreadcrumbException;
 use Orchestra\Web\Form\EndpointForm;
 use Orchestra\Web\Helper\BreadcrumbHelper;
 use Orchestra\Web\Helper\Flash;
 use Orchestra\Web\ViewModel\MetricViewModel;
+use Psr\Log\LoggerInterface;
 use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormError;
@@ -42,9 +47,14 @@ class EndpointController extends AbstractController
     public function __construct(
         private readonly EndpointRepositoryInterface $endpointRepository,
         private readonly BreadcrumbBuilder $breadcrumbBuilder,
+        private readonly LoggerInterface $logger
     ) {
     }
 
+    /**
+     * @throws BreadcrumbException
+     * @throws BreadcrumbBuilderException
+     */
     #[Route('/applications/{applicationId}/endpoints/create', name: 'web_endpoint_create', methods: ["GET", "POST"])]
     public function create(
         #[MapEntity(id: 'applicationId')] Application $application,
@@ -63,7 +73,12 @@ class EndpointController extends AbstractController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             try {
-                $driverOptions = json_decode((string)$form->get('driverOptions')->getData(), true, 512, JSON_THROW_ON_ERROR);
+                $driverOptions = json_decode(
+                    (string)$form->get('driverOptions')->getData(),
+                    true,
+                    512,
+                    JSON_THROW_ON_ERROR
+                );
 
                 if (!is_array($driverOptions)) {
                     $driverOptions = [$driverOptions];
@@ -96,15 +111,19 @@ class EndpointController extends AbstractController
     }
 
     #[Route('/endpoint/{id}/delete', name: 'web_endpoint_delete', methods: ["POST"])]
-    public function delete(Application $application): Response
+    public function delete(Endpoint $endpoint): Response
     {
-        $this->applicationRepository->remove($application, true);
+        $this->endpointRepository->delete($endpoint);
 
-        $this->addFlash('success', 'The endpoint has been deleted.');
+        $this->addFlash(Flash::OK, 'The endpoint has been deleted.');
 
-        return $this->redirectToRoute('web_endpoint_index');
+        return $this->redirectToRoute('web_application_details', ['id' => $endpoint->getApplication()?->getId()]);
     }
 
+    /**
+     * @throws BreadcrumbException
+     * @throws BreadcrumbBuilderException
+     */
     #[Route('/applications/{applicationId}/endpoints/{id}', name: 'web_endpoint_details', methods: ["GET"])]
     public function details(
         #[MapEntity(id: 'applicationId')] Application $application,
@@ -150,17 +169,47 @@ class EndpointController extends AbstractController
         EndpointClient $endpointClient,
         EndpointDriverResponseMapper $mapper
     ): Response {
-        $response = $endpointClient->fetch($endpoint);
+        try {
+            $response = $endpointClient->fetch($endpoint);
 
-        $log = $mapper->createCollectionLog($endpoint, $response);
-        $endpoint->addCollectionLog($log);
+            $log = $mapper->createCollectionLog($endpoint, $response);
+            $endpoint->addCollectionLog($log);
 
-        $endpoint = $mapper->map($endpoint, $response);
-        $endpoint->touchLastSuccessfulResponse();
+            $endpoint = $mapper->map($endpoint, $response);
+            $endpoint->touchLastSuccessfulResponse();
 
-        $this->endpointRepository->save($endpoint);
+            $this->endpointRepository->save($endpoint);
 
-        $this->addFlash(Flash::OK, 'The endpoint has been tested.');
+            $this->addFlash(Flash::OK, 'The endpoint has been tested.');
+        } catch (EndpointExecutionFailedException $e) {
+            $this->addFlash(Flash::ERROR, 'The endpoint failed to execute; is it reachable?');
+
+            $this->logger->warning(
+                sprintf(
+                    'Endpoint execution failed for endpoint %d: %s',
+                    $endpoint->getId(),
+                    $e->getMessage()
+                )
+            );
+        } catch (EndpointDriverNotInstantiableException $e) {
+            $this->addFlash(Flash::ERROR, 'The endpoint driver could not be instantiated. This is an internal error.');
+
+            $this->logger->warning(
+                sprintf(
+                    'Endpoint driver could not be instantiated: %s',
+                    $e->getMessage()
+                )
+            );
+        } catch (InvalidMetricValueException $e) {
+            $this->addFlash(Flash::ERROR, 'One or more metric values could not be encoded.');
+
+            $this->logger->warning(
+                sprintf(
+                    'Invalid metric value: %s',
+                    $e->getMessage()
+                )
+            );
+        }
 
         return $this->redirectToRoute(
             'web_endpoint_details',
@@ -168,6 +217,10 @@ class EndpointController extends AbstractController
         );
     }
 
+    /**
+     * @throws BreadcrumbException
+     * @throws BreadcrumbBuilderException
+     */
     #[Route('/applications/{applicationId}/endpoints/{id}/update', name: 'web_endpoint_update', methods: [
         "GET",
         "POST",
@@ -188,12 +241,29 @@ class EndpointController extends AbstractController
         ]);
 
         $form = $this->createForm(EndpointForm::class, $endpoint);
-        $form->get('driverOptions')->setData(json_encode($endpoint->getDriverOptions(), JSON_THROW_ON_ERROR));
+        try {
+            $form->get('driverOptions')->setData(json_encode($endpoint->getDriverOptions(), JSON_THROW_ON_ERROR));
+        } catch (JsonException $e) {
+            $this->logger->error(
+                sprintf(
+                    'Could not encode driver options for presentation. Offending driver: %s, exception: %s',
+                    $endpoint->getDriver()?->name ?? 'Unknown',
+                    $e->getMessage()
+                )
+            );
+
+            $form->get('driverOptions')->setData('{}');
+        }
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             try {
-                $driverOptions = json_decode((string)$form->get('driverOptions')->getData(), true, 512, JSON_THROW_ON_ERROR);
+                $driverOptions = json_decode(
+                    (string)$form->get('driverOptions')->getData(),
+                    true,
+                    512,
+                    JSON_THROW_ON_ERROR
+                );
 
                 if (!is_array($driverOptions)) {
                     $driverOptions = [$driverOptions];

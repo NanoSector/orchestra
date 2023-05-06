@@ -55,7 +55,7 @@ class UserController extends AbstractController
                 )
             );
 
-            $this->userRepository->save($user, true);
+            $this->userRepository->save($user);
 
             $this->addFlash(Flash::OK, 'The user has been created.');
 
@@ -107,7 +107,7 @@ class UserController extends AbstractController
                 );
             }
 
-            $this->userRepository->save($user, true);
+            $this->userRepository->save($user);
 
             $this->addFlash(Flash::OK, 'The user has been updated.');
 
