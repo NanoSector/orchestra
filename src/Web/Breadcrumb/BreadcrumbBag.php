@@ -23,7 +23,7 @@ class BreadcrumbBag extends ParameterBag
     /**
      * @throws BreadcrumbException
      */
-    public function replace(array $breadcrumbs = [])
+    public function replace(array $breadcrumbs = []): void
     {
         $this->parameters = [];
         $this->add($breadcrumbs);
@@ -32,7 +32,7 @@ class BreadcrumbBag extends ParameterBag
     /**
      * @throws BreadcrumbException
      */
-    public function add(array $breadcrumbs = [])
+    public function add(array $breadcrumbs = []): void
     {
         try {
             Assert::allString(array_keys($breadcrumbs));
@@ -48,7 +48,7 @@ class BreadcrumbBag extends ParameterBag
     /**
      * @throws BreadcrumbException
      */
-    public function set(string $key, mixed $value)
+    public function set(string $key, mixed $value): void
     {
         if (!$value instanceof BreadcrumbItem) {
             throw new BreadcrumbException('A breadcrumb must be an instance of BreadcrumbItem');
