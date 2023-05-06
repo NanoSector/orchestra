@@ -11,10 +11,10 @@ declare(strict_types=1);
 namespace Orchestra\Domain\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Orchestra\Domain\Repository\EndpointCollectionLogRepository;
+use Orchestra\Domain\Repository\EndpointCollectionLogDoctrineRepository;
 use Orchestra\Infrastructure\Doctrine\Traits\TimestampedEntityTrait;
 
-#[ORM\Entity(repositoryClass: EndpointCollectionLogRepository::class)]
+#[ORM\Entity(repositoryClass: EndpointCollectionLogDoctrineRepository::class)]
 #[ORM\HasLifecycleCallbacks]
 class EndpointCollectionLog
 {

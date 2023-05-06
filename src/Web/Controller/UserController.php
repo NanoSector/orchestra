@@ -12,8 +12,8 @@ namespace Orchestra\Web\Controller;
 
 use Orchestra\Domain\Entity\User;
 use Orchestra\Domain\Enumeration\Role;
-use Orchestra\Domain\Repository\GroupRepository;
-use Orchestra\Domain\Repository\UserRepository;
+use Orchestra\Domain\Repository\GroupRepositoryInterface;
+use Orchestra\Domain\Repository\UserRepositoryInterface;
 use Orchestra\Infrastructure\Controller\AppContext;
 use Orchestra\Web\Breadcrumb\Breadcrumb;
 use Orchestra\Web\Form\UserForm;
@@ -31,8 +31,8 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 class UserController extends AbstractController
 {
     public function __construct(
-        private readonly UserRepository $userRepository,
-        private readonly GroupRepository $groupRepository,
+        private readonly UserRepositoryInterface $userRepository,
+        private readonly GroupRepositoryInterface $groupRepository,
         private readonly UserPasswordHasherInterface $passwordHasher
     ) {
     }
@@ -71,7 +71,7 @@ class UserController extends AbstractController
     #[Route('/users/{id}/delete', name: 'web_user_delete', methods: ["POST"])]
     public function delete(User $user): Response
     {
-        $this->userRepository->remove($user, true);
+        $this->userRepository->delete($user);
 
         return $this->redirectToRoute('web_user_index');
     }
@@ -109,7 +109,7 @@ class UserController extends AbstractController
 
             $this->userRepository->save($user, true);
 
-            $this->addFlash('success', 'The user has been updated.');
+            $this->addFlash(Flash::OK, 'The user has been updated.');
 
             return $this->redirectToRoute('web_user_update', ['id' => $user->getId()]);
         }

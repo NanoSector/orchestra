@@ -17,14 +17,14 @@ use InvalidArgumentException;
 use Orchestra\Domain\Collection\RoleCollection;
 use Orchestra\Domain\Entity\Decorator\PinnedMetricUserDecorator;
 use Orchestra\Domain\Enumeration\Role;
-use Orchestra\Domain\Repository\UserRepository;
+use Orchestra\Domain\Repository\UserDoctrineRepository;
 use Orchestra\Infrastructure\Doctrine\Traits\SoftDeleteEntityTrait;
 use Orchestra\Infrastructure\Doctrine\Traits\TimestampedEntityTrait;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints;
 
-#[ORM\Entity(repositoryClass: UserRepository::class)]
+#[ORM\Entity(repositoryClass: UserDoctrineRepository::class)]
 #[ORM\Table(name: '`user`')]
 #[ORM\HasLifecycleCallbacks]
 class User implements UserInterface, PasswordAuthenticatedUserInterface

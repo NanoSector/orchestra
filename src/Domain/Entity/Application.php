@@ -13,10 +13,10 @@ namespace Orchestra\Domain\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use Orchestra\Domain\Repository\ApplicationRepository;
+use Orchestra\Domain\Repository\ApplicationDoctrineRepository;
 use Orchestra\Infrastructure\Doctrine\Traits\TimestampedEntityTrait;
 
-#[ORM\Entity(repositoryClass: ApplicationRepository::class)]
+#[ORM\Entity(repositoryClass: ApplicationDoctrineRepository::class)]
 #[ORM\HasLifecycleCallbacks]
 class Application
 {

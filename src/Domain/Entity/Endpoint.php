@@ -16,11 +16,11 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Orchestra\Domain\Endpoint\Driver\DriverEndpointInterface;
 use Orchestra\Domain\Endpoint\Driver\DriverEnum;
-use Orchestra\Domain\Repository\EndpointRepository;
+use Orchestra\Domain\Repository\EndpointDoctrineRepository;
 use Orchestra\Infrastructure\Doctrine\Traits\TimestampedEntityTrait;
 use Symfony\Component\Validator\Constraints;
 
-#[ORM\Entity(repositoryClass: EndpointRepository::class)]
+#[ORM\Entity(repositoryClass: EndpointDoctrineRepository::class)]
 #[ORM\HasLifecycleCallbacks]
 class Endpoint implements DriverEndpointInterface
 {

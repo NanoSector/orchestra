@@ -20,6 +20,7 @@ use Orchestra\Domain\Entity\Endpoint;
 use Orchestra\Domain\Entity\Metric;
 use Orchestra\Domain\Entity\User;
 use Orchestra\Domain\Repository\EndpointRepository;
+use Orchestra\Domain\Repository\EndpointRepositoryInterface;
 use Orchestra\Infrastructure\Controller\AppContext;
 use Orchestra\Web\Breadcrumb\Breadcrumb;
 use Orchestra\Web\Breadcrumb\BreadcrumbBuilder;
@@ -39,8 +40,8 @@ use Symfony\Component\Routing\Annotation\Route;
 class EndpointController extends AbstractController
 {
     public function __construct(
-        private readonly EndpointRepository $endpointRepository,
-        private readonly BreadcrumbBuilder $breadcrumbBuilder
+        private readonly EndpointRepositoryInterface $endpointRepository,
+        private readonly BreadcrumbBuilder $breadcrumbBuilder,
     ) {
     }
 
@@ -70,7 +71,7 @@ class EndpointController extends AbstractController
                 $endpoint->setDriverOptions($driverOptions);
                 $endpoint->setInterval(30);
 
-                $this->endpointRepository->save($endpoint, true);
+                $this->endpointRepository->save($endpoint);
                 $this->addFlash(Flash::OK, 'The endpoint has been created.');
 
                 return $this->redirectToRoute(
@@ -157,9 +158,9 @@ class EndpointController extends AbstractController
         $endpoint = $mapper->map($endpoint, $response);
         $endpoint->touchLastSuccessfulResponse();
 
-        $this->endpointRepository->save($endpoint, true);
+        $this->endpointRepository->save($endpoint);
 
-        $this->addFlash('success', 'The endpoint has been tested.');
+        $this->addFlash(Flash::OK, 'The endpoint has been tested.');
 
         return $this->redirectToRoute(
             'web_endpoint_details',
@@ -200,7 +201,7 @@ class EndpointController extends AbstractController
                 $endpoint->setDriverOptions($driverOptions);
                 $endpoint->setInterval(30);
 
-                $this->endpointRepository->save($endpoint, true);
+                $this->endpointRepository->save($endpoint);
                 $this->addFlash(Flash::OK, 'The endpoint has been updated.');
 
                 return $this->redirectToRoute(

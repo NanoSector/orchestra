@@ -12,7 +12,7 @@ namespace Orchestra\Domain\Command;
 
 use Orchestra\Domain\Entity\User;
 use Orchestra\Domain\Enumeration\Role;
-use Orchestra\Domain\Repository\UserRepository;
+use Orchestra\Domain\Repository\UserRepositoryInterface;
 use RuntimeException;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
@@ -26,7 +26,7 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 final class CreateAdministratorCommand extends Command
 {
     public function __construct(
-        private readonly UserRepository $userRepository,
+        private readonly UserRepositoryInterface $userRepository,
         private readonly ValidatorInterface $validator,
         private readonly UserPasswordHasherInterface $passwordHasher
     ) {
@@ -39,9 +39,7 @@ final class CreateAdministratorCommand extends Command
 
         $usernameQuestion = new Question('What should the username for this user be? ');
         $usernameQuestion->setValidator(function (string $username) {
-            $user = $this->userRepository->findOneBy([
-                'username' => $username,
-            ]);
+            $user = $this->userRepository->findOneByUsername($username);
 
             if ($user !== null) {
                 throw new RuntimeException('This username is already taken');
@@ -60,9 +58,7 @@ final class CreateAdministratorCommand extends Command
                 throw new RuntimeException('Invalid e-mail address');
             }
 
-            $user = $this->userRepository->findOneBy([
-                'email' => $email,
-            ]);
+            $user = $this->userRepository->findOneByEmail($email);
 
             if ($user !== null) {
                 throw new RuntimeException('This e-mail address is already taken');
@@ -97,7 +93,7 @@ final class CreateAdministratorCommand extends Command
             return self::FAILURE;
         }
 
-        $this->userRepository->save($user, true);
+        $this->userRepository->save($user);
 
         $output->writeln('<info>The user has been created.</info>');
 

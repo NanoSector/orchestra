@@ -14,14 +14,14 @@ use Orchestra\Api\Controller\AbstractApiController;
 use Orchestra\Api\Support\ApiProblem;
 use Orchestra\Domain\Entity\Metric;
 use Orchestra\Domain\Entity\User;
-use Orchestra\Domain\Repository\UserRepository;
+use Orchestra\Domain\Repository\UserRepositoryInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 #[Route('/v1/metrics', name: 'api_metrics_v1_')]
 class MetricController extends AbstractApiController
 {
-    public function __construct(private readonly UserRepository $userRepository)
+    public function __construct(private readonly UserRepositoryInterface $userRepository)
     {
         parent::__construct();
     }
@@ -44,7 +44,7 @@ class MetricController extends AbstractApiController
         }
 
         $pinnedMetrics->pinMetric($metric);
-        $this->userRepository->save($user, true);
+        $this->userRepository->save($user);
 
         $this->verbose()->add('Metric has been pinned and saved');
 
@@ -69,7 +69,7 @@ class MetricController extends AbstractApiController
         }
 
         $pinnedMetrics->unpinMetric($metric);
-        $this->userRepository->save($user, true);
+        $this->userRepository->save($user);
 
         $this->verbose()->add('Metric has been unpinned and saved');
 
