@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace Orchestra\Bundle\Endpoint\DependencyInjection;
 
+use Exception;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Extension\Extension;
@@ -20,6 +21,9 @@ use Symfony\Component\DependencyInjection\Loader\PhpFileLoader;
  */
 class OrchestraEndpointExtension extends Extension
 {
+    /**
+     * @throws Exception
+     */
     public function load(array $configs, ContainerBuilder $container)
     {
         $configuration = $this->getConfiguration($configs, $container);

@@ -12,7 +12,6 @@ namespace Orchestra\Infrastructure\Doctrine\Traits;
 
 use Carbon\Carbon;
 use Doctrine\ORM\Mapping as ORM;
-use Orchestra\Domain\Doctrine\Interface\SoftDeleteInterface;
 
 trait SoftDeleteEntityTrait
 {

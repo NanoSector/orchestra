@@ -40,7 +40,7 @@ class GroupController extends AbstractController
         methods: ["GET", "POST"]
     )]
     #[Breadcrumb('Create group')]
-    public function create(Request $request): Response
+    public function createAction(Request $request): Response
     {
         $group = new Group();
 
@@ -62,7 +62,7 @@ class GroupController extends AbstractController
     }
 
     #[Route('/groups/{id}/delete', name: 'web_group_delete', methods: ["POST"])]
-    public function delete(Group $group): Response
+    public function deleteAction(Group $group): Response
     {
         $this->groupRepository->delete($group);
 
@@ -79,7 +79,7 @@ class GroupController extends AbstractController
         name: 'web_group_update',
         methods: ["GET", "POST"]
     )]
-    public function update(Group $group, Request $request): Response
+    public function updateAction(Group $group, Request $request): Response
     {
         BreadcrumbHelper::request($request)->add([
             'application' => $this->breadcrumbBuilder->text(sprintf('Group %s', $group->getName())),

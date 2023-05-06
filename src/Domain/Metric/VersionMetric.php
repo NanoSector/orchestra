@@ -22,17 +22,6 @@ readonly class VersionMetric implements SemverMetricInterface
     ) {
     }
 
-    /**
-     * @throws JsonException
-     */
-    public static function fromDatapoint(Datapoint $datapoint): self
-    {
-        return new self(
-            $datapoint->getMetric()->getProduct(),
-            (string)json_decode($datapoint->getValue(), true, 512, JSON_THROW_ON_ERROR)
-        );
-    }
-
     public function getValue(): string
     {
         return $this->value;

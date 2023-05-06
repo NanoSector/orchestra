@@ -60,7 +60,7 @@ class EndpointController extends AbstractController
         name: 'web_endpoint_create',
         methods: ["GET", "POST"]
     )]
-    public function create(
+    public function createAction(
         #[MapEntity(id: 'applicationId')] Application $application,
         Request $request
     ): Response {
@@ -119,7 +119,7 @@ class EndpointController extends AbstractController
         name: 'web_endpoint_delete',
         methods: ["POST"]
     )]
-    public function delete(Endpoint $endpoint): Response
+    public function deleteAction(Endpoint $endpoint): Response
     {
         $this->endpointRepository->delete($endpoint);
 
@@ -137,7 +137,7 @@ class EndpointController extends AbstractController
         name: 'web_endpoint_details',
         methods: ["GET"]
     )]
-    public function details(
+    public function detailsAction(
         #[MapEntity(id: 'applicationId')] Application $application,
         Endpoint $endpoint,
         Request $request
@@ -179,7 +179,7 @@ class EndpointController extends AbstractController
         name: 'web_endpoint_test',
         methods: ["GET"]
     )]
-    public function test(
+    public function testAction(
         #[MapEntity(id: 'applicationId')] Application $application,
         Endpoint $endpoint,
         EndpointClient $endpointClient,
@@ -242,7 +242,7 @@ class EndpointController extends AbstractController
         name: 'web_endpoint_update',
         methods: ["GET", "POST"]
     )]
-    public function update(
+    public function updateAction(
         #[MapEntity(id: 'applicationId')] Application $application,
         Endpoint $endpoint,
         Request $request

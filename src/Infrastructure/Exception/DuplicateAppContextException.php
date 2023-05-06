@@ -11,6 +11,7 @@ declare(strict_types=1);
 namespace Orchestra\Infrastructure\Exception;
 
 use Exception;
+use Throwable;
 
 class DuplicateAppContextException extends Exception
 {

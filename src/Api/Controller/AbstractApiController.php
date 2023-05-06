@@ -34,7 +34,23 @@ class AbstractApiController extends AbstractController
 
     public function okResponse(): JsonResponse
     {
-        return $this->json($this->wrapPayload([]));
+        return $this->json([]);
+    }
+
+    /**
+     * @param array $additionalData when passed, appends the payload with the given data
+     */
+    protected function json(
+        mixed $data,
+        int $status = 200,
+        array $headers = [],
+        array $context = [],
+        array $additionalData = []
+    ): JsonResponse {
+        $payload = $this->wrapPayload($data, $status);
+        $payload = array_merge($additionalData, $payload);
+
+        return parent::json($payload, $status, $headers, $context);
     }
 
     protected function wrapPayload(mixed $payload, int $status = 200): array
@@ -63,11 +79,17 @@ class AbstractApiController extends AbstractController
 
     public function problemResponse(ApiProblem $apiProblem): JsonResponse
     {
-        $response = $this->json($apiProblem->jsonSerialize());
+        // API Problem is an RFC standard - do not wrap or alter it in any way.
+        $response = $this->rawJson($apiProblem->jsonSerialize());
 
         $response->setContent('application/problem+json');
 
         return $response;
+    }
+
+    protected function rawJson(mixed $data, int $status = 200, array $headers = [], array $context = []): JsonResponse
+    {
+        return parent::json($data, $status, $headers, $context);
     }
 
     #[Required]

@@ -22,11 +22,6 @@ readonly class HealthMetric implements MetricInterface, HealthMetricInterface
     ) {
     }
 
-    public static function fromDatapoint(Datapoint $datapoint): self
-    {
-        return new self($datapoint->getMetric()->getProduct(), (bool)$datapoint->getValue(), []);
-    }
-
     public function getValue(): bool
     {
         return $this->healthy;

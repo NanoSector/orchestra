@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace Orchestra\Web\Breadcrumb;
 
+use Orchestra\Web\Exception\BreadcrumbException;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpKernel\Event\ControllerArgumentsEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
@@ -31,6 +32,9 @@ readonly class BreadcrumbListener implements EventSubscriberInterface
         ];
     }
 
+    /**
+     * @throws BreadcrumbException
+     */
     public function createBreadcrumbBag(ControllerArgumentsEvent $event): void
     {
         $attributes = $event->getAttributes();
@@ -41,6 +45,9 @@ readonly class BreadcrumbListener implements EventSubscriberInterface
         $this->resolveBreadcrumbs($bag, $attributes);
     }
 
+    /**
+     * @throws BreadcrumbException
+     */
     private function resolveBreadcrumbs(BreadcrumbBag $bag, array $attributes): void
     {
         if (!array_key_exists(Breadcrumb::class, $attributes)) {

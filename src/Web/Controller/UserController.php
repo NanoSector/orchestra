@@ -43,7 +43,7 @@ class UserController extends AbstractController
         methods: ["GET", "POST"]
     )]
     #[Breadcrumb('Create user')]
-    public function create(Request $request): Response
+    public function createAction(Request $request): Response
     {
         $user = new User();
 
@@ -77,7 +77,7 @@ class UserController extends AbstractController
         name: 'web_user_delete',
         methods: ["POST"]
     )]
-    public function delete(User $user): Response
+    public function deleteAction(User $user): Response
     {
         $this->userRepository->delete($user);
 
@@ -89,7 +89,7 @@ class UserController extends AbstractController
         name: 'web_user_index',
         methods: ["GET"]
     )]
-    public function index(): Response
+    public function indexAction(): Response
     {
         return $this->render('users/index.html.twig', [
             'groups' => $this->groupRepository->findAll(),
@@ -103,7 +103,7 @@ class UserController extends AbstractController
         methods: ["GET", "POST"]
     )]
     #[Breadcrumb('Update user')]
-    public function update(User $user, Request $request): Response
+    public function updateAction(User $user, Request $request): Response
     {
         $form = $this->createForm(UserForm::class, $user, [
             'require_password' => false,

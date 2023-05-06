@@ -46,7 +46,7 @@ class LoginController extends AbstractController
         name: 'web_login_logout',
         methods: ['GET']
     )]
-    public function logout(): never
+    public function logoutAction(): never
     {
         // As per https://symfony.com/doc/current/security.html#logging-out this should never be called;
         // pretend it does not exist.

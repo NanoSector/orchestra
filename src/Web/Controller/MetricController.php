@@ -42,7 +42,7 @@ class MetricController extends AbstractController
         name: 'web_metric_details',
         methods: ["GET"]
     )]
-    public function details(
+    public function detailsAction(
         #[MapEntity(id: 'applicationId')] Application $application,
         #[MapEntity(id: 'endpointId')] Endpoint $endpoint,
         Metric $metric,

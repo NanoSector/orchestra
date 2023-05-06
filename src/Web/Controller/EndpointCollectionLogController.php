@@ -43,7 +43,7 @@ class EndpointCollectionLogController extends AbstractController
         name: 'web_endpoint_collection_log_details',
         methods: ["GET"]
     )]
-    public function details(
+    public function detailsAction(
         #[MapEntity(id: 'applicationId')] Application $application,
         #[MapEntity(id: 'endpointId')] Endpoint $endpoint,
         EndpointCollectionLog $log,

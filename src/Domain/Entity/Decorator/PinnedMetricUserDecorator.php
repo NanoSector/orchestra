@@ -25,6 +25,7 @@ readonly class PinnedMetricUserDecorator
     }
 
     /**
+     * @param Application $application
      * @return ReadableCollection<MetricPin>
      */
     public function findPinsByApplication(Application $application): ReadableCollection
