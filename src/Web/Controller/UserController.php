@@ -37,7 +37,11 @@ class UserController extends AbstractController
     ) {
     }
 
-    #[Route('/users/create', name: 'web_user_create', methods: ["GET", "POST"])]
+    #[Route(
+        '/users/create',
+        name: 'web_user_create',
+        methods: ["GET", "POST"]
+    )]
     #[Breadcrumb('Create user')]
     public function create(Request $request): Response
     {
@@ -68,7 +72,11 @@ class UserController extends AbstractController
         ]);
     }
 
-    #[Route('/users/{id}/delete', name: 'web_user_delete', methods: ["POST"])]
+    #[Route(
+        '/users/{id}/delete',
+        name: 'web_user_delete',
+        methods: ["POST"]
+    )]
     public function delete(User $user): Response
     {
         $this->userRepository->delete($user);
@@ -76,7 +84,11 @@ class UserController extends AbstractController
         return $this->redirectToRoute('web_user_index');
     }
 
-    #[Route('/users', name: 'web_user_index', methods: ["GET"])]
+    #[Route(
+        '/users',
+        name: 'web_user_index',
+        methods: ["GET"]
+    )]
     public function index(): Response
     {
         return $this->render('users/index.html.twig', [
@@ -85,7 +97,11 @@ class UserController extends AbstractController
         ]);
     }
 
-    #[Route('/users/{id}', name: 'web_user_update', methods: ["GET", "POST"])]
+    #[Route(
+        '/users/{id}',
+        name: 'web_user_update',
+        methods: ["GET", "POST"]
+    )]
     #[Breadcrumb('Update user')]
     public function update(User $user, Request $request): Response
     {

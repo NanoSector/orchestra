@@ -15,6 +15,8 @@ use Orchestra\Domain\Entity\Endpoint;
 use Orchestra\Domain\Entity\Metric;
 use Orchestra\Web\Breadcrumb\Breadcrumb;
 use Orchestra\Web\Breadcrumb\BreadcrumbBuilder;
+use Orchestra\Web\Exception\BreadcrumbBuilderException;
+use Orchestra\Web\Exception\BreadcrumbException;
 use Orchestra\Web\Helper\BreadcrumbHelper;
 use Orchestra\Web\ViewModel\DatapointViewModel;
 use Symfony\Bridge\Doctrine\Attribute\MapEntity;
@@ -31,7 +33,15 @@ class MetricController extends AbstractController
     ) {
     }
 
-    #[Route('/applications/{applicationId}/endpoints/{endpointId}/metrics/{id}', name: 'web_metric_details', methods: ["GET"])]
+    /**
+     * @throws BreadcrumbException
+     * @throws BreadcrumbBuilderException
+     */
+    #[Route(
+        '/applications/{applicationId}/endpoints/{endpointId}/metrics/{id}',
+        name: 'web_metric_details',
+        methods: ["GET"]
+    )]
     public function details(
         #[MapEntity(id: 'applicationId')] Application $application,
         #[MapEntity(id: 'endpointId')] Endpoint $endpoint,

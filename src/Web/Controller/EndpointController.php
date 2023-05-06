@@ -55,7 +55,11 @@ class EndpointController extends AbstractController
      * @throws BreadcrumbException
      * @throws BreadcrumbBuilderException
      */
-    #[Route('/applications/{applicationId}/endpoints/create', name: 'web_endpoint_create', methods: ["GET", "POST"])]
+    #[Route(
+        '/applications/{applicationId}/endpoints/create',
+        name: 'web_endpoint_create',
+        methods: ["GET", "POST"]
+    )]
     public function create(
         #[MapEntity(id: 'applicationId')] Application $application,
         Request $request
@@ -110,7 +114,11 @@ class EndpointController extends AbstractController
         ]);
     }
 
-    #[Route('/endpoint/{id}/delete', name: 'web_endpoint_delete', methods: ["POST"])]
+    #[Route(
+        '/endpoint/{id}/delete',
+        name: 'web_endpoint_delete',
+        methods: ["POST"]
+    )]
     public function delete(Endpoint $endpoint): Response
     {
         $this->endpointRepository->delete($endpoint);
@@ -124,7 +132,11 @@ class EndpointController extends AbstractController
      * @throws BreadcrumbException
      * @throws BreadcrumbBuilderException
      */
-    #[Route('/applications/{applicationId}/endpoints/{id}', name: 'web_endpoint_details', methods: ["GET"])]
+    #[Route(
+        '/applications/{applicationId}/endpoints/{id}',
+        name: 'web_endpoint_details',
+        methods: ["GET"]
+    )]
     public function details(
         #[MapEntity(id: 'applicationId')] Application $application,
         Endpoint $endpoint,
@@ -162,7 +174,11 @@ class EndpointController extends AbstractController
         ]);
     }
 
-    #[Route('/applications/{applicationId}/endpoints/{id}/test', name: 'web_endpoint_test', methods: ["GET"])]
+    #[Route(
+        '/applications/{applicationId}/endpoints/{id}/test',
+        name: 'web_endpoint_test',
+        methods: ["GET"]
+    )]
     public function test(
         #[MapEntity(id: 'applicationId')] Application $application,
         Endpoint $endpoint,
@@ -221,10 +237,11 @@ class EndpointController extends AbstractController
      * @throws BreadcrumbException
      * @throws BreadcrumbBuilderException
      */
-    #[Route('/applications/{applicationId}/endpoints/{id}/update', name: 'web_endpoint_update', methods: [
-        "GET",
-        "POST",
-    ])]
+    #[Route(
+        '/applications/{applicationId}/endpoints/{id}/update',
+        name: 'web_endpoint_update',
+        methods: ["GET", "POST"]
+    )]
     public function update(
         #[MapEntity(id: 'applicationId')] Application $application,
         Endpoint $endpoint,

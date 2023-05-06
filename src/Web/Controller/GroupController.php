@@ -15,6 +15,7 @@ use Orchestra\Domain\Repository\GroupRepositoryInterface;
 use Orchestra\Infrastructure\Controller\AppContext;
 use Orchestra\Web\Breadcrumb\Breadcrumb;
 use Orchestra\Web\Breadcrumb\BreadcrumbBuilder;
+use Orchestra\Web\Exception\BreadcrumbException;
 use Orchestra\Web\Form\GroupForm;
 use Orchestra\Web\Helper\BreadcrumbHelper;
 use Orchestra\Web\Helper\Flash;
@@ -33,7 +34,11 @@ class GroupController extends AbstractController
     ) {
     }
 
-    #[Route('/groups/create', name: 'web_group_create', methods: ["GET", "POST"])]
+    #[Route(
+        '/groups/create',
+        name: 'web_group_create',
+        methods: ["GET", "POST"]
+    )]
     #[Breadcrumb('Create group')]
     public function create(Request $request): Response
     {
@@ -66,7 +71,14 @@ class GroupController extends AbstractController
         return $this->redirectToRoute('web_user_index');
     }
 
-    #[Route('/groups/{id}', name: 'web_group_update', methods: ["GET", "POST"])]
+    /**
+     * @throws BreadcrumbException
+     */
+    #[Route(
+        '/groups/{id}',
+        name: 'web_group_update',
+        methods: ["GET", "POST"]
+    )]
     public function update(Group $group, Request $request): Response
     {
         BreadcrumbHelper::request($request)->add([
