@@ -16,7 +16,7 @@ use Orchestra\Domain\Entity\Application;
 use Orchestra\Domain\Entity\Metric;
 use Orchestra\Domain\Entity\MetricPin;
 use Orchestra\Domain\Entity\User;
-use Orchestra\Domain\Repository\ApplicationRepository;
+use Orchestra\Domain\Repository\ApplicationRepositoryInterface;
 use Orchestra\Infrastructure\Controller\AppContext;
 use Orchestra\Web\Breadcrumb\Breadcrumb;
 use Orchestra\Web\Breadcrumb\BreadcrumbBuilder;
@@ -34,7 +34,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class ApplicationController extends AbstractController
 {
     public function __construct(
-        private readonly ApplicationRepository $applicationRepository,
+        private readonly ApplicationRepositoryInterface $applicationRepository,
         private readonly BreadcrumbBuilder $breadcrumbBuilder
     ) {
     }
@@ -49,7 +49,7 @@ class ApplicationController extends AbstractController
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->applicationRepository->save($application, true);
+            $this->applicationRepository->save($application);
 
             $this->addFlash(Flash::OK, 'The application has been created.');
 
@@ -65,9 +65,9 @@ class ApplicationController extends AbstractController
     #[Route('/applications/{id}/delete', name: 'web_application_delete', methods: ["POST"])]
     public function delete(Application $application): Response
     {
-        $this->applicationRepository->remove($application, true);
+        $this->applicationRepository->delete($application);
 
-        $this->addFlash('success', 'The application has been deleted.');
+        $this->addFlash(Flash::OK, 'The application has been deleted.');
 
         return $this->redirectToRoute('web_application_index');
     }
@@ -126,9 +126,9 @@ class ApplicationController extends AbstractController
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->applicationRepository->save($application, true);
+            $this->applicationRepository->save($application);
 
-            $this->addFlash('success', 'The application has been updated.');
+            $this->addFlash(Flash::OK, 'The application has been updated.');
 
             return $this->redirectToRoute('web_application_update', ['id' => $application->getId()]);
         }

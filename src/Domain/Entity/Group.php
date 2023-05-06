@@ -13,10 +13,10 @@ namespace Orchestra\Domain\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use Orchestra\Domain\Repository\GroupRepository;
+use Orchestra\Domain\Repository\GroupDoctrineRepository;
 use Orchestra\Infrastructure\Doctrine\Traits\TimestampedEntityTrait;
 
-#[ORM\Entity(repositoryClass: GroupRepository::class)]
+#[ORM\Entity(repositoryClass: GroupDoctrineRepository::class)]
 #[ORM\Table(name: '`group`')]
 #[ORM\HasLifecycleCallbacks]
 class Group

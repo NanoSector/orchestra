@@ -11,7 +11,7 @@ declare(strict_types=1);
 namespace Orchestra\Web\Controller;
 
 use Orchestra\Domain\Entity\Group;
-use Orchestra\Domain\Repository\GroupRepository;
+use Orchestra\Domain\Repository\GroupRepositoryInterface;
 use Orchestra\Infrastructure\Controller\AppContext;
 use Orchestra\Web\Breadcrumb\Breadcrumb;
 use Orchestra\Web\Breadcrumb\BreadcrumbBuilder;
@@ -28,7 +28,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class GroupController extends AbstractController
 {
     public function __construct(
-        private readonly GroupRepository $groupRepository,
+        private readonly GroupRepositoryInterface $groupRepository,
         private readonly BreadcrumbBuilder $breadcrumbBuilder
     ) {
     }
@@ -43,7 +43,7 @@ class GroupController extends AbstractController
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->groupRepository->save($group, true);
+            $this->groupRepository->save($group);
 
             $this->addFlash(Flash::OK, 'The group has been created.');
 
@@ -59,9 +59,9 @@ class GroupController extends AbstractController
     #[Route('/groups/{id}/delete', name: 'web_group_delete', methods: ["POST"])]
     public function delete(Group $group): Response
     {
-        $this->groupRepository->remove($group, true);
+        $this->groupRepository->delete($group);
 
-        $this->addFlash('success', 'The group has been deleted.');
+        $this->addFlash(Flash::OK, 'The group has been deleted.');
 
         return $this->redirectToRoute('web_user_index');
     }
@@ -78,9 +78,9 @@ class GroupController extends AbstractController
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->groupRepository->save($group, true);
+            $this->groupRepository->save($group);
 
-            $this->addFlash('success', 'The group has been updated.');
+            $this->addFlash(Flash::OK, 'The group has been updated.');
 
             return $this->redirectToRoute('web_group_update', ['id' => $group->getId()]);
         }

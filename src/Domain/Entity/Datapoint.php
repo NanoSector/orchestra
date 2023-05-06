@@ -12,10 +12,10 @@ namespace Orchestra\Domain\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Orchestra\Domain\Metric\DatapointSpecialist;
-use Orchestra\Domain\Repository\DatapointRepository;
+use Orchestra\Domain\Repository\DatapointDoctrineRepository;
 use Orchestra\Infrastructure\Doctrine\Traits\TimestampedEntityTrait;
 
-#[ORM\Entity(repositoryClass: DatapointRepository::class)]
+#[ORM\Entity(repositoryClass: DatapointDoctrineRepository::class)]
 #[ORM\HasLifecycleCallbacks]
 class Datapoint
 {
