@@ -12,6 +12,7 @@ namespace Orchestra\Web\Controller\Fragment;
 
 use Orchestra\Domain\Entity\Metric;
 use Orchestra\Domain\Entity\User;
+use Orchestra\Web\Exception\NoUsableDatapointException;
 use Orchestra\Web\ViewModel\MetricViewModel;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -24,7 +25,11 @@ class MetricFragmentController extends AbstractController
     {
         $user = $this->getUser();
 
-        $viewModel = MetricViewModel::fromLastDatapointInMetric($metric);
+        try {
+            $viewModel = MetricViewModel::fromLastDatapointInMetric($metric);
+        } catch (NoUsableDatapointException) {
+            throw $this->createNotFoundException();
+        }
 
         if ($user instanceof User) {
             $viewModel->setPinned($user->decoratePinnedMetrics()->hasPinnedMetric($metric));

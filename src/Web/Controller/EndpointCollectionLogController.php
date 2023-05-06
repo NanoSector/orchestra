@@ -16,6 +16,8 @@ use Orchestra\Domain\Entity\EndpointCollectionLog;
 use Orchestra\Infrastructure\Controller\AppContext;
 use Orchestra\Web\Breadcrumb\Breadcrumb;
 use Orchestra\Web\Breadcrumb\BreadcrumbBuilder;
+use Orchestra\Web\Exception\BreadcrumbBuilderException;
+use Orchestra\Web\Exception\BreadcrumbException;
 use Orchestra\Web\Helper\BreadcrumbHelper;
 use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -32,8 +34,16 @@ class EndpointCollectionLogController extends AbstractController
     ) {
     }
 
-    #[Route('/applications/{applicationId}/endpoints/{endpointId}/log/{id}', name: 'web_endpoint_collection_log_details', methods: ["GET"])]
-    public function details(
+    /**
+     * @throws BreadcrumbException
+     * @throws BreadcrumbBuilderException
+     */
+    #[Route(
+        '/applications/{applicationId}/endpoints/{endpointId}/log/{id}',
+        name: 'web_endpoint_collection_log_details',
+        methods: ["GET"]
+    )]
+    public function detailsAction(
         #[MapEntity(id: 'applicationId')] Application $application,
         #[MapEntity(id: 'endpointId')] Endpoint $endpoint,
         EndpointCollectionLog $log,

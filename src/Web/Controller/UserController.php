@@ -37,9 +37,13 @@ class UserController extends AbstractController
     ) {
     }
 
-    #[Route('/users/create', name: 'web_user_create', methods: ["GET", "POST"])]
+    #[Route(
+        '/users/create',
+        name: 'web_user_create',
+        methods: ["GET", "POST"]
+    )]
     #[Breadcrumb('Create user')]
-    public function create(Request $request): Response
+    public function createAction(Request $request): Response
     {
         $user = new User();
 
@@ -55,7 +59,7 @@ class UserController extends AbstractController
                 )
             );
 
-            $this->userRepository->save($user, true);
+            $this->userRepository->save($user);
 
             $this->addFlash(Flash::OK, 'The user has been created.');
 
@@ -68,16 +72,24 @@ class UserController extends AbstractController
         ]);
     }
 
-    #[Route('/users/{id}/delete', name: 'web_user_delete', methods: ["POST"])]
-    public function delete(User $user): Response
+    #[Route(
+        '/users/{id}/delete',
+        name: 'web_user_delete',
+        methods: ["POST"]
+    )]
+    public function deleteAction(User $user): Response
     {
         $this->userRepository->delete($user);
 
         return $this->redirectToRoute('web_user_index');
     }
 
-    #[Route('/users', name: 'web_user_index', methods: ["GET"])]
-    public function index(): Response
+    #[Route(
+        '/users',
+        name: 'web_user_index',
+        methods: ["GET"]
+    )]
+    public function indexAction(): Response
     {
         return $this->render('users/index.html.twig', [
             'groups' => $this->groupRepository->findAll(),
@@ -85,9 +97,13 @@ class UserController extends AbstractController
         ]);
     }
 
-    #[Route('/users/{id}', name: 'web_user_update', methods: ["GET", "POST"])]
+    #[Route(
+        '/users/{id}',
+        name: 'web_user_update',
+        methods: ["GET", "POST"]
+    )]
     #[Breadcrumb('Update user')]
-    public function update(User $user, Request $request): Response
+    public function updateAction(User $user, Request $request): Response
     {
         $form = $this->createForm(UserForm::class, $user, [
             'require_password' => false,
@@ -107,7 +123,7 @@ class UserController extends AbstractController
                 );
             }
 
-            $this->userRepository->save($user, true);
+            $this->userRepository->save($user);
 
             $this->addFlash(Flash::OK, 'The user has been updated.');
 

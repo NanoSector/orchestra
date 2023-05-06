@@ -20,6 +20,8 @@ use Orchestra\Domain\Repository\ApplicationRepositoryInterface;
 use Orchestra\Infrastructure\Controller\AppContext;
 use Orchestra\Web\Breadcrumb\Breadcrumb;
 use Orchestra\Web\Breadcrumb\BreadcrumbBuilder;
+use Orchestra\Web\Exception\BreadcrumbBuilderException;
+use Orchestra\Web\Exception\BreadcrumbException;
 use Orchestra\Web\Form\ApplicationForm;
 use Orchestra\Web\Helper\BreadcrumbHelper;
 use Orchestra\Web\Helper\Flash;
@@ -41,7 +43,7 @@ class ApplicationController extends AbstractController
 
     #[Route('/applications/create', name: 'web_application_create', methods: ["GET", "POST"])]
     #[Breadcrumb('Create application')]
-    public function create(Request $request): Response
+    public function createAction(Request $request): Response
     {
         $application = new Application();
 
@@ -63,7 +65,7 @@ class ApplicationController extends AbstractController
     }
 
     #[Route('/applications/{id}/delete', name: 'web_application_delete', methods: ["POST"])]
-    public function delete(Application $application): Response
+    public function deleteAction(Application $application): Response
     {
         $this->applicationRepository->delete($application);
 
@@ -72,12 +74,16 @@ class ApplicationController extends AbstractController
         return $this->redirectToRoute('web_application_index');
     }
 
+    /**
+     * @throws BreadcrumbException
+     * @throws BreadcrumbBuilderException
+     */
     #[Route('/applications/{id}', name: 'web_application_details', methods: ["GET"])]
-    public function details(Request $request, Application $application): Response
+    public function detailsAction(Request $request, Application $application): Response
     {
-        BreadcrumbHelper::request($request)->add(
-            ['application' => $this->breadcrumbBuilder->application($application)]
-        );
+        BreadcrumbHelper::request($request)->add([
+            'application' => $this->breadcrumbBuilder->application($application)
+        ]);
 
         $pinnedMetricsPerProduct = new ArrayCollection();
 
@@ -105,22 +111,24 @@ class ApplicationController extends AbstractController
     }
 
     #[Route('/applications', name: 'web_application_index')]
-    public function index(): Response
+    public function indexAction(): Response
     {
         return $this->render('applications/index.html.twig', [
             'applications' => $this->applicationRepository->findAll(),
         ]);
     }
 
+    /**
+     * @throws BreadcrumbException
+     * @throws BreadcrumbBuilderException
+     */
     #[Route('/applications/{id}/update', name: 'web_application_update', methods: ["GET", "POST"])]
-    public function update(Application $application, Request $request): Response
+    public function updateAction(Application $application, Request $request): Response
     {
-        BreadcrumbHelper::request($request)->add(
-            [
-                'application' => $this->breadcrumbBuilder->application($application),
-                'current'     => $this->breadcrumbBuilder->text('Update application', true),
-            ]
-        );
+        BreadcrumbHelper::request($request)->add([
+            'application' => $this->breadcrumbBuilder->application($application),
+            'current'     => $this->breadcrumbBuilder->text('Update application', true),
+        ]);
 
         $form = $this->createForm(ApplicationForm::class, $application);
 

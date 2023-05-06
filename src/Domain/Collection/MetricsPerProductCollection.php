@@ -29,12 +29,13 @@ readonly class MetricsPerProductCollection
 
     /**
      * @param Collection<Metric> $collection
+     * @return Collection<string, Metric>
      */
     public static function fromMetricCollection(Collection $collection): Collection
     {
         $self = new self();
 
-        $collection->forAll(fn(int $key, Metric $m) => $self->add($m));
+        $collection->forAll(fn(mixed $key, Metric $m) => $self->add($m));
 
         return $self->getResult();
     }

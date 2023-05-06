@@ -15,6 +15,7 @@ use Orchestra\Domain\Repository\GroupRepositoryInterface;
 use Orchestra\Infrastructure\Controller\AppContext;
 use Orchestra\Web\Breadcrumb\Breadcrumb;
 use Orchestra\Web\Breadcrumb\BreadcrumbBuilder;
+use Orchestra\Web\Exception\BreadcrumbException;
 use Orchestra\Web\Form\GroupForm;
 use Orchestra\Web\Helper\BreadcrumbHelper;
 use Orchestra\Web\Helper\Flash;
@@ -33,9 +34,13 @@ class GroupController extends AbstractController
     ) {
     }
 
-    #[Route('/groups/create', name: 'web_group_create', methods: ["GET", "POST"])]
+    #[Route(
+        '/groups/create',
+        name: 'web_group_create',
+        methods: ["GET", "POST"]
+    )]
     #[Breadcrumb('Create group')]
-    public function create(Request $request): Response
+    public function createAction(Request $request): Response
     {
         $group = new Group();
 
@@ -57,7 +62,7 @@ class GroupController extends AbstractController
     }
 
     #[Route('/groups/{id}/delete', name: 'web_group_delete', methods: ["POST"])]
-    public function delete(Group $group): Response
+    public function deleteAction(Group $group): Response
     {
         $this->groupRepository->delete($group);
 
@@ -66,8 +71,15 @@ class GroupController extends AbstractController
         return $this->redirectToRoute('web_user_index');
     }
 
-    #[Route('/groups/{id}', name: 'web_group_update', methods: ["GET", "POST"])]
-    public function update(Group $group, Request $request): Response
+    /**
+     * @throws BreadcrumbException
+     */
+    #[Route(
+        '/groups/{id}',
+        name: 'web_group_update',
+        methods: ["GET", "POST"]
+    )]
+    public function updateAction(Group $group, Request $request): Response
     {
         BreadcrumbHelper::request($request)->add([
             'application' => $this->breadcrumbBuilder->text(sprintf('Group %s', $group->getName())),

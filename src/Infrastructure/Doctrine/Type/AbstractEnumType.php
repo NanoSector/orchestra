@@ -39,6 +39,7 @@ abstract class AbstractEnumType extends Type
             return null;
         }
 
+        /** @noinspection PhpUndefinedMethodInspection */
         return $this::getEnumsClass()::tryFrom($value);
     }
 

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="PhpEntryPointsManager">
+    <entry_point>
+      <entry_point TYPE="phpMethod" FQNAME="\Orchestra\Api\Controller\Metrics\V1\MetricController pin" />
+      <entry_point TYPE="phpClass" FQNAME="\Orchestra\Api\Controller\Metrics\V1\MetricController" />
+      <entry_point TYPE="phpMethod" FQNAME="\Orchestra\Api\Controller\Metrics\V1\MetricController __construct" />
+      <entry_point TYPE="phpMethod" FQNAME="\Orchestra\Api\Controller\AbstractApiController setEnvironment" />
+      <entry_point TYPE="phpClass" FQNAME="\Orchestra\Api\Controller\AbstractApiController" />
+      <entry_point TYPE="phpMethod" FQNAME="\Orchestra\Api\Controller\AbstractApiController __construct" />
+      <entry_point TYPE="phpMethod" FQNAME="\Orchestra\Domain\Endpoint\Driver\Sonarr\SonarrDriver __construct" />
+      <entry_point TYPE="phpClass" FQNAME="\Orchestra\Domain\Endpoint\Driver\Sonarr\SonarrDriver" />
+      <entry_point TYPE="phpNamespace" FQNAME="\Orchestra\Infrastructure\Doctrine\Type" />
+      <entry_point TYPE="phpClass" FQNAME="\Orchestra\Infrastructure\Doctrine\Type\AbstractEnumType" />
+      <entry_point TYPE="phpMethod" FQNAME="\Orchestra\Infrastructure\Doctrine\Type\AbstractEnumType convertToDatabaseValue" />
+      <entry_point TYPE="phpMethod" FQNAME="\Orchestra\Infrastructure\Doctrine\Type\AbstractEnumType convertToPHPValue" />
+      <entry_point TYPE="phpMethod" FQNAME="\Orchestra\Infrastructure\Doctrine\Type\AbstractEnumType getSQLDeclaration" />
+    </entry_point>
+    <pattern value="\Orchestra\Api\Controller\*Controller" member="*Action" />
+    <pattern value="\Orchestra\Web\Controller\*Controller" member="*Action" />
+    <pattern value="\Orchestra\Api\Controller\AbstractApiController" member="setEnvironment" />
+    <pattern value="\Orchestra\Domain\Endpoint\Driver\*Driver" member="__construct" />
+    <pattern value="\Orchestra\Domain\Endpoint\Driver\*Driver" />
+    <pattern value="\Orchestra\Infrastructure\*" member="*" />
+  </component>
+</project>

@@ -19,11 +19,6 @@ readonly class InvalidMetric implements MetricInterface
     ) {
     }
 
-    public static function fromDatapoint(Datapoint $datapoint): self
-    {
-        return new self($datapoint->getMetric()->getProduct());
-    }
-
     public function getName(): string
     {
         return $this->product;

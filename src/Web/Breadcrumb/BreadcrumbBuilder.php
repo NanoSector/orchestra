@@ -29,7 +29,7 @@ readonly class BreadcrumbBuilder
     {
         if (!$application->getId()) {
             throw new BreadcrumbBuilderException(
-                'Building an Endpoint breadcrumb item requires that both the Endpoint and its Application have an ID'
+                'Building an Application breadcrumb item requires that the Application has an ID'
             );
         }
 

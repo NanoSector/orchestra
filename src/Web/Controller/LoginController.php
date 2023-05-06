@@ -18,7 +18,10 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 class LoginController extends AbstractController
 {
-    #[Route('/login', name: 'web_login_index')]
+    #[Route(
+        '/login',
+        name: 'web_login_index'
+    )]
     public function index(AuthenticationUtils $authenticationUtils): Response
     {
         if ($this->getUser() instanceof User) {
@@ -38,8 +41,12 @@ class LoginController extends AbstractController
         ]);
     }
 
-    #[Route('/logout', name: 'web_login_logout', methods: ['GET'])]
-    public function logout(): never
+    #[Route(
+        '/logout',
+        name: 'web_login_logout',
+        methods: ['GET']
+    )]
+    public function logoutAction(): never
     {
         // As per https://symfony.com/doc/current/security.html#logging-out this should never be called;
         // pretend it does not exist.

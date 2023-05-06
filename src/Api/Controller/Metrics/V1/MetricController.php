@@ -27,7 +27,7 @@ class MetricController extends AbstractApiController
     }
 
     #[Route('/{id}/pin', name: 'metric_pin', methods: ["POST"])]
-    public function pin(Metric $metric): Response
+    public function pinAction(Metric $metric): Response
     {
         $user = $this->getUser();
 
@@ -52,7 +52,7 @@ class MetricController extends AbstractApiController
     }
 
     #[Route('/{id}/unpin', name: 'metric_unpin', methods: ["POST"])]
-    public function unpin(Metric $metric): Response
+    public function unpinAction(Metric $metric): Response
     {
         $user = $this->getUser();
 

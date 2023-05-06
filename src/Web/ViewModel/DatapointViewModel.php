@@ -25,6 +25,7 @@ readonly class DatapointViewModel
     }
 
     /**
+     * @param Metric $metric
      * @return Generator<DatapointViewModel>
      */
     public static function fromAllDatapointsInMetric(Metric $metric): Generator
