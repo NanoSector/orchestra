@@ -17,13 +17,13 @@ require('bootstrap');
 // any CSS you import will output into a single css file (app.css in this case)
 import './styles/app.css';
 import './styles/global.scss';
-import 'simple-datatables/src/style.css'
+import 'simple-datatables/src/css/style.css'
 
 // start the Stimulus application
 import './bootstrap';
 
 document.addEventListener('DOMContentLoaded', (event) => {
-    let tables = document.querySelectorAll('.init-datatable');
+    let tables = document.querySelectorAll<HTMLTableElement>('.init-datatable');
 
     for (const table of tables) {
         new DataTable(table, {
